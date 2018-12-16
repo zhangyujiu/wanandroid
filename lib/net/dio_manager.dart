@@ -1,5 +1,14 @@
+import 'dart:io';
+
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wanandroid/event/error_event.dart';
 import 'package:wanandroid/model/base_data.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
+
+import 'package:wanandroid/utils/EventBus.dart';
 
 class DioManager {
   Dio _dio;
@@ -9,7 +18,7 @@ class DioManager {
       baseUrl: "http://www.wanandroid.com/",
       connectTimeout: 10000,
       receiveTimeout: 3000,
-      headers: {
+      /*headers: {
         //测试header
         "deviceType": "2.0",
         "deviceOS": "android",
@@ -17,8 +26,17 @@ class DioManager {
         "appVersion": "27",
         "deviceFactory": "OPPO",
         "deviceModel": "OPPO R9tm",
-      },
+      },*/
     ));
+    _getCookiePath().then((path) {
+      _dio.cookieJar = PersistCookieJar(path);
+    });
+  }
+
+  Future<String> _getCookiePath() async {
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    return "${tempPath}/cookies";
   }
 
   static DioManager singleton = DioManager._internal();
@@ -32,6 +50,7 @@ class DioManager {
   Future<ResultData> get(url, {data, options, cancelToken}) async {
     print('get请求启动! url：$url ,body: $data');
     Response response;
+    ResultData result;
     try {
       response = await dio.get(
         url,
@@ -40,13 +59,13 @@ class DioManager {
         cancelToken: cancelToken,
       );
       print('get请求成功!response.data：${response.data}');
+      result = ResultData.fromJson(response.data);
     } on DioError catch (e) {
       if (CancelToken.isCancel(e)) {
         print('get请求取消! ' + e.message);
       }
       print('get请求发生错误：$e');
     }
-    ResultData result = ResultData.fromJson(response.data);
     return result;
   }
 
@@ -73,6 +92,7 @@ class DioManager {
   Future<ResultData> post(url, {data, options, cancelToken}) async {
     print('post请求启动! url：$url ,body: $data');
     Response response;
+    ResultData result;
     try {
       response = await dio.post(
         url,
@@ -80,14 +100,19 @@ class DioManager {
         options: options,
         cancelToken: cancelToken,
       );
-      print('post请求成功!response.data：${response.data}');
+      print('post请求成功!response.data:${response.data}');
+      result = ResultData.fromJson(
+          response.data is String ? json.decode(response.data) : response.data);
+      if (result.errorCode < 0) {
+        EventUtil.eventBus.fire(ErrorEvent(result.errorCode, result.errorMsg));
+        result = null;
+      }
     } on DioError catch (e) {
       if (CancelToken.isCancel(e)) {
         print('post请求取消! ' + e.message);
       }
       print('post请求发生错误：$e');
     }
-    ResultData result = ResultData.fromJson(response.data);
     return result;
   }
 

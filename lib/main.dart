@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroid/flash.dart';
+import 'package:wanandroid/ui/login_page.dart';
 import 'package:wanandroid/ui/start_page.dart';
 import 'package:wanandroid/utils/color.dart';
 

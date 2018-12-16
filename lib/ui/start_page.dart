@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wanandroid/event/error_event.dart';
 import 'package:wanandroid/ui/home/home_page.dart';
 import 'package:wanandroid/ui/knowledge/knowledge_page.dart';
+import 'package:wanandroid/ui/login_page.dart';
 import 'package:wanandroid/ui/navigation/navigation_page.dart';
 import 'package:wanandroid/ui/project/project_page.dart';
+import 'package:wanandroid/utils/EventBus.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/widget/titlebar.dart';
+import 'package:event_bus/event_bus.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -22,6 +26,13 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
+    EventUtil.eventBus.on().listen((event) {
+      if(event is ErrorEvent){
+        Fluttertoast.showToast(msg: event.errorMsg);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      }
+    });
   }
 
   GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
