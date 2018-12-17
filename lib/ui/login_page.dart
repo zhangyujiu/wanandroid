@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/net/dio_manager.dart';
@@ -40,13 +41,17 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
 
   login() async {
     loading(true);
-    DioManager.singleton.post("user/login", data: {
-      "username": _userController.text.toString(),
-      "password": _pwdController.text.toString(),
-    }).whenComplete(() {
+    DioManager.singleton
+        .post("user/login",
+            data: FormData.from({
+              "username": _userController.text.toString(),
+              "password": _pwdController.text.toString(),
+            }))
+        .whenComplete(() {
       loading(false);
     }).then((result) {
-
+      Fluttertoast.showToast(msg: "登录成功");
+      Navigator.of(context).pop();
     });
   }
 

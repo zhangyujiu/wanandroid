@@ -49,30 +49,30 @@ class _HomePageState extends State<HomePage>
         itemBuilder: (context, index) {
           return index == 0
               ? Container(
-                  margin: EdgeInsets.only(top: 5),
-                  width: MediaQuery.of(context).size.width,
-                  height: 180,
-                  child: banners.length != 0
-                      ? Swiper(
-                          controller: _controller,
-                          itemWidth: MediaQuery.of(context).size.width,
-                          itemHeight: 180,
-                          pagination: pagination(),
-                          itemBuilder: (BuildContext context, int index) {
-                            return new Image.network(
-                              banners[index].imagePath,
-                              fit: BoxFit.fill,
-                            );
-                          },
-                          itemCount: banners.length,
-                          viewportFraction: 0.8,
-                          scale: 0.9,
-                        )
-                      : SizedBox(
-                          width: 0,
-                          height: 0,
-                        ),
-                )
+            margin: EdgeInsets.only(top: 5),
+            width: MediaQuery.of(context).size.width,
+            height: 180,
+            child: banners.length != 0
+                ? Swiper(
+              controller: _controller,
+              itemWidth: MediaQuery.of(context).size.width,
+              itemHeight: 180,
+              pagination: pagination(),
+              itemBuilder: (BuildContext context, int index) {
+                return new Image.network(
+                  banners[index].imagePath,
+                  fit: BoxFit.fill,
+                );
+              },
+              itemCount: banners.length,
+              viewportFraction: 0.8,
+              scale: 0.9,
+            )
+                : SizedBox(
+              width: 0,
+              height: 0,
+            ),
+          )
               : _builditem(index - 1);
         });
   }
@@ -81,30 +81,6 @@ class _HomePageState extends State<HomePage>
       margin: EdgeInsets.all(0.0),
       builder: SwiperCustomPagination(
           builder: (BuildContext context, SwiperPluginConfig config) {
-        return Container(
-          color: Color(0x599E9E9E),
-          height: 40,
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-          child: Row(
-            children: <Widget>[
-              Text(
-                "${banners[config.activeIndex].title}",
-                style: TextStyle(
-                    fontSize: TextSizeConst.smallTextSize,
-                    color: ColorConst.color_white),
-              ),
-              Expanded(
-                flex: 1,
-                child: new Align(
-                  alignment: Alignment.centerRight,
-                  child: new DotSwiperPaginationBuilder(
-  //自定义指示器
-  SwiperPagination pagination() =>
-      SwiperPagination(
-          margin: EdgeInsets.all(0.0),
-          builder: SwiperCustomPagination(builder:
-              (BuildContext context,
-              SwiperPluginConfig config) {
             return Container(
               color: Color(0x599E9E9E),
               height: 40,
@@ -114,7 +90,8 @@ class _HomePageState extends State<HomePage>
                   Text(
                     "${banners[config.activeIndex].title}",
                     style: TextStyle(
-                        fontSize: TextSizeConst.smallTextSize, color: ColorConst.color_white),
+                        fontSize: TextSizeConst.smallTextSize,
+                        color: ColorConst.color_white),
                   ),
                   Expanded(
                     flex: 1,
@@ -125,13 +102,13 @@ class _HomePageState extends State<HomePage>
                           activeColor: ColorConst.color_primary,
                           size: 6.0,
                           activeSize: 6.0)
-                      .build(context, config),
-                ),
-              )
-            ],
-          ),
-        );
-      }));
+                          .build(context, config),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }));
 
   Widget _builditem(int index) {
     Article article = articles[index];
@@ -191,18 +168,18 @@ class _HomePageState extends State<HomePage>
               ),
               Row(
                 children: <Widget>[
-                  article.zan == 0
+                  !article.collect
                       ? IconButton(
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.all(0),
                     icon: Icon(Icons.favorite_border),
-                    onPressed: () => _like(index),
+                    onPressed: () => _collect(index),
                   )
                       : IconButton(
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.all(0),
                     icon: Icon(Icons.favorite,color: Colors.red,),
-                    onPressed: () => _like(index),
+                    onPressed: () => _collect(index),
                   ),
                   Icon(
                     Icons.access_time,
@@ -253,17 +230,20 @@ class _HomePageState extends State<HomePage>
   @override
   bool get wantKeepAlive => true;
 
-  //TODO:没有对接口,需要判断是否登录
-  _like(int index) {
+  _collect(int index) {
     Article article = articles[index];
-    DioManager.singleton.post("lg/collect/${article.id}/json").then((result){
+    String url="";
+    if(!article.collect){
+      url="lg/collect/${article.id}/json";
+    }else{
+      url="lg/uncollect_originId/${article.id}/json";
+    }
+    DioManager.singleton.post(url).then((result){
       if(result!=null){
         setState(() {
-          article.zan = article.zan == 1 ? 0 : 1;
+          article.collect = !article.collect;
         });
       }
     });
   }
 }
-
-

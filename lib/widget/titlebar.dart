@@ -86,7 +86,6 @@ class _TitleBarState extends State<TitleBar> {
             right: 0,
             height: 56,
             child: Container(
-                margin: EdgeInsets.only(right: 10),
                 child: widget.rightButtons != null
                     ? Row(
                         children: widget.rightButtons,

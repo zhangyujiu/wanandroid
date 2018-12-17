@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroid/flash.dart';
 import 'package:wanandroid/ui/login_page.dart';
-import 'package:wanandroid/ui/start_page.dart';
+import 'package:wanandroid/main_page.dart';
 import 'package:wanandroid/utils/color.dart';
 
 void main() => runApp(MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => FlashPage(),
-        "main": (context) => StartPage(),
+        "main": (context) => MainPage(),
       },
     );
   }

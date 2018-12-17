@@ -11,14 +11,14 @@ import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/widget/titlebar.dart';
 import 'package:event_bus/event_bus.dart';
 
-class StartPage extends StatefulWidget {
+class MainPage extends StatefulWidget {
   @override
   State createState() {
-    return _StartPageState();
+    return _MainPageState();
   }
 }
 
-class _StartPageState extends State<StartPage> {
+class _MainPageState extends State<MainPage> {
   var appBarTitles = ['首页', '知识体系', '导航', "项目"];
   int _tabIndex = 0;
   var _pageCtr = PageController(initialPage: 0, keepPage: true);
@@ -29,8 +29,10 @@ class _StartPageState extends State<StartPage> {
     EventUtil.eventBus.on().listen((event) {
       if(event is ErrorEvent){
         Fluttertoast.showToast(msg: event.errorMsg);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+        if(event.errorCode==-1001){//登录
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => LoginPage()));
+        }
       }
     });
   }
