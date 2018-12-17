@@ -86,6 +86,14 @@ class Article {
     }
     return tags;
   }
+  static List<Article> parseList(List<dynamic> list){
+    List<Article> articles = List();
+    for (var a in list) {
+      Article article = Article.fromJson(a);
+      articles.add(article);
+    }
+    return articles;
+  }
 
   Map<String, dynamic> toJson() => {
         'apkLink': apkLink,

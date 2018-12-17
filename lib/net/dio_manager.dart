@@ -8,7 +8,7 @@ import 'package:wanandroid/model/base_data.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
 
-import 'package:wanandroid/utils/EventBus.dart';
+import 'package:wanandroid/utils/eventbus.dart';
 
 class DioManager {
   Dio _dio;

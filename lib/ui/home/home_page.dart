@@ -1,15 +1,13 @@
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import "package:pull_to_refresh/pull_to_refresh.dart";
 import 'package:wanandroid/model/article.dart';
 import 'package:wanandroid/model/banner.dart';
 import 'package:wanandroid/model/base_data.dart';
 import 'package:wanandroid/model/base_list_data.dart';
 import 'package:wanandroid/net/dio_manager.dart';
-import 'package:wanandroid/ui/login_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/textsize.dart';
-import "package:pull_to_refresh/pull_to_refresh.dart";
 
 class HomePage extends StatefulWidget {
   @override
@@ -241,10 +239,7 @@ class _HomePageState extends State<HomePage>
           articles.clear();
         }
         setState(() {
-          for (var a in listdata.datas) {
-            Article article = Article.fromJson(a);
-            articles.add(article);
-          }
+          articles.addAll(Article.parseList(listdata.datas));
         });
       }
     });
