@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redux/redux.dart';
 import 'package:wanandroid/event/error_event.dart';
 import 'package:wanandroid/model/user.dart';
+import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
 import 'package:wanandroid/ui/home/home_page.dart';
@@ -46,19 +47,6 @@ class _MainPageState extends State<MainPage> {
               context, MaterialPageRoute(builder: (context) => LoginPage()));
         }
       }
-    });
-    int userID;
-    String userName;
-    SpManager.singleton.getInt(Const.ID).then((id) {
-      userID = id;
-    }).whenComplete(() {
-      SpManager.singleton.getString(Const.USERNAME).then((name) {
-        userName = name;
-        if (userID != null && userName != null) {
-          StoreProvider.of(context)
-              .dispatch(UpdateUserAction(User(userID, userName)));
-        }
-      });
     });
   }
 
@@ -142,6 +130,8 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  Store _store;
+
   Widget _drawerChild() {
     return Column(
       children: <Widget>[
@@ -165,23 +155,18 @@ class _MainPageState extends State<MainPage> {
         ),
         _menuItem("收藏", Icons.collections, () {}),
         _menuItem("关于我们", Icons.people, () {}),
-        StoreConnector<MainRedux, User>(
-          converter: (store) => store.state.user,
-          builder: (ctx, model) {
+        StoreBuilder<MainRedux>(
+          builder: (context, store) {
+            _store = store;
             return Offstage(
-              offstage: model == null,
+              offstage: store.state.user == null,
               child: Container(
                 margin: EdgeInsets.only(top: 20),
                 width: 200,
                 child: RaisedButton(
                   color: Colors.lightBlueAccent,
                   onPressed: () {
-                    CookieUtil.deleteAllCookies().then((_) {
-                      Fluttertoast.showToast(msg: "退出成功");
-                      StoreProvider.of(context)
-                          .dispatch(UpdateUserAction(null));
-                      Navigator.pop(context);
-                    });
+                    _logout(context);
                   },
                   child: Text('退出登录', style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(
@@ -193,6 +178,18 @@ class _MainPageState extends State<MainPage> {
         ),
       ],
     );
+  }
+
+  void _logout(BuildContext context) {
+     DioManager.singleton.get("user/logout/json").then((result){
+      if(result!=null){
+        Fluttertoast.showToast(msg: "退出成功");
+        SpManager.singleton.save(Const.ID, -1);
+        SpManager.singleton.save(Const.USERNAME, "");
+        _store.dispatch(UpdateUserAction(null));
+        Navigator.pop(context);
+      }
+    });
   }
 
   Widget _menuItem(String text, IconData icon, Function() tap) {

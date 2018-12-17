@@ -62,13 +62,15 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
         .whenComplete(() {
       loading(false);
     }).then((result) {
-      var id = result.data["id"];
-      var username = result.data["username"];
-      SpManager.singleton.save(Const.ID, id);
-      SpManager.singleton.save(Const.USERNAME, username);
-      store.dispatch(UpdateUserAction(User(id, username)));
-      Fluttertoast.showToast(msg: "登录成功");
-      Navigator.of(context).pop();
+      if(result!=null){
+        var id = result.data["id"];
+        var username = result.data["username"];
+        SpManager.singleton.save(Const.ID, id);
+        SpManager.singleton.save(Const.USERNAME, username);
+        store.dispatch(UpdateUserAction(User(id, username)));
+        Fluttertoast.showToast(msg: "登录成功");
+        Navigator.of(context).pop();
+      }
     });
   }
 
