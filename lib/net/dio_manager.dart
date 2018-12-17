@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/event/error_event.dart';
 import 'package:wanandroid/model/base_data.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wanandroid/utils/cookieutil.dart';
 import 'dart:convert';
 
 import 'package:wanandroid/utils/eventbus.dart';
@@ -28,15 +29,9 @@ class DioManager {
         "deviceModel": "OPPO R9tm",
       },*/
     ));
-    _getCookiePath().then((path) {
+    CookieUtil.getCookiePath().then((path) {
       _dio.cookieJar = PersistCookieJar(path);
     });
-  }
-
-  Future<String> _getCookiePath() async {
-    Directory tempDir = await getTemporaryDirectory();
-    String tempPath = tempDir.path;
-    return "${tempPath}/cookies";
   }
 
   static DioManager singleton = DioManager._internal();

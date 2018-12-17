@@ -7,6 +7,7 @@ import 'package:wanandroid/model/base_data.dart';
 import 'package:wanandroid/model/base_list_data.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/utils/color.dart';
+import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
 
 class HomePage extends StatefulWidget {
@@ -187,7 +188,10 @@ class _HomePageState extends State<HomePage>
                       ? IconButton(
                           alignment: Alignment.centerLeft,
                           padding: EdgeInsets.all(0),
-                          icon: Icon(Icons.favorite_border),
+                          icon: Icon(
+                            Icons.favorite_border,
+                            color: Colors.black45,
+                          ),
                           onPressed: () => _collect(index),
                         )
                       : IconButton(
@@ -201,7 +205,7 @@ class _HomePageState extends State<HomePage>
                         ),
                   Icon(
                     Icons.access_time,
-                    color: ColorConst.color_ccc,
+                    color: Colors.black45,
                   ),
                   Expanded(
                       flex: 1,
@@ -256,7 +260,10 @@ class _HomePageState extends State<HomePage>
     } else {
       url = "lg/uncollect_originId/${article.id}/json";
     }
-    DioManager.singleton.post(url).then((result) {
+    CommonUtils.showLoadingDialog(context);
+    DioManager.singleton.post(url).whenComplete(() {
+      Navigator.pop(context);
+    }).then((result) {
       if (result != null) {
         setState(() {
           article.collect = !article.collect;

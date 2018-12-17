@@ -1,7 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:redux/redux.dart';
+import 'package:wanandroid/model/user.dart';
 import 'package:wanandroid/net/dio_manager.dart';
+import 'package:wanandroid/redux/main_redux.dart';
+import 'package:wanandroid/redux/user_reducer.dart';
+import 'package:wanandroid/utils/const.dart';
+import 'package:wanandroid/utils/sp.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,6 +22,11 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
 
   var _userController = TextEditingController();
   var _pwdController = TextEditingController();
+
+  Store _store;
+
+  Store get store => _store;
+
 
   @override
   void initState() {
@@ -50,6 +62,11 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
         .whenComplete(() {
       loading(false);
     }).then((result) {
+      var id = result.data["id"];
+      var username = result.data["username"];
+      SpManager.singleton.save(Const.ID, id);
+      SpManager.singleton.save(Const.USERNAME, username);
+      store.dispatch(UpdateUserAction(User(id, username)));
       Fluttertoast.showToast(msg: "登录成功");
       Navigator.of(context).pop();
     });
@@ -135,29 +152,32 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
       onPressed: () {},
     );
 
-    //TODO：使用GlobalKey键盘失效
-    var globalKey = GlobalKey();
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                logo,
-                SizedBox(height: 48.0),
-                userName,
-                SizedBox(height: 8.0),
-                password,
-                SizedBox(height: 24.0),
-                loginButton,
-                forgotLabel,
-              ],
+    return StoreBuilder<MainRedux>(
+      builder: (context,store){
+        _store = store;
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Container(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    logo,
+                    SizedBox(height: 48.0),
+                    userName,
+                    SizedBox(height: 8.0),
+                    password,
+                    SizedBox(height: 24.0),
+                    loginButton,
+                    forgotLabel,
+                  ],
+                ),
+              ),
+              margin: EdgeInsets.fromLTRB(20, 100, 20, 0),
             ),
           ),
-          margin: EdgeInsets.fromLTRB(20, 100, 20, 0),
-        ),
-      ),
+        );
+      },
     );
   }
 }
