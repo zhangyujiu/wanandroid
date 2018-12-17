@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage>
         });
   }
 
+  //自定义指示器
   SwiperPagination pagination() =>
       SwiperPagination(
           margin: EdgeInsets.all(0.0),
