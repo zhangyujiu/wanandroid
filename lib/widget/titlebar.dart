@@ -76,12 +76,16 @@ class _TitleBarState extends State<TitleBar> {
                   : widget.leftButton,
             ),
           ),
-          Center(
-            child: Text(
-              widget.title,
-              style: TextStyle(fontSize: 18, color: Colors.white),
-            ),
-          ),
+          Padding(
+              child: Center(
+                child: Text(
+                  widget.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 40)),
           Positioned(
             right: 0,
             height: 56,

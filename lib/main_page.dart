@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redux/redux.dart';
 import 'package:wanandroid/event/error_event.dart';
-import 'package:wanandroid/model/user.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
@@ -11,16 +11,13 @@ import 'package:wanandroid/ui/knowledge/knowledge_page.dart';
 import 'package:wanandroid/ui/login_page.dart';
 import 'package:wanandroid/ui/navigation/navigation_page.dart';
 import 'package:wanandroid/ui/project/project_page.dart';
-import 'package:wanandroid/utils/const.dart';
-import 'package:wanandroid/utils/cookieutil.dart';
-import 'package:wanandroid/utils/common.dart';
-import 'package:wanandroid/utils/eventbus.dart';
 import 'package:wanandroid/utils/color.dart';
+import 'package:wanandroid/utils/common.dart';
+import 'package:wanandroid/utils/const.dart';
+import 'package:wanandroid/utils/eventbus.dart';
 import 'package:wanandroid/utils/sp.dart';
 import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/titlebar.dart';
-import 'package:event_bus/event_bus.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -43,8 +40,7 @@ class _MainPageState extends State<MainPage> {
         Fluttertoast.showToast(msg: event.errorMsg);
         if (event.errorCode == -1001) {
           //登录
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => LoginPage()));
+          CommonUtils.pushIOS(context, LoginPage());
         }
       }
     });

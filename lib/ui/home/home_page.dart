@@ -6,6 +6,7 @@ import 'package:wanandroid/model/banner.dart';
 import 'package:wanandroid/model/base_data.dart';
 import 'package:wanandroid/model/base_list_data.dart';
 import 'package:wanandroid/net/dio_manager.dart';
+import 'package:wanandroid/ui/webview_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
@@ -131,7 +132,14 @@ class _HomePageState extends State<HomePage>
   Widget _builditem(int index) {
     Article article = articles[index];
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        CommonUtils.push(
+            context,
+            WebViewPage(
+              title: article.title,
+              url: article.link,
+            ));
+      },
       child: Card(
         margin: EdgeInsets.all(5),
         child: Container(

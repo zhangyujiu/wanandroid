@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -40,5 +41,14 @@ class CommonUtils {
                 ),
               ));
         });
+  }
+  static void push(BuildContext context,Widget widget){
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => widget));
+  }
+
+  static void pushIOS(BuildContext context,Widget widget){
+    Navigator.push(
+        context, CupertinoPageRoute(builder: (context) => widget));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
-import 'package:wanandroid/flash.dart';
+import 'package:wanandroid/flash_page.dart';
 import 'package:wanandroid/main_page.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/utils/color.dart';
