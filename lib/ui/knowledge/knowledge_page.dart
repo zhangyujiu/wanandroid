@@ -85,7 +85,7 @@ class _KnowledgePageState extends State<KnowledgePage>
                       Text(
                         item.name,
                         style: TextStyle(
-                            fontSize: TextSizeConst.middleTextWhiteSize,
+                            fontSize: TextSizeConst.middleTextSize,
                             color: ColorConst.color_333),
                       ),
                       Padding(

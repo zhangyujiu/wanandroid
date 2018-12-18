@@ -79,7 +79,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                     "${article.title}",
                     style: TextStyle(
                         color: ColorConst.color_333,
-                        fontSize: TextSizeConst.middleTextWhiteSize),
+                        fontSize: TextSizeConst.middleTextSize),
                   ),
                 ),
               ),
