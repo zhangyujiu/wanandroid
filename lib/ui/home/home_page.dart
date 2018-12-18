@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     _controller.autoplay = true;
-    _refreshController = new RefreshController();
+    _refreshController = RefreshController();
     getBanner();
     getList(true);
   }
@@ -58,42 +58,52 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: true,
-        onRefresh: _onRefresh,
-        controller: _refreshController,
-        child: ListView.builder(
-            itemCount: articles.length + 1,
-            itemBuilder: (context, index) {
-              return index == 0
-                  ? Container(
-                      margin: EdgeInsets.only(top: 5),
-                      width: MediaQuery.of(context).size.width,
-                      height: 180,
-                      child: banners.length != 0
-                          ? Swiper(
-                              controller: _controller,
-                              itemWidth: MediaQuery.of(context).size.width,
-                              itemHeight: 180,
-                              pagination: pagination(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return new Image.network(
-                                  banners[index].imagePath,
-                                  fit: BoxFit.fill,
-                                );
-                              },
-                              itemCount: banners.length,
-                              viewportFraction: 0.8,
-                              scale: 0.9,
-                            )
-                          : SizedBox(
-                              width: 0,
-                              height: 0,
-                            ),
-                    )
-                  : _builditem(index - 1);
-            }));
+    return Scaffold(
+      body: SmartRefresher(
+          controller: _refreshController,
+          enablePullDown: true,
+          enablePullUp: true,
+          onRefresh: _onRefresh,
+          child: ListView.builder(
+//              controller: _scrollController,
+              itemCount: articles.length + 1,
+              itemBuilder: (context, index) {
+                return index == 0
+                    ? Container(
+                        margin: EdgeInsets.only(top: 5),
+                        width: MediaQuery.of(context).size.width,
+                        height: 180,
+                        child: banners.length != 0
+                            ? Swiper(
+                                autoplayDelay: 5000,
+                                controller: _controller,
+                                itemWidth: MediaQuery.of(context).size.width,
+                                itemHeight: 180,
+                                pagination: pagination(),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return new Image.network(
+                                    banners[index].imagePath,
+                                    fit: BoxFit.fill,
+                                  );
+                                },
+                                itemCount: banners.length,
+                                viewportFraction: 0.8,
+                                scale: 0.9,
+                              )
+                            : SizedBox(
+                                width: 0,
+                                height: 0,
+                              ),
+                      )
+                    : _builditem(index - 1);
+              })),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor.withAlpha(180),
+          child: Icon(Icons.arrow_upward),
+          onPressed: () {
+            _refreshController.scrollTo(0);
+          }),
+    );
   }
 
   SwiperPagination pagination() => SwiperPagination(
@@ -260,6 +270,7 @@ class _HomePageState extends State<HomePage>
   @override
   bool get wantKeepAlive => true;
 
+  //收藏/取消收藏
   _collect(int index) {
     Article article = articles[index];
     String url = "";
