@@ -17,12 +17,19 @@ class BaseListData {
         datas = json["datas"];
 
   Map<String, dynamic> toJson() => {
-    "curPage": curPage,
-    "offset": offset,
-    "size": size,
-    "total": total,
-    "over": over,
-    "pageCount": pageCount,
-    "datas": datas,
-  };
+        "curPage": curPage,
+        "offset": offset,
+        "size": size,
+        "total": total,
+        "over": over,
+        "pageCount": pageCount,
+        "datas": datas,
+      };
+
+  @override
+  String toString() {
+    return 'BaseListData{curPage: $curPage, offset: $offset, pageCount: $pageCount, size: $size, total: $total, over: $over, datas: $datas}';
+  }
+
+  bool get hasNoMore => curPage == pageCount;
 }

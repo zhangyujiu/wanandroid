@@ -148,6 +148,9 @@ class _HomePageState extends State<HomePage>
         if (pageIndex == 0) {
           articles.clear();
         }
+        if (listdata.hasNoMore) {
+          _refreshController.sendBack(false, RefreshStatus.noMore);
+        }
         setState(() {
           articles.addAll(Article.parseList(listdata.datas));
         });

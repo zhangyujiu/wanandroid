@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wanandroid/model/knowledge_system.dart';
 import 'package:wanandroid/net/dio_manager.dart';
+import 'package:wanandroid/ui/knowledge/knowledge_detail_page.dart';
 import 'package:wanandroid/utils/color.dart';
+import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
 
 class KnowledgePage extends StatefulWidget {
@@ -62,11 +64,17 @@ class _KnowledgePageState extends State<KnowledgePage>
 
   Widget _buildItem(KnowledgeSystem item) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        CommonUtils.push(
+            context,
+            knowledgeDetailPage(
+              knowledge: item,
+            ));
+      },
       child: Card(
         margin: EdgeInsets.all(5),
         child: Container(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
+          padding: EdgeInsets.all(10),
           child: Row(
             children: <Widget>[
               Expanded(
