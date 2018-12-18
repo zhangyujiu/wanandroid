@@ -32,6 +32,12 @@ class DioManager {
     CookieUtil.getCookiePath().then((path) {
       _dio.cookieJar = PersistCookieJar(path);
     });
+    _dio.interceptor.response.onError = (DioError e){
+      // 当请求失败时做一些预处理
+
+      EventUtil.eventBus.fire(e);
+      return e;//continue
+    };
   }
 
   static DioManager singleton = DioManager._internal();
@@ -55,6 +61,10 @@ class DioManager {
       );
       print('get请求成功!response.data：${response.data}');
       result = ResultData.fromJson(response.data);
+      if (result.errorCode < 0) {
+        EventUtil.eventBus.fire(ErrorEvent(result.errorCode, result.errorMsg));
+        result = null;
+      }
     } on DioError catch (e) {
       if (CancelToken.isCancel(e)) {
         print('get请求取消! ' + e.message);

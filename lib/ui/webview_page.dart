@@ -49,17 +49,7 @@ class _WebViewPageState extends State<WebViewPage> {
       appBar: widget.fullscreen
           ? null
           : TitleBar(
-              isShowBack: false,
-              leftButton: Builder(builder: (cxt) {
-                return IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Scaffold.of(cxt).openDrawer();
-                    });
-              }),
+              isShowBack: true,
               title: widget.title,
             ),
       body: WebviewScaffold(

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -42,6 +43,28 @@ class _MainPageState extends State<MainPage> {
           //登录
           CommonUtils.pushIOS(context, LoginPage());
         }
+      } else if (event is DioError) {
+        String errorMsg = "";
+        switch (event.type) {
+          case DioErrorType.DEFAULT:
+            errorMsg = "网络错误";
+            break;
+          case DioErrorType.CONNECT_TIMEOUT:
+            errorMsg = "连接超时";
+            break;
+          case DioErrorType.RECEIVE_TIMEOUT:
+            errorMsg = "接收超时";
+            break;
+          case DioErrorType.RESPONSE:
+            errorMsg = "服务器错误";
+            break;
+          case DioErrorType.CANCEL:
+            errorMsg = "请求取消";
+            break;
+          default:
+            break;
+        }
+        Fluttertoast.showToast(msg: errorMsg);
       }
     });
   }
@@ -177,8 +200,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _logout(BuildContext context) {
-     DioManager.singleton.get("user/logout/json").then((result){
-      if(result!=null){
+    DioManager.singleton.get("user/logout/json").then((result) {
+      if (result != null) {
         Fluttertoast.showToast(msg: "退出成功");
         SpManager.singleton.save(Const.ID, -1);
         SpManager.singleton.save(Const.USERNAME, "");

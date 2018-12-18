@@ -10,6 +10,7 @@ import 'package:wanandroid/ui/webview_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
+import 'package:wanandroid/widget/article_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -95,7 +96,7 @@ class _HomePageState extends State<HomePage>
                                 height: 0,
                               ),
                       )
-                    : _builditem(index - 1);
+                    : ArticleWidget(articles[index - 1]);
               })),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColor.withAlpha(180),
@@ -139,119 +140,6 @@ class _HomePageState extends State<HomePage>
         );
       }));
 
-  Widget _builditem(int index) {
-    Article article = articles[index];
-    return GestureDetector(
-      onTap: () {
-        CommonUtils.push(
-            context,
-            WebViewPage(
-              title: article.title,
-              url: article.link,
-            ));
-      },
-      child: Card(
-        margin: EdgeInsets.all(5),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.android,
-                    color: ColorConst.color_primary,
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          "${article.author}",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                              color: ColorConst.color_333,
-                              fontSize: TextSizeConst.smallTextSize),
-                        ),
-                      )),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "${article.chapterName}/${article.superChapterName}",
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                          color: ColorConst.color_primary,
-                          fontSize: TextSizeConst.smallTextSize),
-                    ),
-                  )
-                ],
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Text(
-                    "${article.title}",
-                    style: TextStyle(
-                        color: ColorConst.color_333,
-                        fontSize: TextSizeConst.middleTextWhiteSize),
-                  ),
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  !article.collect
-                      ? IconButton(
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(
-                            Icons.favorite_border,
-                            color: Colors.black45,
-                          ),
-                          onPressed: () => _collect(index),
-                        )
-                      : IconButton(
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          ),
-                          onPressed: () => _collect(index),
-                        ),
-                  Icon(
-                    Icons.access_time,
-                    color: Colors.black45,
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 5),
-                        child: Text(
-                          "${article.niceDate}",
-                          style: TextStyle(
-                              color: ColorConst.color_555,
-                              fontSize: TextSizeConst.smallTextSize),
-                        ),
-                      )),
-                  Offstage(
-                    offstage: !article.fresh,
-                    child: Icon(
-                      Icons.fiber_new,
-                      color: ColorConst.color_primary,
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   void getList(bool isRefresh) {
     DioManager.singleton.get("article/list/${pageIndex}/json").then((result) {
       _refreshController.sendBack(isRefresh, RefreshStatus.idle);
@@ -269,25 +157,4 @@ class _HomePageState extends State<HomePage>
 
   @override
   bool get wantKeepAlive => true;
-
-  //收藏/取消收藏
-  _collect(int index) {
-    Article article = articles[index];
-    String url = "";
-    if (!article.collect) {
-      url = "lg/collect/${article.id}/json";
-    } else {
-      url = "lg/uncollect_originId/${article.id}/json";
-    }
-    CommonUtils.showLoadingDialog(context);
-    DioManager.singleton.post(url).whenComplete(() {
-      Navigator.pop(context);
-    }).then((result) {
-      if (result != null) {
-        setState(() {
-          article.collect = !article.collect;
-        });
-      }
-    });
-  }
 }
