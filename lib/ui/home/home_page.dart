@@ -149,8 +149,8 @@ class _HomePageState extends State<HomePage>
   void getList(bool isRefresh) {
     DioManager.singleton.get("article/list/${pageIndex}/json").then((result) {
       _refreshController.sendBack(isRefresh, RefreshStatus.idle);
-      _pageStateController.isLoadingSuccess=true;
       if (result != null) {
+        _pageStateController.changeState(PageState.LoadSuccess);
         BaseListData listdata = BaseListData.fromJson(result.data);
         if (pageIndex == 0) {
           articles.clear();
@@ -161,6 +161,8 @@ class _HomePageState extends State<HomePage>
         setState(() {
           articles.addAll(Article.parseList(listdata.datas));
         });
+      }else{
+        _pageStateController.changeState(PageState.LoadFail);
       }
     });
   }

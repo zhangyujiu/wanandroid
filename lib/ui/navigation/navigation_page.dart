@@ -39,7 +39,7 @@ class _NavigationPageState extends State<NavigationPage>
               child: ListView.builder(
                   itemCount: datas.length,
                   itemBuilder: (context, index) {
-                    return _bulidItem(index);
+                    return _buildItem(index);
                   })),
           Expanded(
             //右边导航数据
@@ -85,7 +85,7 @@ class _NavigationPageState extends State<NavigationPage>
   @override
   bool get wantKeepAlive => true;
 
-  Widget _bulidItem(int index) {
+  Widget _buildItem(int index) {
     Category category = datas[index];
     return InkWell(
       onTap: () {
@@ -140,13 +140,15 @@ class _NavigationPageState extends State<NavigationPage>
   //获取导航数据
   void _getList() {
     DioManager.singleton.get("navi/json").then((result) {
-      _pageStateController.isLoadingSuccess = true;
       if (result != null) {
+        _pageStateController.changeState(PageState.LoadSuccess);
         setState(() {
           datas.clear();
           List<Category> list = Category.parseList(result.data);
           datas.addAll(list);
         });
+      }else{
+        _pageStateController.changeState(PageState.LoadFail);
       }
     });
   }

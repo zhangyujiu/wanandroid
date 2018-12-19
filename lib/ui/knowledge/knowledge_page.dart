@@ -56,15 +56,17 @@ class _KnowledgePageState extends State<KnowledgePage>
 
   void getList() {
     DioManager.singleton.get("tree/json").then((result) {
-      _pageStateController.isLoadingSuccess=true;
       _refreshController.sendBack(true, RefreshStatus.idle);
       if (result != null) {
+        _pageStateController.changeState(PageState.LoadSuccess);
         setState(() {
           datas.clear();
           List<KnowledgeSystem> knowledges =
               KnowledgeSystem.parseList(result.data);
           datas.addAll(knowledges);
         });
+      }else{
+        _pageStateController.changeState(PageState.LoadFail);
       }
     });
   }

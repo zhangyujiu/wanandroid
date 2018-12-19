@@ -122,8 +122,8 @@ class _knowledgeArticlePageState extends State<knowledgeArticlePage>
         .get("article/list/${pageIndex}/json?cid=${widget.cid}")
         .then((result) {
       _refreshController.sendBack(isRefresh, RefreshStatus.idle);
-      _pageStateController.isLoadingSuccess = true;
       if (result != null) {
+        _pageStateController.changeState(PageState.LoadSuccess);
         var listdata = BaseListData.fromJson(result.data);
         print(listdata.toString());
         if (pageIndex == 0) {
@@ -135,6 +135,8 @@ class _knowledgeArticlePageState extends State<knowledgeArticlePage>
         setState(() {
           articles.addAll(Article.parseList(listdata.datas));
         });
+      }else{
+        _pageStateController.changeState(PageState.LoadFail);
       }
     });
   }
