@@ -3,10 +3,10 @@ import 'package:wanandroid/utils/textsize.dart';
 
 typedef ReloadData = Function();
 
+//页面加载状态
 class PageWidget extends StatefulWidget {
   Widget child;
   PageStateController controller;
-
   ReloadData reload;
 
   PageWidget({this.child, controller, this.reload})
@@ -20,11 +20,12 @@ class PageWidget extends StatefulWidget {
 
 class _PageWidgetState extends State<PageWidget> {
   int index = 2;
+  VoidCallback _listener;
 
   @override
   void initState() {
     super.initState();
-    widget.controller.loadingNotifier.addListener(() {
+    _listener = () {
       setState(() {
         switch (widget.controller._state) {
           case PageState.Loading:
@@ -41,7 +42,8 @@ class _PageWidgetState extends State<PageWidget> {
             break;
         }
       });
-    });
+    };
+    widget.controller.loadingNotifier.addListener(_listener);
   }
 
   @override
@@ -61,29 +63,35 @@ class _PageWidgetState extends State<PageWidget> {
   //加载失败Widget
   Widget _loadFailWidget() {
     return GestureDetector(
-        onTap: () {
-          widget.controller.changeState(PageState.Loading);
-          widget.reload();
-        },
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ImageIcon(
-                AssetImage("assets/load_fail.png"),
-                size: 50,
+      onTap: () {
+        widget.controller.changeState(PageState.Loading);
+        widget.reload();
+      },
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ImageIcon(
+              AssetImage("assets/load_fail.png"),
+              size: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "加载失败",
+                style: TextStyle(fontSize: TextSizeConst.middleTextSize),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "加载失败",
-                  style: TextStyle(fontSize: TextSizeConst.middleTextSize),
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
-      );
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    widget.controller.loadingNotifier.removeListener(_listener);
+    super.dispose();
   }
 }
 

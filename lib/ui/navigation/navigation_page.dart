@@ -47,16 +47,15 @@ class _NavigationPageState extends State<NavigationPage>
           Expanded(
             //右边导航数据
             flex: 3,
-            child: SingleChildScrollView(
-              child: Container(
-//                height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.all(10.0),
-                alignment: Alignment.topLeft,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              alignment: Alignment.topLeft,
+              child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
                     Center(
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 15),
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 15),
                         child: Text(
                           datas.length > 0 ? datas[_selectPos].name : "",
                           style: TextStyle(
@@ -104,6 +103,7 @@ class _NavigationPageState extends State<NavigationPage>
         padding: EdgeInsets.all(10),
         child: Text(
           category.name,
+          textAlign: TextAlign.center,
           style: TextStyle(
               color: _selectPos == index
                   ? ColorConst.color_primary
