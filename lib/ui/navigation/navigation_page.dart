@@ -46,7 +46,7 @@ class _NavigationPageState extends State<NavigationPage>
             flex: 3,
             child: SingleChildScrollView(
               child: Container(
-                height: MediaQuery.of(context).size.height,
+//                height: MediaQuery.of(context).size.height,
                 padding: EdgeInsets.all(10.0),
                 alignment: Alignment.topLeft,
                 child: Column(
@@ -67,7 +67,7 @@ class _NavigationPageState extends State<NavigationPage>
                       child: datas.length > 0
                           ? Wrap(
                               spacing: 8,
-                              runSpacing: 6,
+                              runSpacing: 2,
                               children: _buildSortItem(datas[_selectPos]),
                             )
                           : Container(),
