@@ -30,6 +30,9 @@ class _NavigationPageState extends State<NavigationPage>
   @override
   Widget build(BuildContext context) {
     return PageWidget(
+      reload: () {
+        _getList();
+      },
       controller: _pageStateController,
       child: Row(
         children: <Widget>[
@@ -147,7 +150,7 @@ class _NavigationPageState extends State<NavigationPage>
           List<Category> list = Category.parseList(result.data);
           datas.addAll(list);
         });
-      }else{
+      } else {
         _pageStateController.changeState(PageState.LoadFail);
       }
     });

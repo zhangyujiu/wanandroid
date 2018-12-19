@@ -38,6 +38,9 @@ class _KnowledgePageState extends State<KnowledgePage>
   @override
   Widget build(BuildContext context) {
     return PageWidget(
+      reload: (){
+        getList();
+      },
       controller: _pageStateController,
       child: SmartRefresher(
         controller: _refreshController,

@@ -65,6 +65,9 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       body: PageWidget(
         controller: _pageStateController,
+        reload: (){
+          getList(true);
+        },
         child: SmartRefresher(
             controller: _refreshController,
             enablePullDown: true,
