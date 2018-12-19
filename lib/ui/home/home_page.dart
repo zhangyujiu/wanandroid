@@ -11,6 +11,7 @@ import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/article_widget.dart';
+import 'package:wanandroid/widget/page_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,12 +27,14 @@ class _HomePageState extends State<HomePage>
   int pageIndex = 0;
   List<Article> articles = List();
   RefreshController _refreshController;
+  PageStateController _pageStateController;
 
   @override
   void initState() {
     super.initState();
     _controller.autoplay = true;
     _refreshController = RefreshController();
+    _pageStateController=PageStateController();
     getBanner();
     getList(true);
   }
@@ -60,44 +63,47 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SmartRefresher(
-          controller: _refreshController,
-          enablePullDown: true,
-          enablePullUp: true,
-          onRefresh: _onRefresh,
-          child: ListView.builder(
+      body: PageWidget(
+        controller: _pageStateController,
+        child: SmartRefresher(
+            controller: _refreshController,
+            enablePullDown: true,
+            enablePullUp: true,
+            onRefresh: _onRefresh,
+            child: ListView.builder(
 //              controller: _scrollController,
-              itemCount: articles.length + 1,
-              itemBuilder: (context, index) {
-                return index == 0
-                    ? Container(
-                        margin: EdgeInsets.only(top: 5),
-                        width: MediaQuery.of(context).size.width,
-                        height: 180,
-                        child: banners.length != 0
-                            ? Swiper(
-                                autoplayDelay: 5000,
-                                controller: _controller,
-                                itemWidth: MediaQuery.of(context).size.width,
-                                itemHeight: 180,
-                                pagination: pagination(),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return new Image.network(
-                                    banners[index].imagePath,
-                                    fit: BoxFit.fill,
-                                  );
-                                },
-                                itemCount: banners.length,
-                                viewportFraction: 0.8,
-                                scale: 0.9,
-                              )
-                            : SizedBox(
-                                width: 0,
-                                height: 0,
-                              ),
-                      )
-                    : ArticleWidget(articles[index - 1]);
-              })),
+                itemCount: articles.length + 1,
+                itemBuilder: (context, index) {
+                  return index == 0
+                      ? Container(
+                    margin: EdgeInsets.only(top: 5),
+                    width: MediaQuery.of(context).size.width,
+                    height: 180,
+                    child: banners.length != 0
+                        ? Swiper(
+                      autoplayDelay: 5000,
+                      controller: _controller,
+                      itemWidth: MediaQuery.of(context).size.width,
+                      itemHeight: 180,
+                      pagination: pagination(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return new Image.network(
+                          banners[index].imagePath,
+                          fit: BoxFit.fill,
+                        );
+                      },
+                      itemCount: banners.length,
+                      viewportFraction: 0.8,
+                      scale: 0.9,
+                    )
+                        : SizedBox(
+                      width: 0,
+                      height: 0,
+                    ),
+                  )
+                      : ArticleWidget(articles[index - 1]);
+                })),
+      ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColor.withAlpha(180),
           child: Icon(Icons.arrow_upward),
@@ -143,6 +149,7 @@ class _HomePageState extends State<HomePage>
   void getList(bool isRefresh) {
     DioManager.singleton.get("article/list/${pageIndex}/json").then((result) {
       _refreshController.sendBack(isRefresh, RefreshStatus.idle);
+      _pageStateController.isLoadingSuccess=true;
       if (result != null) {
         BaseListData listdata = BaseListData.fromJson(result.data);
         if (pageIndex == 0) {

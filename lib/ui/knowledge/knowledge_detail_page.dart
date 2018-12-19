@@ -6,6 +6,7 @@ import 'package:wanandroid/model/knowledge_system.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/widget/article_widget.dart';
+import 'package:wanandroid/widget/page_widget.dart';
 import 'package:wanandroid/widget/titlebar.dart';
 
 class knowledgeDetailPage extends StatefulWidget {
@@ -96,11 +97,13 @@ class _knowledgeArticlePageState extends State<knowledgeArticlePage>
   int pageIndex = 0;
   List<Article> articles = List();
   RefreshController _refreshController;
+  PageStateController _pageStateController;
 
   @override
   void initState() {
     super.initState();
     _refreshController = RefreshController();
+    _pageStateController = PageStateController();
     getList(true);
   }
 
@@ -119,6 +122,7 @@ class _knowledgeArticlePageState extends State<knowledgeArticlePage>
         .get("article/list/${pageIndex}/json?cid=${widget.cid}")
         .then((result) {
       _refreshController.sendBack(isRefresh, RefreshStatus.idle);
+      _pageStateController.isLoadingSuccess = true;
       if (result != null) {
         var listdata = BaseListData.fromJson(result.data);
         print(listdata.toString());
@@ -137,16 +141,19 @@ class _knowledgeArticlePageState extends State<knowledgeArticlePage>
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresher(
-        controller: _refreshController,
-        enablePullDown: true,
-        enablePullUp: true,
-        onRefresh: _onRefresh,
-        child: ListView.builder(
-            itemCount: articles.length,
-            itemBuilder: (context, index) {
-              return ArticleWidget(articles[index]);
-            }));
+    return PageWidget(
+      controller: _pageStateController,
+      child: SmartRefresher(
+          controller: _refreshController,
+          enablePullDown: true,
+          enablePullUp: true,
+          onRefresh: _onRefresh,
+          child: ListView.builder(
+              itemCount: articles.length,
+              itemBuilder: (context, index) {
+                return ArticleWidget(articles[index]);
+              })),
+    );
   }
 
   @override

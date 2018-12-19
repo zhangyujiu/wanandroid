@@ -84,7 +84,7 @@ class _TitleBarState extends State<TitleBar> {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 40)),
+              padding: EdgeInsets.symmetric(horizontal: 45)),
           Positioned(
             right: 0,
             height: 56,
