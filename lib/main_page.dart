@@ -12,6 +12,7 @@ import 'package:wanandroid/ui/knowledge/knowledge_page.dart';
 import 'package:wanandroid/ui/login_page.dart';
 import 'package:wanandroid/ui/navigation/navigation_page.dart';
 import 'package:wanandroid/ui/project/project_page.dart';
+import 'package:wanandroid/ui/webview_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/const.dart';
@@ -172,7 +173,14 @@ class _MainPageState extends State<MainPage> {
           height: 5,
         ),
         _menuItem("收藏", Icons.collections, () {}),
-        _menuItem("关于我们", Icons.people, () {}),
+        _menuItem("关于我们", Icons.people, () {
+          CommonUtils.push(
+              context,
+              WebViewPage(
+                title: "关于我们",
+                url: "http://www.wanandroid.com/about",
+              ));
+        }),
         StoreBuilder<MainRedux>(
           builder: (context, store) {
             _store = store;
