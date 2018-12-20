@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroid/utils/textsize.dart';
+import 'package:wanandroid/widget/load_fail_widget.dart';
 
 typedef ReloadData = Function();
 
@@ -52,39 +53,15 @@ class _PageWidgetState extends State<PageWidget> {
       index: index,
       children: <Widget>[
         widget.child,
-        _loadFailWidget(),
+        LoadFailWidget(onTap: (){
+          widget.controller.changeState(PageState.Loading);
+          widget.reload();
+        },),
+//        _loadFailWidget(),
         Center(
           child: CircularProgressIndicator(),
         )
       ],
-    );
-  }
-
-  //加载失败Widget
-  Widget _loadFailWidget() {
-    return GestureDetector(
-      onTap: () {
-        widget.controller.changeState(PageState.Loading);
-        widget.reload();
-      },
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ImageIcon(
-              AssetImage("assets/load_fail.png"),
-              size: 50,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "加载失败",
-                style: TextStyle(fontSize: TextSizeConst.middleTextSize),
-              ),
-            )
-          ],
-        ),
-      ),
     );
   }
 
