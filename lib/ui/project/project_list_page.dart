@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wanandroid/model/base_list_data.dart';
@@ -20,7 +21,7 @@ class ProjectListPage extends StatefulWidget {
   }
 }
 
-class _ProjectListPageState extends State<ProjectListPage> {
+class _ProjectListPageState extends State<ProjectListPage> with AutomaticKeepAliveClientMixin{
   int pageIndex = 1;
   RefreshController _refreshController;
   PageStateController _pageStateController;
@@ -102,11 +103,13 @@ class _ProjectListPageState extends State<ProjectListPage> {
           padding: EdgeInsets.all(10),
           child: Row(
             children: <Widget>[
-              Image.network(
-                project.envelopePic,
+              CachedNetworkImage(
+                fit: BoxFit.fill,
                 width: 100,
                 height: 200,
-                fit: BoxFit.fill,
+                imageUrl: project.envelopePic,
+                placeholder: Icon(Icons.info_outline,color:ColorConst.color_999,size: 100,),
+                errorWidget: Icon(Icons.info_outline),
               ),
               Expanded(
                   flex: 1,
@@ -181,4 +184,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -19,6 +19,7 @@ import 'package:wanandroid/utils/eventbus.dart';
 import 'package:wanandroid/utils/sp.dart';
 import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/titlebar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -154,19 +155,17 @@ class _MainPageState extends State<MainPage> {
   Widget _drawerChild() {
     return Column(
       children: <Widget>[
-        Container(
+        CachedNetworkImage(
+          fit: BoxFit.fill,
           width: double.infinity,
           height: 200,
-          child: Column(
-            children: <Widget>[],
+          imageUrl: "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png",
+          placeholder: Icon(
+            Icons.info_outline,
+            color: ColorConst.color_999,
+            size: 100,
           ),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(
-                    "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png"),
-                fit: BoxFit.fill),
-          ),
-          padding: EdgeInsets.fromLTRB(15, 25, 15, 10),
+          errorWidget: Icon(Icons.info_outline),
         ),
         SizedBox(
           width: 0,

@@ -28,26 +28,6 @@ class _ProjectPageState extends State<ProjectPage>
     super.initState();
   }
 
-  /**
-      Column(
-      children: <Widget>[
-      TabBar(
-      indicatorColor: ColorConst.color_primary,
-      controller: _controller,
-      isScrollable: true,
-      tabs: _parseTabs(),
-      ),
-      /*Expanded(
-      flex: 1,
-      child: TabBarView(
-      controller: _controller,
-      children: _parsePages(),
-      ),
-      )*/
-      ],
-      )
-   */
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(builder: _buildFuture, future: getSorts());
