@@ -120,7 +120,7 @@ class _ProjectPageState extends State<ProjectPage>
   _parsePages() {
     List<ProjectListPage> pages = List();
     for (ProjectSort item in sorts) {
-      var page = ProjectListPage(cid: item.courseId);
+      var page = ProjectListPage(cid: item.id);
       pages.add(page);
     }
     return pages;
