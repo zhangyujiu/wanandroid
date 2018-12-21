@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:wanandroid/utils/color.dart';
+import 'package:wanandroid/utils/const.dart';
+import 'package:wanandroid/utils/sp.dart';
 import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/expand_button.dart';
 
@@ -134,5 +136,11 @@ class CommonUtils {
 
   static void pushIOS(BuildContext context, Widget widget) {
     Navigator.push(context, CupertinoPageRoute(builder: (context) => widget));
+  }
+
+  //判断是否登录
+  static Future<bool> isLogin() async {
+    var id = await SpManager.singleton.getInt(Const.ID);
+    return id != null && id > 0;
   }
 }

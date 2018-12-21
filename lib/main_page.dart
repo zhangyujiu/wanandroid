@@ -173,7 +173,14 @@ class _MainPageState extends State<MainPage> {
           height: 5,
         ),
         _menuItem("收藏", Icons.collections, () {
-          CommonUtils.push(context, CollectionPage());
+          CommonUtils.isLogin().then((isLogin) {
+            if (isLogin) {
+              CommonUtils.push(context, CollectionPage());
+            }else{
+              Fluttertoast.showToast(msg: "请先登录!");
+              CommonUtils.pushIOS(context, LoginPage());
+            }
+          });
         }),
         _menuItem("关于我们", Icons.people, () {
           CommonUtils.push(
