@@ -108,7 +108,7 @@ class _ProjectListPageState extends State<ProjectListPage> with AutomaticKeepAli
                 width: 100,
                 height: 200,
                 imageUrl: project.envelopePic,
-                placeholder: Icon(Icons.info_outline,color:ColorConst.color_999,size: 100,),
+                placeholder: ImageIcon(AssetImage("assets/logo.png"),size: 100,),
                 errorWidget: Icon(Icons.info_outline),
               ),
               Expanded(

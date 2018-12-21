@@ -20,9 +20,11 @@ class Tag {
   };
   static List<Tag> parseTags(List<dynamic> ts) {
     List<Tag> tags = List();
-    for (var t in ts) {
-      Tag tag = Tag(name: t["name"], url: t["url"]);
-      tags.add(tag);
+    if(ts!=null){
+      for (var t in ts) {
+        Tag tag = Tag(name: t["name"], url: t["url"]);
+        tags.add(tag);
+      }
     }
     return tags;
   }

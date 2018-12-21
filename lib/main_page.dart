@@ -7,6 +7,7 @@ import 'package:wanandroid/event/error_event.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
+import 'package:wanandroid/ui/home/collection_page.dart';
 import 'package:wanandroid/ui/home/home_page.dart';
 import 'package:wanandroid/ui/knowledge/knowledge_page.dart';
 import 'package:wanandroid/ui/login_page.dart';
@@ -161,9 +162,8 @@ class _MainPageState extends State<MainPage> {
           width: double.infinity,
           height: 200,
           imageUrl: "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png",
-          placeholder: Icon(
-            Icons.info_outline,
-            color: ColorConst.color_999,
+          placeholder: ImageIcon(
+            AssetImage("assets/logo.png"),
             size: 100,
           ),
           errorWidget: Icon(Icons.info_outline),
@@ -172,7 +172,9 @@ class _MainPageState extends State<MainPage> {
           width: 0,
           height: 5,
         ),
-        _menuItem("收藏", Icons.collections, () {}),
+        _menuItem("收藏", Icons.collections, () {
+          CommonUtils.push(context, CollectionPage());
+        }),
         _menuItem("关于我们", Icons.people, () {
           CommonUtils.push(
               context,
@@ -192,7 +194,12 @@ class _MainPageState extends State<MainPage> {
                 child: RaisedButton(
                   color: Colors.lightBlueAccent,
                   onPressed: () {
-                    _logout(context);
+                    CommonUtils.showCommitOptionDialog(
+                        context, "提示", "您确定要退出登录吗？", ["确定", "取消"], (index) {
+                      if (index == 0) {
+                        _logout(context);
+                      }
+                    }, bgColorList: [Colors.black26, ColorConst.color_primary]);
                   },
                   child: Text('退出登录', style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(

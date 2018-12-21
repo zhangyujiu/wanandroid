@@ -7,18 +7,18 @@ import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
 
 //文章item
-class ArticleWidget extends StatefulWidget {
+class CollectionArticleWidget extends StatefulWidget {
   Article article;
 
-  ArticleWidget(this.article);
+  CollectionArticleWidget(this.article);
 
   @override
   State<StatefulWidget> createState() {
-    return _ArticleWidgetState();
+    return _CollectionArticleWidgetState();
   }
 }
 
-class _ArticleWidgetState extends State<ArticleWidget> {
+class _CollectionArticleWidgetState extends State<CollectionArticleWidget> {
   Article article;
 
   @override
@@ -58,23 +58,12 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                               fontSize: TextSizeConst.smallTextSize),
                         ),
                       )),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "${article.chapterName}/${article.superChapterName}",
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: TextStyle(
-                          color: ColorConst.color_primary,
-                          fontSize: TextSizeConst.smallTextSize),
-                    ),
-                  )
                 ],
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: Text(
                     "${article.title}",
                     style: TextStyle(
@@ -85,25 +74,6 @@ class _ArticleWidgetState extends State<ArticleWidget> {
               ),
               Row(
                 children: <Widget>[
-                  !article.collect
-                      ? IconButton(
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(
-                            Icons.favorite_border,
-                            color: Colors.black45,
-                          ),
-                          onPressed: () => _collect(),
-                        )
-                      : IconButton(
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.all(0),
-                          icon: Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          ),
-                          onPressed: () => _collect(),
-                        ),
                   Icon(
                     Icons.access_time,
                     color: Colors.black45,
@@ -119,13 +89,6 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                               fontSize: TextSizeConst.smallTextSize),
                         ),
                       )),
-                  Offstage(
-                    offstage: !article.fresh ?? true,
-                    child: Icon(
-                      Icons.fiber_new,
-                      color: ColorConst.color_primary,
-                    ),
-                  )
                 ],
               ),
             ],
