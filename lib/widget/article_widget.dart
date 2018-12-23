@@ -120,7 +120,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                         ),
                       )),
                   Offstage(
-                    offstage: !article.fresh,
+                    offstage: !article.fresh ?? true,
                     child: Icon(
                       Icons.fiber_new,
                       color: ColorConst.color_primary,

@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:wanandroid/utils/color.dart';
+import 'package:wanandroid/utils/const.dart';
+import 'package:wanandroid/utils/sp.dart';
+import 'package:wanandroid/utils/textsize.dart';
+import 'package:wanandroid/widget/expand_button.dart';
 
 class CommonUtils {
+  //加载弹窗
   static Future showLoadingDialog(BuildContext context) {
     return showDialog(
         context: context,
@@ -42,13 +48,99 @@ class CommonUtils {
               ));
         });
   }
-  static void push(BuildContext context,Widget widget){
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => widget));
+
+  //普通弹窗
+  static Future<Null> showCommitOptionDialog(
+    BuildContext context,
+    String title,
+    String content,
+    List<String> commitMaps,
+    ValueChanged<int> onTap, {
+    width = 0,
+    height = 200.0,
+    List<Color> bgColorList,
+    List<Color> colorList,
+  }) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Material(
+            color: Colors.transparent,
+            child: Center(
+              child: Container(
+                width: width == 0
+                    ? MediaQuery.of(context).size.width * 3 / 4
+                    : width,
+                height: height,
+                margin: EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  color: ColorConst.color_white,
+                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        title ?? "",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: ColorConst.color_333,
+                            fontSize: TextSizeConst.normalTextSize),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                          child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(content,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: ColorConst.color_555,
+                                fontSize: TextSizeConst.smallTextSize)),
+                      )),
+                    ),
+                    Row(
+                      children: commitMaps.map((str) {
+                        var index = commitMaps.indexOf(str);
+                        return ExpandButton(
+                          maxLines: 1,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          fontSize: 14.0,
+                          color: bgColorList.length > 0
+                              ? bgColorList[index]
+                              : Theme.of(context).primaryColor,
+                          text: str,
+                          textColor: colorList != null
+                              ? colorList[index]
+                              : ColorConst.color_white,
+                          onPress: () {
+                            Navigator.pop(context);
+                            onTap(index);
+                          },
+                        );
+                      }).toList(),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
-  static void pushIOS(BuildContext context,Widget widget){
-    Navigator.push(
-        context, CupertinoPageRoute(builder: (context) => widget));
+  static void push(BuildContext context, Widget widget) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
+  }
+
+  static void pushIOS(BuildContext context, Widget widget) {
+    Navigator.push(context, CupertinoPageRoute(builder: (context) => widget));
+  }
+
+  //判断是否登录
+  static Future<bool> isLogin() async {
+    var id = await SpManager.singleton.getInt(Const.ID);
+    return id != null && id > 0;
   }
 }

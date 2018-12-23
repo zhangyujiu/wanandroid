@@ -1,16 +1,22 @@
 # wanandroid
 
-A new Flutter application.
+使用flutter实现的跨平台项目
 
-## Getting Started
+## 项目主要页面截图
 
-This project is a starting point for a Flutter application.
+<div align="center">
+<img src="https://github.com/zhangyujiu/wanandroid/blob/master/Screenshot_1545373520.png" height="330" width="190" >
 
-A few resources to get you started if this is your first Flutter project:
+<img src="https://github.com/zhangyujiu/wanandroid/blob/master/Screenshot_1545373559.png" height="330" width="190" >
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+<img src="https://github.com/zhangyujiu/wanandroid/blob/master/Screenshot_1545373569.png" height="330" width="190" >
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+<img src="https://github.com/zhangyujiu/wanandroid/blob/master/Screenshot_1545373583.png" height="330" width="190" >
+
+<img src="https://github.com/zhangyujiu/wanandroid/blob/master/Screenshot_1545373624.png" height="330" width="190" >
+
+<img src="https://github.com/zhangyujiu/wanandroid/blob/master/Screenshot_1545373632.png" height="330" width="190" >
+
+<img src="https://github.com/zhangyujiu/wanandroid/blob/master/Screenshot_1545373593.png" height="330" width="190" >
+
+</div>

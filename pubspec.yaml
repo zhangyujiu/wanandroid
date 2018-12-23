@@ -25,7 +25,7 @@ dependencies:
   path_provider: ^0.4.0
   redux: ^3.0.0
   flutter_redux: ^0.5.2 # 数据传递
-  scoped_model: ^1.0.1  # 数据传递
+  #scoped_model: ^1.0.1  # 数据传递
   fluttertoast: 2.1.2
   #permission_handler: ^2.1.2
   flutter_swiper: ^1.1.4
@@ -34,6 +34,7 @@ dependencies:
   pull_to_refresh: ^1.1.6
   flutter_spinkit: ^2.0.1
   flutter_webview_plugin: ^0.3.0+2
+  cached_network_image: ^0.5.1
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +56,8 @@ flutter:
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
+  assets:
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

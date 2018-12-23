@@ -6,6 +6,7 @@ import 'package:wanandroid/ui/knowledge/knowledge_detail_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
+import 'package:wanandroid/widget/page_widget.dart';
 
 class KnowledgePage extends StatefulWidget {
   @override
@@ -18,11 +19,13 @@ class _KnowledgePageState extends State<KnowledgePage>
     with AutomaticKeepAliveClientMixin {
   RefreshController _refreshController;
   List datas = List<KnowledgeSystem>();
+  PageStateController _pageStateController;
 
   @override
   void initState() {
     super.initState();
     _refreshController = RefreshController();
+    _pageStateController=PageStateController();
     getList();
   }
 
@@ -34,17 +37,23 @@ class _KnowledgePageState extends State<KnowledgePage>
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresher(
-      controller: _refreshController,
-      enablePullDown: true,
-      enablePullUp: false,
-      onRefresh: _onRefresh,
-      child: ListView.builder(
-          itemCount: datas.length,
-          itemBuilder: (context, index) {
-            var data = datas[index];
-            return _buildItem(data);
-          }),
+    return PageWidget(
+      reload: (){
+        getList();
+      },
+      controller: _pageStateController,
+      child: SmartRefresher(
+        controller: _refreshController,
+        enablePullDown: true,
+        enablePullUp: false,
+        onRefresh: _onRefresh,
+        child: ListView.builder(
+            itemCount: datas.length,
+            itemBuilder: (context, index) {
+              var data = datas[index];
+              return _buildItem(data);
+            }),
+      ),
     );
   }
 
@@ -52,12 +61,15 @@ class _KnowledgePageState extends State<KnowledgePage>
     DioManager.singleton.get("tree/json").then((result) {
       _refreshController.sendBack(true, RefreshStatus.idle);
       if (result != null) {
+        _pageStateController.changeState(PageState.LoadSuccess);
         setState(() {
           datas.clear();
           List<KnowledgeSystem> knowledges =
               KnowledgeSystem.parseList(result.data);
           datas.addAll(knowledges);
         });
+      }else{
+        _pageStateController.changeState(PageState.LoadFail);
       }
     });
   }

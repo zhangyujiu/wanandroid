@@ -7,11 +7,13 @@ import 'package:wanandroid/event/error_event.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
+import 'package:wanandroid/ui/home/collection_page.dart';
 import 'package:wanandroid/ui/home/home_page.dart';
 import 'package:wanandroid/ui/knowledge/knowledge_page.dart';
 import 'package:wanandroid/ui/login_page.dart';
 import 'package:wanandroid/ui/navigation/navigation_page.dart';
 import 'package:wanandroid/ui/project/project_page.dart';
+import 'package:wanandroid/ui/webview_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/const.dart';
@@ -19,6 +21,7 @@ import 'package:wanandroid/utils/eventbus.dart';
 import 'package:wanandroid/utils/sp.dart';
 import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/titlebar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -154,26 +157,39 @@ class _MainPageState extends State<MainPage> {
   Widget _drawerChild() {
     return Column(
       children: <Widget>[
-        Container(
+        CachedNetworkImage(
+          fit: BoxFit.fill,
           width: double.infinity,
           height: 200,
-          child: Column(
-            children: <Widget>[],
+          imageUrl: "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png",
+          placeholder: ImageIcon(
+            AssetImage("assets/logo.png"),
+            size: 100,
           ),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(
-                    "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png"),
-                fit: BoxFit.fill),
-          ),
-          padding: EdgeInsets.fromLTRB(15, 25, 15, 10),
+          errorWidget: Icon(Icons.info_outline),
         ),
         SizedBox(
           width: 0,
           height: 5,
         ),
-        _menuItem("收藏", Icons.collections, () {}),
-        _menuItem("关于我们", Icons.people, () {}),
+        _menuItem("收藏", Icons.collections, () {
+          CommonUtils.isLogin().then((isLogin) {
+            if (isLogin) {
+              CommonUtils.push(context, CollectionPage());
+            }else{
+              Fluttertoast.showToast(msg: "请先登录!");
+              CommonUtils.pushIOS(context, LoginPage());
+            }
+          });
+        }),
+        _menuItem("关于我们", Icons.people, () {
+          CommonUtils.push(
+              context,
+              WebViewPage(
+                title: "关于我们",
+                url: "http://www.wanandroid.com/about",
+              ));
+        }),
         StoreBuilder<MainRedux>(
           builder: (context, store) {
             _store = store;
@@ -185,7 +201,12 @@ class _MainPageState extends State<MainPage> {
                 child: RaisedButton(
                   color: Colors.lightBlueAccent,
                   onPressed: () {
-                    _logout(context);
+                    CommonUtils.showCommitOptionDialog(
+                        context, "提示", "您确定要退出登录吗？", ["确定", "取消"], (index) {
+                      if (index == 0) {
+                        _logout(context);
+                      }
+                    }, bgColorList: [Colors.black26, ColorConst.color_primary]);
                   },
                   child: Text('退出登录', style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(

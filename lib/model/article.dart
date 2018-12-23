@@ -1,3 +1,5 @@
+import 'package:wanandroid/model/tag.dart';
+
 class Article {
   String apkLink;
   String author;
@@ -74,18 +76,11 @@ class Article {
       visible: json['visible'],
       zan: json['zan'],
     );
-    article.tags = _parseTags(json['tags']);
+    article.tags = Tag.parseTags(json['tags']);
     return article;
   }
 
-  static List<Tag> _parseTags(List<dynamic> ts) {
-    List<Tag> tags = List();
-    for (var t in ts) {
-      Tag tag = Tag(name: t["name"], url: t["url"]);
-      tags.add(tag);
-    }
-    return tags;
-  }
+
   static List<Article> parseList(List<dynamic> list){
     List<Article> articles = List();
     for (var a in list) {
@@ -122,24 +117,4 @@ class Article {
       };
 }
 
-class Tag {
-  String name;
-  String url;
 
-  Tag({
-    this.name,
-    this.url,
-  });
-
-  static Tag fromJson(Map<String, dynamic> json) {
-    return Tag(
-      name: json['name'],
-      url: json['url'],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'url': url,
-      };
-}
