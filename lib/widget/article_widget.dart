@@ -5,6 +5,7 @@ import 'package:wanandroid/ui/webview_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 //文章item
 class ArticleWidget extends StatefulWidget {
@@ -26,10 +27,18 @@ class _ArticleWidgetState extends State<ArticleWidget> {
     article = widget.article;
     return GestureDetector(
       onTap: () {
+        String title = "";
+        if (!isHighLight(article.title)) {
+          title = article.title;
+        } else {
+          title = article.title
+              .replaceAll("<em class='highlight'>", "")
+              .replaceAll("</em>", "");
+        }
         CommonUtils.push(
             context,
             WebViewPage(
-              title: article.title,
+              title: title,
               url: article.link,
             ));
       },
@@ -75,12 +84,16 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Text(
-                    "${article.title}",
-                    style: TextStyle(
-                        color: ColorConst.color_333,
-                        fontSize: TextSizeConst.middleTextSize),
-                  ),
+                  child: !isHighLight(article.title)
+                      ? Text(
+                          "${article.title}",
+                          style: TextStyle(
+                              color: ColorConst.color_333,
+                              fontSize: TextSizeConst.middleTextSize),
+                        )
+                      : Html(
+                          data: article.title,
+                        ),
                 ),
               ),
               Row(
@@ -133,6 +146,12 @@ class _ArticleWidgetState extends State<ArticleWidget> {
         ),
       ),
     );
+  }
+
+  //判断title是否有文字需要加斜体
+  bool isHighLight(String title) {
+    RegExp exp = new RegExp(r"<em class='highlight'>([\s\S]*?)</em>");
+    return exp.hasMatch(title);
   }
 
   //收藏/取消收藏

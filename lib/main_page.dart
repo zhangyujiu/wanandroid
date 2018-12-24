@@ -9,6 +9,7 @@ import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
 import 'package:wanandroid/ui/home/collection_page.dart';
 import 'package:wanandroid/ui/home/home_page.dart';
+import 'package:wanandroid/ui/home/search_page.dart';
 import 'package:wanandroid/ui/knowledge/knowledge_page.dart';
 import 'package:wanandroid/ui/login_page.dart';
 import 'package:wanandroid/ui/navigation/navigation_page.dart';
@@ -96,10 +97,7 @@ class _MainPageState extends State<MainPage> {
                   icon: Icons.search,
                   color: ColorConst.color_white,
                   press: () {
-                    CommonUtils.showLoadingDialog(context);
-                    Future.delayed(Duration(seconds: 3)).then((_) {
-                      Navigator.pop(context);
-                    });
+                    CommonUtils.push(context, SearchPage());
                   })
             ],
           ),
