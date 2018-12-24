@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:wanandroid/db/db.dart';
 import 'package:wanandroid/model/hotword.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/ui/home/search_result_page.dart';
@@ -18,12 +19,19 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   TextEditingController _controller;
   List<HotWord> hotwords = List();
+  List<Map> historys = List();
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
     getHotWord();
+    DbManager.singleton.getHistory().then((list) {
+      setState(() {
+        historys.clear();
+        historys.addAll(list);
+      });
+    });
   }
 
   @override
@@ -33,30 +41,39 @@ class _SearchPageState extends State<SearchPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _title(context),
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      "搜索热词",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(color: ColorConst.color_333),
-                    ),
-                  ),
-                  hotwords.length > 0
-                      ? Wrap(
-                          spacing: 5,
-                          runSpacing: 5,
-                          children: _buildWrapItem(),
-                        )
-                      : SizedBox(),
-                ],
-              ),
-            ),
+          Expanded(
+            flex: 1,
+            child: ListView.builder(
+                itemCount: historys.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              "搜索热词",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(color: ColorConst.color_333),
+                            ),
+                          ),
+                          hotwords.length > 0
+                              ? Wrap(
+                                  spacing: 5,
+                                  runSpacing: 5,
+                                  children: _buildWrapItem(),
+                                )
+                              : SizedBox(),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return _buildHistoryItem(historys[index-1]);
+                  }
+                }),
           )
         ],
       ),
@@ -117,11 +134,15 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
-                  onPressed: () {
+                  onPressed: () async {
                     var key = _controller.text.toString();
                     if (key.isEmpty) {
                       Fluttertoast.showToast(msg: "关键字不能为空");
                       return;
+                    }
+                    var b = await DbManager.singleton.hasSameData(key);
+                    if (!b) {
+                      DbManager.singleton.save(key);
                     }
                     CommonUtils.push(context, SearchResultPage(key));
                   },
@@ -150,7 +171,11 @@ class _SearchPageState extends State<SearchPage> {
     List<Widget> items = List();
     for (var hotWord in hotwords) {
       Widget item = InkWell(
-        onTap: () {
+        onTap: () async {
+          var b = await DbManager.singleton.hasSameData(hotWord.name);
+          if (!b) {
+            DbManager.singleton.save(hotWord.name);
+          }
           CommonUtils.push(context, SearchResultPage(hotWord.name));
         },
         child: Container(
@@ -171,5 +196,47 @@ class _SearchPageState extends State<SearchPage> {
       items.add(item);
     }
     return items;
+  }
+
+  Widget _buildHistoryItem(Map history) {
+    var name = history["name"];
+    return InkWell(
+      onTap: ()async{
+        var b = await DbManager.singleton.hasSameData(name);
+        if (!b) {
+          DbManager.singleton.save(name);
+        }
+        CommonUtils.push(context, SearchResultPage(name));
+      },
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          children: <Widget>[
+            Icon(
+              Icons.android,
+              color: ColorConst.color_primary,
+            ),
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  name,
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  _goToSearchResultPage(String name)async{
+    var b = await DbManager.singleton.hasSameData(name);
+    if (!b) {
+      DbManager.singleton.save(name);
+    }
+    CommonUtils.push(context, SearchResultPage(name));
   }
 }
