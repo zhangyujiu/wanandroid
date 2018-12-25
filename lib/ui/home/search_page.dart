@@ -25,7 +25,11 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    getHistory();
     getHotWord();
+  }
+
+  void getHistory() {
     DbManager.singleton.getHistory().then((list) {
       setState(() {
         historys.clear();
@@ -71,7 +75,7 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     );
                   } else {
-                    return _buildHistoryItem(historys[index-1]);
+                    return _buildHistoryItem(historys[index - 1]);
                   }
                 }),
           )
@@ -96,7 +100,7 @@ class _SearchPageState extends State<SearchPage> {
             Expanded(
               flex: 1,
               child: Container(
-                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(5.0)),
@@ -111,10 +115,10 @@ class _SearchPageState extends State<SearchPage> {
                       keyboardType: TextInputType.text,
                       autofocus: false,
                       obscureText: false,
-                      style: TextStyle(fontSize: TextSizeConst.smallTextSize),
+                      style: TextStyle(fontSize: TextSizeConst.smallTextSize,color: ColorConst.color_333),
                       decoration: InputDecoration(
                           hintText: '请输入关键词',
-                          contentPadding: EdgeInsets.all(4.0),
+                          contentPadding: EdgeInsets.all(6.0),
                           border: InputBorder.none)),
                 ),
               ),
@@ -134,17 +138,14 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
-                  onPressed: () async {
+                  onPressed: () {
                     var key = _controller.text.toString();
                     if (key.isEmpty) {
                       Fluttertoast.showToast(msg: "关键字不能为空");
                       return;
                     }
-                    var b = await DbManager.singleton.hasSameData(key);
-                    if (!b) {
-                      DbManager.singleton.save(key);
-                    }
-                    CommonUtils.push(context, SearchResultPage(key));
+                    _goToSearchResultPage(key);
+                    _controller.text = "";
                   },
                 ),
               ),
@@ -171,12 +172,8 @@ class _SearchPageState extends State<SearchPage> {
     List<Widget> items = List();
     for (var hotWord in hotwords) {
       Widget item = InkWell(
-        onTap: () async {
-          var b = await DbManager.singleton.hasSameData(hotWord.name);
-          if (!b) {
-            DbManager.singleton.save(hotWord.name);
-          }
-          CommonUtils.push(context, SearchResultPage(hotWord.name));
+        onTap: () {
+          _goToSearchResultPage(hotWord.name);
         },
         child: Container(
           constraints: BoxConstraints(minHeight: 30),
@@ -201,12 +198,8 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildHistoryItem(Map history) {
     var name = history["name"];
     return InkWell(
-      onTap: ()async{
-        var b = await DbManager.singleton.hasSameData(name);
-        if (!b) {
-          DbManager.singleton.save(name);
-        }
-        CommonUtils.push(context, SearchResultPage(name));
+      onTap: () {
+        _goToSearchResultPage(name);
       },
       child: Padding(
         padding: EdgeInsets.all(10),
@@ -232,11 +225,13 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  _goToSearchResultPage(String name)async{
+  _goToSearchResultPage(String name) async {
     var b = await DbManager.singleton.hasSameData(name);
     if (!b) {
       DbManager.singleton.save(name);
     }
-    CommonUtils.push(context, SearchResultPage(name));
+    CommonUtils.push(context, SearchResultPage(name)).then((_){
+      getHistory();
+    });
   }
 }

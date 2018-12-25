@@ -130,12 +130,16 @@ class CommonUtils {
         });
   }
 
-  static void push(BuildContext context, Widget widget) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => widget));
+  static Future push(BuildContext context, Widget widget) {
+    Future result = Navigator.push(
+        context, MaterialPageRoute(builder: (context) => widget));
+    return result;
   }
 
-  static void pushIOS(BuildContext context, Widget widget) {
-    Navigator.push(context, CupertinoPageRoute(builder: (context) => widget));
+  static Future pushIOS(BuildContext context, Widget widget) {
+    Future result = Navigator.push(
+        context, CupertinoPageRoute(builder: (context) => widget));
+    return result;
   }
 
   //判断是否登录
