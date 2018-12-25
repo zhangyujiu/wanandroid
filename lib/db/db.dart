@@ -50,7 +50,7 @@ class DbManager {
   //获取数据
   Future<List<Map>> getHistory() async {
     final db = await _localFile;
-    List<Map> list = await db.rawQuery('SELECT * FROM history');
+    List<Map> list = await db.rawQuery('SELECT * FROM history ORDER BY id DESC');
     return list;
   }
 }

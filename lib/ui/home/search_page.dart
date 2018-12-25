@@ -52,7 +52,7 @@ class _SearchPageState extends State<SearchPage> {
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -71,6 +71,32 @@ class _SearchPageState extends State<SearchPage> {
                                   children: _buildWrapItem(),
                                 )
                               : SizedBox(),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 1,
+                                  child: Text("历史记录",
+                                      style: TextStyle(
+                                          color: ColorConst.color_333)),
+                                ),
+                                InkWell(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Text("清空",
+                                        style: TextStyle(
+                                            color: ColorConst.color_333)),
+                                  ),
+                                  onTap: () {
+                                    DbManager.singleton.clear().then((_){
+                                      getHistory();
+                                    });
+                                  },
+                                )
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     );
@@ -84,74 +110,74 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Padding _title(BuildContext context) {
-    return Padding(
+  Widget _title(BuildContext context) {
+    return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-      child: Container(
-        color: ColorConst.color_white,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            IconButton(
-                icon: Icon(Icons.arrow_back),
+      color: ColorConst.color_white,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5.0)),
+              child: IconTextWidget(
+                icon: Icon(
+                  Icons.search,
+                  size: 20,
+                  color: ColorConst.color_999,
+                ),
+                text: TextField(
+                    controller: _controller,
+                    keyboardType: TextInputType.text,
+                    autofocus: false,
+                    obscureText: false,
+                    style: TextStyle(
+                        fontSize: TextSizeConst.smallTextSize,
+                        color: ColorConst.color_333),
+                    decoration: InputDecoration(
+                        hintText: '请输入关键词',
+                        contentPadding: EdgeInsets.all(6.0),
+                        border: InputBorder.none)),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: SizedBox(
+              width: 60,
+              height: 30,
+              child: RaisedButton(
+                elevation: 0,
+                highlightElevation: 0,
+                color: ColorConst.color_primary,
+                child: Text(
+                  "搜索",
+                  style: TextStyle(color: ColorConst.color_white),
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                }),
-            Expanded(
-              flex: 1,
-              child: Container(
-                padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(5.0)),
-                child: IconTextWidget(
-                  icon: Icon(
-                    Icons.search,
-                    size: 20,
-                    color: ColorConst.color_999,
-                  ),
-                  text: TextField(
-                      controller: _controller,
-                      keyboardType: TextInputType.text,
-                      autofocus: false,
-                      obscureText: false,
-                      style: TextStyle(fontSize: TextSizeConst.smallTextSize,color: ColorConst.color_333),
-                      decoration: InputDecoration(
-                          hintText: '请输入关键词',
-                          contentPadding: EdgeInsets.all(6.0),
-                          border: InputBorder.none)),
-                ),
+                  var key = _controller.text.toString();
+                  if (key.isEmpty) {
+                    Fluttertoast.showToast(msg: "关键字不能为空");
+                    return;
+                  }
+                  _goToSearchResultPage(key);
+                  _controller.text = "";
+                },
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: SizedBox(
-                width: 60,
-                height: 30,
-                child: RaisedButton(
-                  elevation: 0,
-                  highlightElevation: 0,
-                  color: ColorConst.color_primary,
-                  child: Text(
-                    "搜索",
-                    style: TextStyle(color: ColorConst.color_white),
-                  ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  onPressed: () {
-                    var key = _controller.text.toString();
-                    if (key.isEmpty) {
-                      Fluttertoast.showToast(msg: "关键字不能为空");
-                      return;
-                    }
-                    _goToSearchResultPage(key);
-                    _controller.text = "";
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -230,7 +256,7 @@ class _SearchPageState extends State<SearchPage> {
     if (!b) {
       DbManager.singleton.save(name);
     }
-    CommonUtils.push(context, SearchResultPage(name)).then((_){
+    CommonUtils.push(context, SearchResultPage(name)).then((_) {
       getHistory();
     });
   }
