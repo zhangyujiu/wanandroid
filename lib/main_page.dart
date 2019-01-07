@@ -155,16 +155,19 @@ class _MainPageState extends State<MainPage> {
   Widget _drawerChild() {
     return Column(
       children: <Widget>[
-        CachedNetworkImage(
-          fit: BoxFit.fill,
-          width: double.infinity,
-          height: 200,
-          imageUrl: "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png",
-          placeholder: ImageIcon(
-            AssetImage("assets/logo.png"),
-            size: 100,
+        ClipPath(
+          clipper: ArcClipper(),
+          child: CachedNetworkImage(
+            fit: BoxFit.fill,
+            width: double.infinity,
+            height: 200,
+            imageUrl: "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png",
+            placeholder: ImageIcon(
+              AssetImage("assets/logo.png"),
+              size: 100,
+            ),
+            errorWidget: Icon(Icons.info_outline),
           ),
-          errorWidget: Icon(Icons.info_outline),
         ),
         SizedBox(
           width: 0,
@@ -174,7 +177,7 @@ class _MainPageState extends State<MainPage> {
           CommonUtils.isLogin().then((isLogin) {
             if (isLogin) {
               CommonUtils.push(context, CollectionPage());
-            }else{
+            } else {
               Fluttertoast.showToast(msg: "请先登录!");
               CommonUtils.pushIOS(context, LoginPage());
             }
@@ -254,5 +257,27 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
     );
+  }
+}
+
+//CustomClipper 裁切路径
+class ArcClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0, 0);
+    path.lineTo(0, size.height - 30);
+    var firstControlPoint = Offset(size.width / 2, size.height);
+    var firstEndPoint = Offset(size.width, size.height - 30);
+    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+        firstEndPoint.dx, firstEndPoint.dy);
+    path.lineTo(size.width, size.height - 30);
+    path.lineTo(size.width, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }
