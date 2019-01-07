@@ -93,7 +93,7 @@ class _MainPageState extends State<MainPage> {
             }),
             title: appBarTitles[_tabIndex],
             rightButtons: <Widget>[
-              TitleBar.iconButton(
+               TitleBar.iconButton(
                   icon: Icons.search,
                   color: ColorConst.color_white,
                   press: () {

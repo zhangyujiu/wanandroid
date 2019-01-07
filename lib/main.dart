@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return StoreProvider<MainRedux>(
       store: store,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: '玩Android',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           primaryColor: Color(ColorConst.primaryColor),

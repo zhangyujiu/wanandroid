@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/load_fail_widget.dart';
 
 typedef ReloadData = Function();
@@ -9,8 +8,9 @@ class PageWidget extends StatefulWidget {
   Widget child;
   PageStateController controller;
   ReloadData reload;
+  int index = 2;
 
-  PageWidget({this.child, controller, this.reload})
+  PageWidget({this.child, controller, this.reload, this.index = 2})
       : controller = controller != null ? controller : PageStateController();
 
   @override
@@ -20,12 +20,13 @@ class PageWidget extends StatefulWidget {
 }
 
 class _PageWidgetState extends State<PageWidget> {
-  int index = 2;
+  int index;
   VoidCallback _listener;
 
   @override
   void initState() {
     super.initState();
+    index = widget.index;
     _listener = () {
       setState(() {
         switch (widget.controller._state) {
@@ -53,10 +54,12 @@ class _PageWidgetState extends State<PageWidget> {
       index: index,
       children: <Widget>[
         widget.child,
-        LoadFailWidget(onTap: (){
-          widget.controller.changeState(PageState.Loading);
-          widget.reload();
-        },),
+        LoadFailWidget(
+          onTap: () {
+            widget.controller.changeState(PageState.Loading);
+            widget.reload();
+          },
+        ),
 //        _loadFailWidget(),
         Center(
           child: CircularProgressIndicator(),
