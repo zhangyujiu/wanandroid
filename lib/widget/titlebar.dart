@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroid/widget/marquee_widget.dart';
 
 class TitleBar extends StatefulWidget implements PreferredSizeWidget {
   bool isShowBack = true;
@@ -75,7 +76,7 @@ class _TitleBarState extends State<TitleBar> {
                   : widget.leftButton,
             ),
           ),
-          Padding(
+          /* Padding(
               child: Center(
                 child: Text(
                   widget.title,
@@ -84,7 +85,18 @@ class _TitleBarState extends State<TitleBar> {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 45)),
+              padding: EdgeInsets.symmetric(horizontal: 45)), */
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 45),
+            child: Center(
+              child: MarqueeWidget(
+                text: widget.title,
+                height: 56,
+                width: MediaQuery.of(context).size.width - 90,
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
+          ),
           Positioned(
             right: 0,
             height: 56,

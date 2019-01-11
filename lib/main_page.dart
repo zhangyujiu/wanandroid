@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -22,7 +23,6 @@ import 'package:wanandroid/utils/eventbus.dart';
 import 'package:wanandroid/utils/sp.dart';
 import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/titlebar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class MainPage extends StatefulWidget {
   @override
