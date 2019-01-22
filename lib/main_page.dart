@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redux/redux.dart';
 import 'package:wanandroid/event/error_event.dart';
+import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
@@ -32,7 +33,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  var appBarTitles = ['首页', '知识体系', '导航', "项目"];
+  var appBarTitles ;
   int _tabIndex = 0;
   var _pageCtr = PageController(initialPage: 0, keepPage: true);
   DateTime _lastPressedAt; //上次点击时间
@@ -51,19 +52,19 @@ class _MainPageState extends State<MainPage> {
         String errorMsg = "";
         switch (event.type) {
           case DioErrorType.DEFAULT:
-            errorMsg = "网络错误";
+            errorMsg = S.of(context).network_error;
             break;
           case DioErrorType.CONNECT_TIMEOUT:
-            errorMsg = "连接超时";
+            errorMsg = S.of(context).connect_timeout;
             break;
           case DioErrorType.RECEIVE_TIMEOUT:
-            errorMsg = "接收超时";
+            errorMsg = S.of(context).receive_timeout;
             break;
           case DioErrorType.RESPONSE:
-            errorMsg = "服务器错误";
+            errorMsg = S.of(context).server_error;
             break;
           case DioErrorType.CANCEL:
-            errorMsg = "请求取消";
+            errorMsg = S.of(context).request_cancel;
             break;
           default:
             break;
@@ -77,6 +78,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    appBarTitles=[S.of(context).home, S.of(context).knowledge_system, S.of(context).navigation, S.of(context).project];
     return WillPopScope(
         child: Scaffold(
           appBar: TitleBar(
@@ -136,7 +138,7 @@ class _MainPageState extends State<MainPage> {
                   Duration(seconds: 2)) {
             //两次点击间隔超过2秒则重新计时
             _lastPressedAt = DateTime.now();
-            Fluttertoast.showToast(msg: "再按一次退出应用程序");
+            Fluttertoast.showToast(msg: S.of(context).press_again_to_exit_the_app);
             return false;
           }
           return true;
@@ -173,21 +175,21 @@ class _MainPageState extends State<MainPage> {
           width: 0,
           height: 5,
         ),
-        _menuItem("收藏", Icons.collections, () {
+        _menuItem(S.of(context).collection, Icons.collections, () {
           CommonUtils.isLogin().then((isLogin) {
             if (isLogin) {
               CommonUtils.push(context, CollectionPage());
             } else {
-              Fluttertoast.showToast(msg: "请先登录!");
+              Fluttertoast.showToast(msg: S.of(context).please_login_first);
               CommonUtils.pushIOS(context, LoginPage());
             }
           });
         }),
-        _menuItem("关于我们", Icons.people, () {
+        _menuItem(S.of(context).about_us, Icons.people, () {
           CommonUtils.push(
               context,
               WebViewPage(
-                title: "关于我们",
+                title: S.of(context).about_us,
                 url: "http://www.wanandroid.com/about",
               ));
         }),
@@ -203,13 +205,13 @@ class _MainPageState extends State<MainPage> {
                   color: Colors.lightBlueAccent,
                   onPressed: () {
                     CommonUtils.showCommitOptionDialog(
-                        context, "提示", "您确定要退出登录吗？", ["确定", "取消"], (index) {
+                        context, S.of(context).prompt, S.of(context).logout_prompt, [S.of(context).ok, S.of(context).cancel], (index) {
                       if (index == 0) {
                         _logout(context);
                       }
                     }, bgColorList: [Colors.black26, ColorConst.color_primary]);
                   },
-                  child: Text('退出登录', style: TextStyle(color: Colors.white)),
+                  child: Text(S.of(context).logout, style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                 ),
@@ -224,7 +226,7 @@ class _MainPageState extends State<MainPage> {
   void _logout(BuildContext context) {
     DioManager.singleton.get("user/logout/json").then((result) {
       if (result != null) {
-        Fluttertoast.showToast(msg: "退出成功");
+        Fluttertoast.showToast(msg: S.of(context).logout_success);
         SpManager.singleton.save(Const.ID, -1);
         SpManager.singleton.save(Const.USERNAME, "");
         _store.dispatch(UpdateUserAction(null));

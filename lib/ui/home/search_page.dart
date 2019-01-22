@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/db/db.dart';
+import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/hotword.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/ui/home/search_result_page.dart';
@@ -59,7 +60,7 @@ class _SearchPageState extends State<SearchPage> {
                           Padding(
                             padding: EdgeInsets.only(bottom: 10),
                             child: Text(
-                              "搜索热词",
+                              S.of(context).search_for_hot_words,
                               textAlign: TextAlign.left,
                               style: TextStyle(color: ColorConst.color_333),
                             ),
@@ -77,19 +78,19 @@ class _SearchPageState extends State<SearchPage> {
                               children: <Widget>[
                                 Expanded(
                                   flex: 1,
-                                  child: Text("历史记录",
+                                  child: Text(S.of(context).history_record,
                                       style: TextStyle(
                                           color: ColorConst.color_333)),
                                 ),
                                 InkWell(
                                   child: Padding(
                                     padding: EdgeInsets.all(5),
-                                    child: Text("清空",
+                                    child: Text(S.of(context).clear,
                                         style: TextStyle(
                                             color: ColorConst.color_333)),
                                   ),
                                   onTap: () {
-                                    DbManager.singleton.clear().then((_){
+                                    DbManager.singleton.clear().then((_) {
                                       getHistory();
                                     });
                                   },
@@ -144,7 +145,7 @@ class _SearchPageState extends State<SearchPage> {
                         fontSize: TextSizeConst.smallTextSize,
                         color: ColorConst.color_333),
                     decoration: InputDecoration(
-                        hintText: '请输入关键词',
+                        hintText: S.of(context).please_enter_a_keyword,
                         contentPadding: EdgeInsets.all(6.0),
                         border: InputBorder.none)),
               ),
@@ -160,7 +161,7 @@ class _SearchPageState extends State<SearchPage> {
                 highlightElevation: 0,
                 color: ColorConst.color_primary,
                 child: Text(
-                  "搜索",
+                  S.of(context).search,
                   style: TextStyle(color: ColorConst.color_white),
                 ),
                 shape: RoundedRectangleBorder(
@@ -168,7 +169,7 @@ class _SearchPageState extends State<SearchPage> {
                 onPressed: () {
                   var key = _controller.text.toString();
                   if (key.isEmpty) {
-                    Fluttertoast.showToast(msg: "关键字不能为空");
+                    Fluttertoast.showToast(msg: S.of(context).keyword_cannot_be_empty);
                     return;
                   }
                   _goToSearchResultPage(key);

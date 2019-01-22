@@ -19,10 +19,126 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get about_us => "About us";
+  String get app_name => "Play Android";
+  String get cancel => "Cancel";
+  String get clear => "clear";
+  String get collection => "Collection";
+  String get connect_timeout => "Connect timeout";
+  String get forget_pwd => "Forget password?";
+  String get history_record => "History record";
+  String get home => "Home";
+  String get keyword_cannot_be_empty => "Keyword cannot be empty";
+  String get knowledge_system => "Knowledge";
+  String get load_fail => "Load fail";
+  String get login => "Login";
+  String get login_success => "Login success";
+  String get logout => "Logout";
+  String get logout_prompt => "Are you sure you want to log out?";
+  String get logout_success => "Logout success";
+  String get my_collection => "My collection";
+  String get navigation => "Navigation";
+  String get network_error => "Network error";
+  String get ok => "Ok";
+  String get please_enter_a_keyword => "Please enter a keyword";
+  String get please_input_pwd => "Please input password";
+  String get please_input_username => "Please input username";
+  String get please_login_first => "Please login first!";
+  String get press_again_to_exit_the_app => "Press again to exit the app";
+  String get project => "Project";
+  String get prompt => "Prompt";
+  String get pwd_can_not_be_empty => "Password can not be empty";
+  String get receive_timeout => "Receive timeout";
+  String get reload => "Reload...";
+  String get request_cancel => "Request cancel";
+  String get search => "Search";
+  String get search_for_hot_words => "Search for hot words";
+  String get server_error => "Server error";
+  String get username_can_not_be_empty => "Username can not be empty";
 }
 
 class $en extends S {
   const $en();
+}
+
+class $zh_CN extends S {
+  const $zh_CN();
+
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "取消";
+  @override
+  String get network_error => "网络错误";
+  @override
+  String get connect_timeout => "连接超时";
+  @override
+  String get my_collection => "我的收藏";
+  @override
+  String get project => "项目";
+  @override
+  String get server_error => "服务器错误";
+  @override
+  String get knowledge_system => "知识体系";
+  @override
+  String get username_can_not_be_empty => "用户名不能为空";
+  @override
+  String get login => "登录";
+  @override
+  String get search_for_hot_words => "搜索热词";
+  @override
+  String get search => "搜索";
+  @override
+  String get navigation => "导航";
+  @override
+  String get logout => "退出登录";
+  @override
+  String get reload => "重新加载...";
+  @override
+  String get about_us => "关于我们";
+  @override
+  String get logout_success => "退出成功";
+  @override
+  String get receive_timeout => "接收超时";
+  @override
+  String get load_fail => "加载失败";
+  @override
+  String get ok => "确定";
+  @override
+  String get pwd_can_not_be_empty => "密码不能为空";
+  @override
+  String get please_input_pwd => "请输入密码";
+  @override
+  String get request_cancel => "请求取消";
+  @override
+  String get history_record => "历史记录";
+  @override
+  String get clear => "清空";
+  @override
+  String get forget_pwd => "忘记密码？";
+  @override
+  String get collection => "收藏";
+  @override
+  String get keyword_cannot_be_empty => "关键字不能为空";
+  @override
+  String get press_again_to_exit_the_app => "再按一次退出应用程序";
+  @override
+  String get home => "首页";
+  @override
+  String get login_success => "登录成功";
+  @override
+  String get app_name => "玩Android";
+  @override
+  String get please_enter_a_keyword => "请输入关键词";
+  @override
+  String get please_input_username => "请输入用户名";
+  @override
+  String get logout_prompt => "您确定要退出登录吗？";
+  @override
+  String get please_login_first => "请先登录!";
+  @override
+  String get prompt => "提示";
 }
 
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
@@ -31,6 +147,7 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale("en", ""),
+      Locale("zh", "CN"),
     ];
   }
 
@@ -73,6 +190,8 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
       switch (lang) {
         case "en":
           return SynchronousFuture<S>(const $en());
+        case "zh_CN":
+          return SynchronousFuture<S>(const $zh_CN());
         default:
           // NO-OP.
       }

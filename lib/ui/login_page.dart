@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redux/redux.dart';
+import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/user.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
@@ -35,11 +36,11 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
 
   onLoginClick() async {
     if (_userController.text.toString().isEmpty) {
-      Fluttertoast.showToast(msg: "用户名不能为空", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(msg: S.of(context).username_can_not_be_empty, toastLength: Toast.LENGTH_SHORT);
       return;
     }
     if (_pwdController.text.toString().isEmpty) {
-      Fluttertoast.showToast(msg: "密码不能为空", toastLength: Toast.LENGTH_SHORT);
+      Fluttertoast.showToast(msg: S.of(context).pwd_can_not_be_empty, toastLength: Toast.LENGTH_SHORT);
       return;
     }
     login();
@@ -68,7 +69,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
         SpManager.singleton.save(Const.ID, id);
         SpManager.singleton.save(Const.USERNAME, username);
         store.dispatch(UpdateUserAction(User(id, username)));
-        Fluttertoast.showToast(msg: "登录成功");
+        Fluttertoast.showToast(msg: S.of(context).login_success);
         Navigator.of(context).pop();
       }
     });
@@ -88,7 +89,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
         valueColor: animation,
       );
     } else {
-      loginButtonWidegt = Text('登录', style: TextStyle(color: Colors.white));
+      loginButtonWidegt = Text(S.of(context).login, style: TextStyle(color: Colors.white));
     }
     final logo = Hero(
       tag: 'hero',
@@ -112,7 +113,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
           autofocus: false,
           obscureText: false,
           decoration: InputDecoration(
-              hintText: '请输入用户名',
+              hintText: S.of(context).please_input_username,
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: InputBorder.none)),
     );
@@ -126,7 +127,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
           autofocus: false,
           obscureText: true,
           decoration: InputDecoration(
-              hintText: '请输入密码',
+              hintText: S.of(context).please_input_pwd,
               contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               border: InputBorder.none)),
     );
@@ -148,7 +149,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
 
     final forgotLabel = FlatButton(
       child: Text(
-        '忘记密码?',
+        S.of(context).forget_pwd,
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {},
