@@ -162,7 +162,9 @@ class _SearchPageState extends State<SearchPage> {
                 color: ColorConst.color_primary,
                 child: Text(
                   S.of(context).search,
-                  style: TextStyle(color: ColorConst.color_white),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: ColorConst.color_white,fontSize: 12),
+                  maxLines: 1,
                 ),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),

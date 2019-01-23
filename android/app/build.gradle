@@ -34,18 +34,19 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion 27
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
     lintOptions {
         disable 'InvalidPackage'
     }
+    //TODO:键盘弹起失效 https://blog.csdn.net/hao_m582/article/details/84037950
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.sxbcar.wanandroid"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
