@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/base_data.dart';
 import 'package:wanandroid/model/project_sort.dart';
 import 'package:wanandroid/net/dio_manager.dart';
@@ -62,7 +63,7 @@ class _ProjectPageState extends State<ProjectPage>
             );
           } else {
             return LoadFailWidget(onTap: (){
-              print("重新加载...");
+              print(S.of(context).reload);
               setState(() {});
             },);
           }

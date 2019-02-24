@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/article.dart';
 import 'package:wanandroid/model/base_list_data.dart';
 import 'package:wanandroid/net/dio_manager.dart';
@@ -44,7 +45,7 @@ class _CollectionPageState extends State<CollectionPage> {
     return Scaffold(
       appBar: TitleBar(
         isShowBack: true,
-        title: "我的收藏",
+        title: S.of(context).my_collection,
       ),
       body: PageWidget(
         controller: _pageStateController,

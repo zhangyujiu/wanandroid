@@ -9,7 +9,7 @@ class WebViewPage extends StatefulWidget {
   String title = "";
   bool fullscreen = false;
 
-  WebViewPage({this.fullscreen=false, this.title, this.url});
+  WebViewPage({this.fullscreen = false, this.title, this.url});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,6 +24,7 @@ class _WebViewPageState extends State<WebViewPage> {
   @override
   void initState() {
     super.initState();
+    flutterWebViewPlugin.close();
     _onStateChanged =
         flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
       switch (state.type) {
@@ -40,6 +41,9 @@ class _WebViewPageState extends State<WebViewPage> {
           print("加载完成");
           break;
       }
+    });
+    flutterWebViewPlugin.onDestroy.listen((_) {
+      Navigator.of(context).pop();
     });
   }
 

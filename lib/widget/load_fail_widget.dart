@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/utils/textsize.dart';
 
 //加载失败widget
@@ -24,7 +25,7 @@ class LoadFailWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "加载失败",
+                S.of(context).load_fail,
                 style: TextStyle(fontSize: TextSizeConst.middleTextSize),
               ),
             )
