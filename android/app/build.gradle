@@ -30,7 +30,7 @@ android {
         config {
             keyAlias 'wanandroid'
             keyPassword '123456'
-            storeFile file('E:/flutter_demo/wanandroid/android/key.jks')
+            storeFile file('android/key.jks')
             storePassword '123456'
         }
     }
