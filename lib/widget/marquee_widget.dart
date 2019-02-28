@@ -26,17 +26,19 @@ class _MarqueeWidgetState extends State<MarqueeWidget> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      double pixels = _controller.position.pixels;
-      double maxScrollExtent = _controller.position.maxScrollExtent;
-      if (pixels + 3.0 >= maxScrollExtent) {
-        position = 0;
-        _controller.jumpTo(position);
-      }
-      position += 3.0;
-      _controller.animateTo(position,
-          duration: new Duration(milliseconds: 90), curve: Curves.linear);
-    });
+    if (getCenterWidgetWidth() > widget.width) {
+      timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+        double pixels = _controller.position.pixels;
+        double maxScrollExtent = _controller.position.maxScrollExtent;
+        if (pixels + 3.0 >= maxScrollExtent) {
+          position = 0;
+          _controller.jumpTo(position);
+        }
+        position += 3.0;
+        _controller.animateTo(position,
+            duration: new Duration(milliseconds: 90), curve: Curves.linear);
+      });
+    }
   }
 
   Widget getStartEndWidget() {
@@ -86,6 +88,8 @@ class _MarqueeWidgetState extends State<MarqueeWidget> {
   @override
   void dispose() {
     super.dispose();
-    timer.cancel();
+    if (timer != null) {
+      timer.cancel();
+    }
   }
 }
