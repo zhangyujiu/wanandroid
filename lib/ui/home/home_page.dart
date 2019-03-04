@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import "package:pull_to_refresh/pull_to_refresh.dart";
+import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/article.dart';
 import 'package:wanandroid/model/banner.dart';
 import 'package:wanandroid/model/base_data.dart';
 import 'package:wanandroid/model/base_list_data.dart';
 import 'package:wanandroid/net/dio_manager.dart';
+import 'package:wanandroid/ui/webview_page.dart';
 import 'package:wanandroid/utils/color.dart';
+import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/article_widget.dart';
 import 'package:wanandroid/widget/page_widget.dart';
@@ -32,7 +35,7 @@ class _HomePageState extends State<HomePage>
     super.initState();
     _controller.autoplay = true;
     _refreshController = RefreshController();
-    _pageStateController=PageStateController();
+    _pageStateController = PageStateController();
     getBanner();
     getList(true);
   }
@@ -63,7 +66,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       body: PageWidget(
         controller: _pageStateController,
-        reload: (){
+        reload: () {
           getList(true);
         },
         child: SmartRefresher(
@@ -77,31 +80,41 @@ class _HomePageState extends State<HomePage>
                 itemBuilder: (context, index) {
                   return index == 0
                       ? Container(
-                    margin: EdgeInsets.only(top: 5),
-                    width: MediaQuery.of(context).size.width,
-                    height: 180,
-                    child: banners.length != 0
-                        ? Swiper(
-                      autoplayDelay: 5000,
-                      controller: _controller,
-                      itemWidth: MediaQuery.of(context).size.width,
-                      itemHeight: 180,
-                      pagination: pagination(),
-                      itemBuilder: (BuildContext context, int index) {
-                        return new Image.network(
-                          banners[index].imagePath,
-                          fit: BoxFit.fill,
-                        );
-                      },
-                      itemCount: banners.length,
-                      viewportFraction: 0.8,
-                      scale: 0.9,
-                    )
-                        : SizedBox(
-                      width: 0,
-                      height: 0,
-                    ),
-                  )
+                          margin: EdgeInsets.only(top: 5),
+                          width: MediaQuery.of(context).size.width,
+                          height: 180,
+                          child: banners.length != 0
+                              ? Swiper(
+                                  autoplayDelay: 5000,
+                                  controller: _controller,
+                                  itemWidth: MediaQuery.of(context).size.width,
+                                  itemHeight: 180,
+                                  pagination: pagination(),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return new Image.network(
+                                      banners[index].imagePath,
+                                      fit: BoxFit.fill,
+                                    );
+                                  },
+                                  itemCount: banners.length,
+                                  viewportFraction: 0.8,
+                                  scale: 0.9,
+                                  onTap: (index) {
+                                    var item = banners[index];
+                                    CommonUtils.push(
+                                        context,
+                                        WebViewPage(
+                                          title: item.title,
+                                          url: item.url,
+                                        ));
+                                  },
+                                )
+                              : SizedBox(
+                                  width: 0,
+                                  height: 0,
+                                ),
+                        )
                       : ArticleWidget(articles[index - 1]);
                 })),
       ),
@@ -162,7 +175,7 @@ class _HomePageState extends State<HomePage>
         setState(() {
           articles.addAll(Article.parseList(listdata.datas));
         });
-      }else{
+      } else {
         _pageStateController.changeState(PageState.LoadFail);
       }
     });
