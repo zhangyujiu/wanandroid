@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import "package:pull_to_refresh/pull_to_refresh.dart";
-import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/article.dart';
 import 'package:wanandroid/model/banner.dart';
 import 'package:wanandroid/model/base_data.dart';
@@ -12,6 +11,7 @@ import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/article_widget.dart';
+import 'package:wanandroid/widget/custom_refresh.dart';
 import 'package:wanandroid/widget/page_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,14 +27,14 @@ class _HomePageState extends State<HomePage>
   SwiperController _controller = SwiperController();
   int pageIndex = 0;
   List<Article> articles = List();
-  RefreshController _refreshController;
   PageStateController _pageStateController;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _controller.autoplay = true;
-    _refreshController = RefreshController();
+    _scrollController = ScrollController();
     _pageStateController = PageStateController();
     getBanner();
     getList(true);
@@ -61,6 +61,15 @@ class _HomePageState extends State<HomePage>
     }
   }
 
+  GlobalKey<EasyRefreshState> _easyRefreshKey =
+      new GlobalKey<EasyRefreshState>();
+
+  GlobalKey<RefreshHeaderState> _headerKey =
+  new GlobalKey<RefreshHeaderState>();
+
+  GlobalKey<RefreshFooterState> _footerKey =
+  new GlobalKey<RefreshFooterState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,13 +78,18 @@ class _HomePageState extends State<HomePage>
         reload: () {
           getList(true);
         },
-        child: SmartRefresher(
-            controller: _refreshController,
-            enablePullDown: true,
-            enablePullUp: true,
-            onRefresh: _onRefresh,
+        child: CustomRefresh(
+            easyRefreshKey: _easyRefreshKey,
+            headerKey: _headerKey,
+            footerKey: _footerKey,
+            onRefresh: () {
+              _onRefresh(true);
+            },
+            loadMore: () {
+              _onRefresh(false);
+            },
             child: ListView.builder(
-//              controller: _scrollController,
+                controller: _scrollController,
                 itemCount: articles.length + 1,
                 itemBuilder: (context, index) {
                   return index == 0
@@ -122,7 +136,9 @@ class _HomePageState extends State<HomePage>
           backgroundColor: Theme.of(context).primaryColor.withAlpha(180),
           child: Icon(Icons.arrow_upward),
           onPressed: () {
-            _refreshController.scrollTo(0);
+//            _refreshController.scrollTo(0);
+            _scrollController.animateTo(0,
+                duration: Duration(milliseconds: 1000), curve: Curves.bounceIn);
           }),
     );
   }
@@ -162,7 +178,8 @@ class _HomePageState extends State<HomePage>
 
   void getList(bool isRefresh) {
     DioManager.singleton.get("article/list/${pageIndex}/json").then((result) {
-      _refreshController.sendBack(isRefresh, RefreshStatus.idle);
+      _easyRefreshKey.currentState.callRefreshFinish();
+      _easyRefreshKey.currentState.callLoadMoreFinish();
       if (result != null) {
         _pageStateController.changeState(PageState.LoadSuccess);
         BaseListData listdata = BaseListData.fromJson(result.data);
@@ -170,7 +187,7 @@ class _HomePageState extends State<HomePage>
           articles.clear();
         }
         if (listdata.hasNoMore) {
-          _refreshController.sendBack(false, RefreshStatus.noMore);
+//          _refreshController.sendBack(false, RefreshStatus.noMore);
         }
         setState(() {
           articles.addAll(Article.parseList(listdata.datas));

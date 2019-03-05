@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wanandroid/model/knowledge_system.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/ui/knowledge/knowledge_detail_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
+import 'package:wanandroid/widget/custom_refresh.dart';
 import 'package:wanandroid/widget/page_widget.dart';
 
 class KnowledgePage extends StatefulWidget {
@@ -17,14 +18,21 @@ class KnowledgePage extends StatefulWidget {
 
 class _KnowledgePageState extends State<KnowledgePage>
     with AutomaticKeepAliveClientMixin {
-  RefreshController _refreshController;
+  GlobalKey<EasyRefreshState> _easyRefreshKey =
+  new GlobalKey<EasyRefreshState>();
+
+  GlobalKey<RefreshHeaderState> _headerKey =
+  new GlobalKey<RefreshHeaderState>();
+
+  GlobalKey<RefreshFooterState> _footerKey =
+  new GlobalKey<RefreshFooterState>();
+
   List datas = List<KnowledgeSystem>();
   PageStateController _pageStateController;
 
   @override
   void initState() {
     super.initState();
-    _refreshController = RefreshController();
     _pageStateController=PageStateController();
     getList();
   }
@@ -42,11 +50,13 @@ class _KnowledgePageState extends State<KnowledgePage>
         getList();
       },
       controller: _pageStateController,
-      child: SmartRefresher(
-        controller: _refreshController,
-        enablePullDown: true,
-        enablePullUp: false,
-        onRefresh: _onRefresh,
+      child: CustomRefresh(
+        easyRefreshKey: _easyRefreshKey,
+        headerKey: _headerKey,
+        footerKey: _footerKey,
+        onRefresh: () {
+          _onRefresh(true);
+        },
         child: ListView.builder(
             itemCount: datas.length,
             itemBuilder: (context, index) {
@@ -59,7 +69,8 @@ class _KnowledgePageState extends State<KnowledgePage>
 
   void getList() {
     DioManager.singleton.get("tree/json").then((result) {
-      _refreshController.sendBack(true, RefreshStatus.idle);
+      _easyRefreshKey.currentState.callRefreshFinish();
+      _easyRefreshKey.currentState.callLoadMoreFinish();
       if (result != null) {
         _pageStateController.changeState(PageState.LoadSuccess);
         setState(() {

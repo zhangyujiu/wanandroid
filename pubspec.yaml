@@ -26,18 +26,18 @@ dependencies:
   sqflite: ^0.12.2
   path_provider: ^0.4.0
   redux: ^3.0.0
-  flutter_redux: ^0.5.2 # 数据传递
-  #scoped_model: ^1.0.1  # 数据传递
+  flutter_redux: ^0.5.2 # 数据共享
+  #scoped_model: ^1.0.1  # 数据共享
   fluttertoast: 2.1.2
   #permission_handler: ^2.1.2
   flutter_swiper: ^1.1.4
   rxdart: ^0.19.0
   event_bus: ^1.0.1
-  pull_to_refresh: ^1.1.6
   flutter_spinkit: ^2.0.1
   flutter_webview_plugin: ^0.3.0+2
   cached_network_image: ^0.5.1
   flutter_html: ^0.8.2
+  flutter_easyrefresh: ^1.2.7
 dev_dependencies:
   flutter_test:
     sdk: flutter

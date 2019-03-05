@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wanandroid/model/base_list_data.dart';
 import 'package:wanandroid/model/project.dart';
 import 'package:wanandroid/net/dio_manager.dart';
@@ -8,6 +8,7 @@ import 'package:wanandroid/ui/webview_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
 import 'package:wanandroid/utils/textsize.dart';
+import 'package:wanandroid/widget/custom_refresh.dart';
 import 'package:wanandroid/widget/page_widget.dart';
 
 class ProjectListPage extends StatefulWidget {
@@ -23,14 +24,20 @@ class ProjectListPage extends StatefulWidget {
 
 class _ProjectListPageState extends State<ProjectListPage> with AutomaticKeepAliveClientMixin{
   int pageIndex = 1;
-  RefreshController _refreshController;
   PageStateController _pageStateController;
   List<Project> projects = List();
+  GlobalKey<EasyRefreshState> _easyRefreshKey =
+  new GlobalKey<EasyRefreshState>();
+
+  GlobalKey<RefreshHeaderState> _headerKey =
+  new GlobalKey<RefreshHeaderState>();
+
+  GlobalKey<RefreshFooterState> _footerKey =
+  new GlobalKey<RefreshFooterState>();
 
   @override
   void initState() {
     super.initState();
-    _refreshController = RefreshController();
     _pageStateController = PageStateController();
     getList(true);
   }
@@ -49,7 +56,8 @@ class _ProjectListPageState extends State<ProjectListPage> with AutomaticKeepAli
     DioManager.singleton
         .get("project/list/${pageIndex}/json?cid=${widget.cid}")
         .then((result) {
-      _refreshController.sendBack(isRefresh, RefreshStatus.idle);
+      _easyRefreshKey.currentState.callRefreshFinish();
+      _easyRefreshKey.currentState.callLoadMoreFinish();
       if (result != null) {
         _pageStateController.changeState(PageState.LoadSuccess);
         var baseListData = BaseListData.fromJson(result.data);
@@ -57,7 +65,7 @@ class _ProjectListPageState extends State<ProjectListPage> with AutomaticKeepAli
           projects.clear();
         }
         if (baseListData.hasNoMore) {
-          _refreshController.sendBack(false, RefreshStatus.noMore);
+          //_refreshController.sendBack(false, RefreshStatus.noMore);
         }
         setState(() {
           projects.addAll(Project.parseList(baseListData.datas));
@@ -75,11 +83,16 @@ class _ProjectListPageState extends State<ProjectListPage> with AutomaticKeepAli
         getList(true);
       },
       controller: _pageStateController,
-      child: SmartRefresher(
-          controller: _refreshController,
-          enablePullDown: true,
-          enablePullUp: true,
-          onRefresh: _onRefresh,
+      child: CustomRefresh(
+          easyRefreshKey: _easyRefreshKey,
+          headerKey: _headerKey,
+          footerKey: _footerKey,
+          onRefresh: () {
+            _onRefresh(true);
+          },
+          loadMore: () {
+            _onRefresh(false);
+          },
           child: ListView.builder(
               itemCount: projects.length,
               itemBuilder: (context, index) {
