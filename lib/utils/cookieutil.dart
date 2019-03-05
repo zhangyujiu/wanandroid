@@ -13,7 +13,7 @@ class CookieUtil {
   //清除所有cookie
   static Future<Null> deleteAllCookies() async {
     await getCookiePath().then((path) {
-      PersistCookieJar cookieJar = PersistCookieJar(path);
+      PersistCookieJar cookieJar = PersistCookieJar(dir: path);
       cookieJar.deleteAll();
     });
   }
