@@ -16,18 +16,9 @@ class DioManager {
       baseUrl: "http://www.wanandroid.com/",
       connectTimeout: 10000,
       receiveTimeout: 3000,
-      /*headers: {
-        //测试header
-        "deviceType": "2.0",
-        "deviceOS": "android",
-        "deviceOSVersion": "5.1",
-        "appVersion": "27",
-        "deviceFactory": "OPPO",
-        "deviceModel": "OPPO R9tm",
-      },*/
     ));
     CookieUtil.getCookiePath().then((path) {
-      _dio.cookieJar = PersistCookieJar(dir: path);
+      _dio.cookieJar = PersistCookieJar(path);
     });
     _dio.interceptor.response.onError = (DioError e) {
       // 当请求失败时做一些预处理
