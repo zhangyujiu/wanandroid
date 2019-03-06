@@ -1,14 +1,11 @@
-import 'dart:io';
+import 'dart:async';
+import 'dart:convert';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/event/error_event.dart';
 import 'package:wanandroid/model/base_data.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:wanandroid/utils/cookieutil.dart';
-import 'dart:convert';
-
 import 'package:wanandroid/utils/eventbus.dart';
 
 class DioManager {
