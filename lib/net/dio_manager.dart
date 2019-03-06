@@ -27,7 +27,7 @@ class DioManager {
       },*/
     ));
     CookieUtil.getCookiePath().then((path) {
-      _dio.cookieJar = PersistCookieJar(path);
+      _dio.cookieJar = PersistCookieJar(dir: path);
     });
     _dio.interceptor.response.onError = (DioError e) {
       // 当请求失败时做一些预处理
