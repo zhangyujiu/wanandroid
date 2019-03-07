@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage>
           onPressed: () {
 //            _refreshController.scrollTo(0);
             _scrollController.animateTo(0,
-                duration: Duration(milliseconds: 1000), curve: Curves.bounceIn);
+                duration: Duration(milliseconds: 1000), curve: Curves.linear);
           }),
     );
   }

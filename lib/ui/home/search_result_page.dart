@@ -63,7 +63,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
           child: Icon(Icons.arrow_upward),
           onPressed: () {
             _scrollController.animateTo(0,
-                duration: Duration(milliseconds: 1000), curve: Curves.bounceIn);
+                duration: Duration(milliseconds: 1000), curve: Curves.linear);
           }),
       body: PageWidget(
         reload: () {
