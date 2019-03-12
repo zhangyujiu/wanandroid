@@ -12,20 +12,18 @@ class DioManager {
   Dio _dio;
 
   DioManager._internal() {
-    _dio = new Dio(Options(
-      baseUrl: "http://www.wanandroid.com/",
+    _dio = new Dio(BaseOptions(
+      baseUrl: "https://www.wanandroid.com/",
       connectTimeout: 10000,
       receiveTimeout: 3000,
     ));
     CookieUtil.getCookiePath().then((path) {
-      _dio.cookieJar = PersistCookieJar(path);
+      _dio.interceptors..add(CookieManager(PersistCookieJar(dir: path)));
     });
-    _dio.interceptor.response.onError = (DioError e) {
-      // 当请求失败时做一些预处理
-
+    _dio.interceptors.add(InterceptorsWrapper(onError: (DioError e) {
       EventUtil.eventBus.fire(e);
-      return e; //continue
-    };
+      return e;
+    }));
   }
 
   static DioManager singleton = DioManager._internal();
@@ -43,7 +41,7 @@ class DioManager {
     try {
       response = await dio.get(
         url,
-        data: data,
+        queryParameters: data,
         options: options,
         cancelToken: cancelToken,
       );
@@ -69,7 +67,7 @@ class DioManager {
     try {
       response = await dio.get(
         url,
-        data: data,
+        queryParameters: data,
         options: options,
         cancelToken: cancelToken,
       );
@@ -90,7 +88,7 @@ class DioManager {
     try {
       response = await dio.post(
         url,
-        data: data,
+        queryParameters: data,
         options: options,
         cancelToken: cancelToken,
       );
@@ -116,7 +114,7 @@ class DioManager {
     try {
       response = await dio.post(
         url,
-        data: data,
+        queryParameters: data,
         options: options,
         cancelToken: cancelToken,
       );
