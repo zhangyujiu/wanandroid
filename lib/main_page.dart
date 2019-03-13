@@ -16,6 +16,7 @@ import 'package:wanandroid/ui/knowledge/knowledge_page.dart';
 import 'package:wanandroid/ui/login_page.dart';
 import 'package:wanandroid/ui/navigation/navigation_page.dart';
 import 'package:wanandroid/ui/project/project_page.dart';
+import 'package:wanandroid/ui/todo/todo_page.dart';
 import 'package:wanandroid/ui/webview_page.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/common.dart';
@@ -175,6 +176,9 @@ class _MainPageState extends State<MainPage> {
           width: 0,
           height: 5,
         ),
+        _menuItem('TODO', Icons.work, () {
+          CommonUtils.push(context, TodoPage());
+        }),
         _menuItem(S.of(context).collection, Icons.collections, () {
           CommonUtils.isLogin().then((isLogin) {
             if (isLogin) {

@@ -38,6 +38,7 @@ dependencies:
   cached_network_image: ^0.5.1
   flutter_html: ^0.8.2
   flutter_easyrefresh: ^1.2.7
+  fish_redux: ^0.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
