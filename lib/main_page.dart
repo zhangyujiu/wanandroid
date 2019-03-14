@@ -34,7 +34,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  var appBarTitles ;
+  var appBarTitles;
+
   int _tabIndex = 0;
   var _pageCtr = PageController(initialPage: 0, keepPage: true);
   DateTime _lastPressedAt; //上次点击时间
@@ -79,7 +80,12 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    appBarTitles=[S.of(context).home, S.of(context).knowledge_system, S.of(context).navigation, S.of(context).project];
+    appBarTitles = [
+      S.of(context).home,
+      S.of(context).knowledge_system,
+      S.of(context).navigation,
+      S.of(context).project
+    ];
     return WillPopScope(
         child: Scaffold(
           appBar: TitleBar(
@@ -96,7 +102,7 @@ class _MainPageState extends State<MainPage> {
             }),
             title: appBarTitles[_tabIndex],
             rightButtons: <Widget>[
-               TitleBar.iconButton(
+              TitleBar.iconButton(
                   icon: Icons.search,
                   color: ColorConst.color_white,
                   press: () {
@@ -139,7 +145,8 @@ class _MainPageState extends State<MainPage> {
                   Duration(seconds: 2)) {
             //两次点击间隔超过2秒则重新计时
             _lastPressedAt = DateTime.now();
-            Fluttertoast.showToast(msg: S.of(context).press_again_to_exit_the_app);
+            Fluttertoast.showToast(
+                msg: S.of(context).press_again_to_exit_the_app);
             return false;
           }
           return true;
@@ -177,7 +184,7 @@ class _MainPageState extends State<MainPage> {
           height: 5,
         ),
         _menuItem('TODO', Icons.work, () {
-          CommonUtils.push(context, TodoPage());
+          CommonUtils.push(context, TodoPage().buildPage({}));
         }),
         _menuItem(S.of(context).collection, Icons.collections, () {
           CommonUtils.isLogin().then((isLogin) {
@@ -209,13 +216,17 @@ class _MainPageState extends State<MainPage> {
                   color: Colors.lightBlueAccent,
                   onPressed: () {
                     CommonUtils.showCommitOptionDialog(
-                        context, S.of(context).prompt, S.of(context).logout_prompt, [S.of(context).ok, S.of(context).cancel], (index) {
+                        context,
+                        S.of(context).prompt,
+                        S.of(context).logout_prompt,
+                        [S.of(context).ok, S.of(context).cancel], (index) {
                       if (index == 0) {
                         _logout(context);
                       }
                     }, bgColorList: [Colors.black26, ColorConst.color_primary]);
                   },
-                  child: Text(S.of(context).logout, style: TextStyle(color: Colors.white)),
+                  child: Text(S.of(context).logout,
+                      style: TextStyle(color: Colors.white)),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                 ),
