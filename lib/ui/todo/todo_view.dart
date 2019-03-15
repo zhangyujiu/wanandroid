@@ -37,8 +37,6 @@ Widget buildView(TodoState state, Dispatch dispatch, ViewService viewService) {
         },
         child: CustomRefresh(
           easyRefreshKey: state.easyRefreshKey,
-          headerKey: state.headerKey,
-          footerKey: state.footerKey,
           onRefresh: () {
             dispatch(TodoActionCreator.onRefreshAction());
           },

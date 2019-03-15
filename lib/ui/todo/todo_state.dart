@@ -8,10 +8,6 @@ class TodoState implements Cloneable<TodoState> {
   PageStateController pageStateController;
   GlobalKey<EasyRefreshState> easyRefreshKey;
 
-  GlobalKey<RefreshHeaderState> headerKey;
-
-  GlobalKey<RefreshFooterState> footerKey;
-
   var pageIndex = 1;
   List<Todo> todos = [];
 
@@ -20,8 +16,6 @@ class TodoState implements Cloneable<TodoState> {
     return TodoState()
       ..pageStateController = pageStateController
       ..easyRefreshKey = easyRefreshKey
-      ..headerKey = headerKey
-      ..footerKey = footerKey
       ..pageIndex = pageIndex
       ..todos = todos;
   }
@@ -31,7 +25,5 @@ TodoState initState(Map<String, dynamic> args) {
   var state = TodoState();
   state.pageStateController = PageStateController();
   state.easyRefreshKey = GlobalKey<EasyRefreshState>();
-  state.headerKey = GlobalKey<RefreshHeaderState>();
-  state.footerKey = GlobalKey<RefreshFooterState>();
   return state;
 }

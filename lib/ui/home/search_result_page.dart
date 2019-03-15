@@ -28,12 +28,6 @@ class _SearchResultPageState extends State<SearchResultPage> {
   GlobalKey<EasyRefreshState> _easyRefreshKey =
       new GlobalKey<EasyRefreshState>();
 
-  GlobalKey<RefreshHeaderState> _headerKey =
-      new GlobalKey<RefreshHeaderState>();
-
-  GlobalKey<RefreshFooterState> _footerKey =
-      new GlobalKey<RefreshFooterState>();
-
   @override
   void initState() {
     super.initState();
@@ -72,8 +66,6 @@ class _SearchResultPageState extends State<SearchResultPage> {
         controller: _pageStateController,
         child: CustomRefresh(
             easyRefreshKey: _easyRefreshKey,
-            headerKey: _headerKey,
-            footerKey: _footerKey,
             onRefresh: () {
               _onRefresh(true);
             },
