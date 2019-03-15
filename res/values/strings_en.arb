@@ -34,5 +34,11 @@
   "ok":"Ok",
   "cancel":"Cancel",
   "logout":"Logout",
-  "logout_success":"Logout success"
+  "logout_success":"Logout success",
+  "delete_prompt":"Are you sure you want to delete?",
+  "add":"add",
+  "update":"Update",
+  "save":"Save",
+  "please_input_title":"Please input title",
+  "please_input_content":"Please input content"
 }

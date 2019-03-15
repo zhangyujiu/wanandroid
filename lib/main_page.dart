@@ -184,7 +184,14 @@ class _MainPageState extends State<MainPage> {
           height: 5,
         ),
         _menuItem('TODO', Icons.work, () {
-          CommonUtils.push(context, TodoPage().buildPage({}));
+          CommonUtils.isLogin().then((isLogin) {
+            if (isLogin) {
+              CommonUtils.push(context, TodoPage().buildPage({}));
+            } else {
+              Fluttertoast.showToast(msg: S.of(context).please_login_first);
+              CommonUtils.pushIOS(context, LoginPage());
+            }
+          });
         }),
         _menuItem(S.of(context).collection, Icons.collections, () {
           CommonUtils.isLogin().then((isLogin) {
@@ -210,8 +217,9 @@ class _MainPageState extends State<MainPage> {
             return Offstage(
               offstage: store.state.user == null,
               child: Container(
-                margin: EdgeInsets.only(top: 20),
-                width: 200,
+                margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                width: MediaQuery.of(context).size.width,
+                height: 45,
                 child: RaisedButton(
                   color: Colors.lightBlueAccent,
                   onPressed: () {

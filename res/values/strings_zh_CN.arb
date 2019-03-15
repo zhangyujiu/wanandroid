@@ -34,5 +34,11 @@
   "ok":"确定",
   "cancel":"取消",
   "logout":"退出登录",
-  "logout_success":"退出成功"
+  "logout_success":"退出成功",
+  "delete_prompt":"您确定要删除吗？",
+  "add":"添加",
+  "update":"修改",
+  "save":"保存",
+  "please_input_title":"请输入标题",
+  "please_input_content":"请输入内容"
 }

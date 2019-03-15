@@ -20,11 +20,13 @@ class S implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 
   String get about_us => "About us";
+  String get add => "add";
   String get app_name => "Play Android";
   String get cancel => "Cancel";
   String get clear => "clear";
   String get collection => "Collection";
   String get connect_timeout => "Connect timeout";
+  String get delete_prompt => "Are you sure you want to delete?";
   String get forget_pwd => "Forget password?";
   String get history_record => "History record";
   String get home => "Home";
@@ -41,7 +43,9 @@ class S implements WidgetsLocalizations {
   String get network_error => "Network error";
   String get ok => "Ok";
   String get please_enter_a_keyword => "Please enter a keyword";
+  String get please_input_content => "Please input content";
   String get please_input_pwd => "Please input password";
+  String get please_input_title => "Please input title";
   String get please_input_username => "Please input username";
   String get please_login_first => "Please login first!";
   String get press_again_to_exit_the_app => "Press again to exit the app";
@@ -51,9 +55,11 @@ class S implements WidgetsLocalizations {
   String get receive_timeout => "Receive timeout";
   String get reload => "Reload...";
   String get request_cancel => "Request cancel";
+  String get save => "Save";
   String get search => "Search";
   String get search_for_hot_words => "Search for hot words";
   String get server_error => "Server error";
+  String get update => "Update";
   String get username_can_not_be_empty => "Username can not be empty";
 }
 
@@ -76,9 +82,13 @@ class $zh_CN extends S {
   @override
   String get my_collection => "我的收藏";
   @override
+  String get save => "保存";
+  @override
   String get project => "项目";
   @override
   String get server_error => "服务器错误";
+  @override
+  String get update => "修改";
   @override
   String get knowledge_system => "知识体系";
   @override
@@ -100,6 +110,8 @@ class $zh_CN extends S {
   @override
   String get logout_success => "退出成功";
   @override
+  String get please_input_content => "请输入内容";
+  @override
   String get receive_timeout => "接收超时";
   @override
   String get load_fail => "加载失败";
@@ -110,6 +122,10 @@ class $zh_CN extends S {
   @override
   String get please_input_pwd => "请输入密码";
   @override
+  String get add => "添加";
+  @override
+  String get delete_prompt => "您确定要删除吗？";
+  @override
   String get request_cancel => "请求取消";
   @override
   String get history_record => "历史记录";
@@ -119,6 +135,8 @@ class $zh_CN extends S {
   String get forget_pwd => "忘记密码？";
   @override
   String get collection => "收藏";
+  @override
+  String get please_input_title => "请输入标题";
   @override
   String get keyword_cannot_be_empty => "关键字不能为空";
   @override

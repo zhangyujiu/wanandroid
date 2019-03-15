@@ -60,8 +60,8 @@ class CommonUtils {
     ValueChanged<int> onTap, {
     width = 0,
     height = 200.0,
-    List<Color> bgColorList,
-    List<Color> colorList,
+    List<Color> bgColorList, //按钮背景
+    List<Color> colorList, //按钮文字颜色
   }) {
     return showDialog(
         context: context,

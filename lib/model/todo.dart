@@ -34,6 +34,9 @@ class Todo implements Cloneable<Todo> {
           ? new Todo.fromJson(json.decode(jsonStr))
           : new Todo.fromJson(jsonStr);
 
+
+  Todo.none();
+
   Todo.fromJson(jsonRes) {
     completeDate = jsonRes['completeDate'];
     date = jsonRes['date'];

@@ -1,7 +1,15 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:wanandroid/model/todo.dart';
 
-enum TodoAction { init, onRefresh, refresh, onLoadMore, loadMore }
+enum TodoAction {
+  init,
+  onRefresh,
+  refresh,
+  onLoadMore,
+  loadMore,
+  onDelete,
+  delete
+}
 
 class TodoActionCreator {
   static Action onInitAction(List<Todo> todos) {
@@ -11,8 +19,9 @@ class TodoActionCreator {
   static Action onRefreshAction() {
     return Action(TodoAction.onRefresh);
   }
+
   static Action refreshAction(List<Todo> todos) {
-    return Action(TodoAction.refresh,payload: todos);
+    return Action(TodoAction.refresh, payload: todos);
   }
 
   static Action onLoadMoreAction() {
@@ -20,6 +29,14 @@ class TodoActionCreator {
   }
 
   static Action loadMoreAction(List<Todo> todos) {
-    return Action(TodoAction.loadMore,payload: todos);
+    return Action(TodoAction.loadMore, payload: todos);
+  }
+
+  static Action onDeleteAction() {
+    return Action(TodoAction.onDelete);
+  }
+
+  static Action deleteAction(Todo todo) {
+    return Action(TodoAction.delete, payload: todo);
   }
 }

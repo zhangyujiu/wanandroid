@@ -18,14 +18,15 @@ class TitleBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(56.0);
 
-  static Widget textButton({
-    String text = "",
+  static Widget textButton(
+    String text, {
     Color color = Colors.white,
     Function() press,
   }) {
     return InkWell(
-      child: Padding(
-        padding: EdgeInsets.all(2),
+      child: Container(
+        margin: EdgeInsets.only(right: 5),
+        padding: EdgeInsets.all(5),
         child: Text(
           text,
           style: TextStyle(color: color),

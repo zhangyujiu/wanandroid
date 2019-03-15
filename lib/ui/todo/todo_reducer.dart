@@ -8,6 +8,7 @@ Reducer<TodoState> buildReducer() {
     TodoAction.init: _onInitData,
     TodoAction.refresh:_refresh,
     TodoAction.loadMore:_loadMore,
+    TodoAction.delete:_delete,
   });
 }
 
@@ -30,5 +31,11 @@ TodoState _loadMore(TodoState state, Action action) {
   List<Todo> todos = action.payload ?? <Todo>[];
   var clone = state.clone();
   clone.todos.addAll(todos);
+  return clone;
+}
+
+TodoState _delete(TodoState state, Action action) {
+  var clone = state.clone();
+  clone.todos.remove(action.payload);
   return clone;
 }
