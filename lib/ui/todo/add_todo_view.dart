@@ -1,5 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/ui/todo/add_todo_action.dart';
 import 'package:wanandroid/ui/todo/add_todo_state.dart';
@@ -11,21 +12,29 @@ Widget buildView(
   return Scaffold(
     appBar: TitleBar(
       isShowBack: true,
-      title: "${state.todo == null ? S.of(viewService.context).add : S.of(viewService.context).update} TODO",
+      title:
+          "${state.todo == null ? S.of(viewService.context).add : S.of(viewService.context).update} TODO",
       rightButtons: <Widget>[
-        TitleBar.textButton( S.of(viewService.context).save , color: ColorConst.color_white, press: () {
+        TitleBar.textButton(S.of(viewService.context).save,
+            color: ColorConst.color_white, press: () {
+          String title = state.titleEditController.text.toString();
+          String content = state.contentEditController.text.toString();
+          if(title.isEmpty){
+            Fluttertoast.showToast(msg: S.of(viewService.context).title_can_not_be_blank);
+            return;
+          }
+          if(content.isEmpty){
+            Fluttertoast.showToast(msg: S.of(viewService.context).content_can_not_be_blank);
+            return;
+          }
           if (state.todo == null) {
             //添加
-            dispatch(AddTodoActionCreator.onAddAction(<String, String>{
-              "title": state.titleEditController.text.toString(),
-              "content": state.contentEditController.text.toString()
-            }));
+            dispatch(AddTodoActionCreator.onAddAction(
+                <String, String>{"title": title, "content": content}));
           } else {
             //修改
-            dispatch(AddTodoActionCreator.onEditAction(<String, String>{
-              "title": state.titleEditController.text.toString(),
-              "content": state.contentEditController.text.toString()
-            }));
+            dispatch(AddTodoActionCreator.onEditAction(
+                <String, String>{"title": title, "content": content}));
           }
         })
       ],
@@ -70,7 +79,8 @@ Widget buildView(
                     style: TextStyle(color: ColorConst.color_555, fontSize: 14),
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: S.of(viewService.context).please_input_content,
+                        hintText:
+                            S.of(viewService.context).please_input_content,
                         contentPadding: EdgeInsets.all(10),
                         hintStyle: TextStyle(
                             color: ColorConst.color_999, fontSize: 14)),

@@ -25,7 +25,9 @@ void _onCheck(Action action, Context<Todo> ctx) {
       .whenComplete(() {
     Navigator.pop(ctx.context);
   }).then((result) {
-    ctx.dispatch(TodoItemCreator.check(ctx.state.id));
+    if (result != null) {
+      ctx.dispatch(TodoItemCreator.check(ctx.state.id));
+    }
   });
 }
 
@@ -36,9 +38,12 @@ void _onDelete(Action action, Context<Todo> ctx) {
       S.of(ctx.context).delete_prompt,
       [S.of(ctx.context).ok, S.of(ctx.context).cancel], (index) {
     if (index == 0) {
+      CommonUtils.showLoadingDialog(ctx.context);
       DioManager.singleton
           .post("lg/todo/delete/${ctx.state.id}/json")
-          .then((result) {
+          .whenComplete(() {
+        Navigator.pop(ctx.context);
+      }).then((result) {
         if (result != null) {
           ctx.dispatch(TodoActionCreator.deleteAction(ctx.state));
         }
