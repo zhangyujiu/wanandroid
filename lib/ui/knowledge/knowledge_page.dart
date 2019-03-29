@@ -38,6 +38,7 @@ class _KnowledgePageState extends State<KnowledgePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return PageWidget(
       reload: (){
         getList();

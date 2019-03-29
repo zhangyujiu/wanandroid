@@ -27,6 +27,7 @@ class _ProjectPageState extends State<ProjectPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FutureBuilder(builder: _buildFuture, future: getSorts());
   }
 

@@ -29,6 +29,7 @@ class _NavigationPageState extends State<NavigationPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return PageWidget(
       reload: () {
         _getList();

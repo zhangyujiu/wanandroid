@@ -72,6 +72,7 @@ class _ProjectListPageState extends State<ProjectListPage> with AutomaticKeepAli
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return PageWidget(
       reload: () {
         getList(true);
