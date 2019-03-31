@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/base_data.dart';
@@ -19,16 +21,18 @@ class _ProjectPageState extends State<ProjectPage>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   TabController _controller;
   List<ProjectSort> sorts = List();
+  Future getSort;
 
   @override
   void initState() {
     super.initState();
+    getSort = getSorts();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return FutureBuilder(builder: _buildFuture, future: getSorts());
+    return FutureBuilder(builder: _buildFuture, future: getSort);
   }
 
   Widget _buildFuture(BuildContext context, AsyncSnapshot snapshot) {
