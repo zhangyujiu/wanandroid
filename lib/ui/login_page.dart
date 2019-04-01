@@ -96,9 +96,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 48.0,
-        child: FlutterLogo(
-          size: 80,
-        ),
+        child: Image.asset("assets/logo.png"),
       ),
     );
 

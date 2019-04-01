@@ -11,9 +11,11 @@ import 'package:wanandroid/utils/eventbus.dart';
 class DioManager {
   Dio _dio;
 
+  static String baseUrl="https://www.wanandroid.com/";
+
   DioManager._internal() {
     _dio = new Dio(BaseOptions(
-      baseUrl: "https://www.wanandroid.com/",
+      baseUrl: baseUrl,
       connectTimeout: 10000,
       receiveTimeout: 3000,
     ));
