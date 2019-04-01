@@ -42,7 +42,7 @@ class _FlashPageState extends State<FlashPage> {
       if (cookies != null && cookies.length > 0) {
         var cookie = cookies[0];
         if (cookie.expires == null) return;
-        bool isExpires = cookie.expires?.isAfter(DateTime.now());
+        bool isExpires = cookie.expires.isBefore(DateTime.now());
         //Cookie过期则退出登录
         if (isExpires) {
           DioManager.singleton.get("user/logout/json").then((result) {
