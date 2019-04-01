@@ -40,6 +40,9 @@ class _WebViewPageState extends State<WebViewPage> {
           // 加载完成
           print("加载完成");
           break;
+        case WebViewState.abortLoad:
+          print("终止加载");
+          break;
       }
     });
     flutterWebViewPlugin.onDestroy.listen((_) {

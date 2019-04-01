@@ -10,7 +10,7 @@ class TodoAdapter extends DynamicFlowAdapter<TodoState> {
             connector: _ListConnector());
 }
 
-class _ListConnector implements Connector<TodoState, List<ItemBean>> {
+class _ListConnector extends ConnOp<TodoState, List<ItemBean>> {
   @override
   List<ItemBean> get(TodoState state) {
     if (state.todos?.isNotEmpty == true) {
