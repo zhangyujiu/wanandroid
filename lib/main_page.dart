@@ -41,7 +41,7 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     EventUtil.eventBus.on().listen((event) {
       if (event is ErrorEvent) {
-        Fluttertoast.showToast(msg: event.errorMsg);
+        CommonUtils.toast(event.errorMsg);
         if (event.errorCode == -1001) {
           //登录
           CommonUtils.pushIOS(context, LoginPage());
@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage> {
           default:
             break;
         }
-        Fluttertoast.showToast(msg: errorMsg);
+        CommonUtils.toast(errorMsg);
       }
     });
   }
@@ -141,8 +141,7 @@ class _MainPageState extends State<MainPage> {
                   Duration(seconds: 2)) {
             //两次点击间隔超过2秒则重新计时
             _lastPressedAt = DateTime.now();
-            Fluttertoast.showToast(
-                msg: S.of(context).press_again_to_exit_the_app);
+            CommonUtils.toast(S.of(context).press_again_to_exit_the_app);
             return false;
           }
           return true;
@@ -184,7 +183,7 @@ class _MainPageState extends State<MainPage> {
             if (isLogin) {
               CommonUtils.push(context, TodoPage().buildPage({}));
             } else {
-              Fluttertoast.showToast(msg: S.of(context).please_login_first);
+              CommonUtils.toast(S.of(context).please_login_first);
               CommonUtils.pushIOS(context, LoginPage());
             }
           });
@@ -194,7 +193,7 @@ class _MainPageState extends State<MainPage> {
             if (isLogin) {
               CommonUtils.push(context, CollectionPage());
             } else {
-              Fluttertoast.showToast(msg: S.of(context).please_login_first);
+              CommonUtils.toast(S.of(context).please_login_first);
               CommonUtils.pushIOS(context, LoginPage());
             }
           });
@@ -245,7 +244,7 @@ class _MainPageState extends State<MainPage> {
   void _logout(BuildContext context) {
     DioManager.singleton.get("user/logout/json").then((result) {
       if (result != null) {
-        Fluttertoast.showToast(msg: S.of(context).logout_success);
+        CommonUtils.toast(S.of(context).logout_success);
         SpManager.singleton.save(Const.ID, -1);
         SpManager.singleton.save(Const.USERNAME, "");
         _store.dispatch(UpdateUserAction(null));

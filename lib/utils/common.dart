@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/utils/const.dart';
 import 'package:wanandroid/utils/sp.dart';
@@ -148,5 +149,9 @@ class CommonUtils {
   static Future<bool> isLogin() async {
     var id = await SpManager.singleton.getInt(Const.ID);
     return id != null && id > 0;
+  }
+
+  static toast(String msg) {
+    Fluttertoast.showToast(msg: msg, fontSize: 14);
   }
 }

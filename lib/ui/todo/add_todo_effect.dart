@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/ui/todo/add_todo_action.dart';
 import 'package:wanandroid/ui/todo/add_todo_state.dart';
-import 'package:wanandroid/utils/common.dart';
-import 'package:wanandroid/utils/time.dart';
+import 'package:wanandroid/utils/utils.dart';
 
 Effect<AddTodoState> buildEffect() {
   return combineEffects(<Object, Effect<AddTodoState>>{
@@ -37,7 +35,7 @@ void _onAdd(Action action, Context<AddTodoState> ctx) {
     if (result != null) {
       Navigator.pop(ctx.context, "yes");
     } else {
-      Fluttertoast.showToast(msg: "添加失败");
+      CommonUtils.toast("添加失败");
     }
   });
 }
@@ -59,7 +57,7 @@ void _onEdit(Action action, Context<AddTodoState> ctx) {
     if (result != null) {
       Navigator.pop(ctx.context, "yes");
     } else {
-      Fluttertoast.showToast(msg: "修改失败");
+      CommonUtils.toast("修改失败");
     }
   });
 }

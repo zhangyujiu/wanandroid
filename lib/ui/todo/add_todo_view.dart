@@ -1,6 +1,5 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/ui/todo/add_todo_action.dart';
 import 'package:wanandroid/ui/todo/add_todo_state.dart';
@@ -20,11 +19,11 @@ Widget buildView(
           String title = state.titleEditController.text.toString();
           String content = state.contentEditController.text.toString();
           if(title.isEmpty){
-            Fluttertoast.showToast(msg: S.of(viewService.context).title_can_not_be_blank);
+            CommonUtils.toast(S.of(viewService.context).title_can_not_be_blank);
             return;
           }
           if(content.isEmpty){
-            Fluttertoast.showToast(msg: S.of(viewService.context).content_can_not_be_blank);
+            CommonUtils.toast(S.of(viewService.context).content_can_not_be_blank);
             return;
           }
           if (state.todo == null) {

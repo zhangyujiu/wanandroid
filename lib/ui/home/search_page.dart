@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/db/db.dart';
 import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/hotword.dart';
@@ -169,7 +168,7 @@ class _SearchPageState extends State<SearchPage> {
                 onPressed: () {
                   var key = _controller.text.toString();
                   if (key.isEmpty) {
-                    Fluttertoast.showToast(msg: S.of(context).keyword_cannot_be_empty);
+                    CommonUtils.toast(S.of(context).keyword_cannot_be_empty);
                     return;
                   }
                   _goToSearchResultPage(key);
