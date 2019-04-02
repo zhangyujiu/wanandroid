@@ -24,6 +24,7 @@ class Article {
   int userId;
   int visible;
   int zan;
+  int originId;
 
   Article({
     this.apkLink,
@@ -49,6 +50,7 @@ class Article {
     this.userId,
     this.visible,
     this.zan,
+    this.originId,
   });
 
   static Article fromJson(Map<String, dynamic> json) {
@@ -75,13 +77,13 @@ class Article {
       userId: json['userId'],
       visible: json['visible'],
       zan: json['zan'],
+      originId: json['originId'],
     );
     article.tags = Tag.parseTags(json['tags']);
     return article;
   }
 
-
-  static List<Article> parseList(List<dynamic> list){
+  static List<Article> parseList(List<dynamic> list) {
     List<Article> articles = List();
     for (var a in list) {
       Article article = Article.fromJson(a);
@@ -114,7 +116,6 @@ class Article {
         'userId': userId,
         'visible': visible,
         'zan': zan,
+        'originId ': originId,
       };
 }
-
-

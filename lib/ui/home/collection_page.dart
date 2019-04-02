@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_ui/widget/flutter_ui.dart';
 import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/article.dart';
 import 'package:wanandroid/model/base_list_data.dart';
 import 'package:wanandroid/net/dio_manager.dart';
+import 'package:wanandroid/utils/utils.dart';
 import 'package:wanandroid/widget/collection_article_widget.dart';
 import 'package:wanandroid/widget/custom_refresh.dart';
 import 'package:wanandroid/widget/page_widget.dart';
@@ -20,6 +23,7 @@ class _CollectionPageState extends State<CollectionPage> {
   PageStateController _pageStateController;
   List<Article> articles = List();
   int pageIndex = 0;
+  List<SlideButton> list = [];
 
   GlobalKey<EasyRefreshState> _easyRefreshKey =
       new GlobalKey<EasyRefreshState>();
@@ -64,8 +68,71 @@ class _CollectionPageState extends State<CollectionPage> {
             child: ListView.builder(
                 itemCount: articles.length,
                 itemBuilder: (context, index) {
-                  return CollectionArticleWidget(articles[index]);
+                  return Card(
+                    margin: EdgeInsets.all(5),
+                    child: list[index],
+                  );
                 })),
+      ),
+    );
+  }
+
+  getCollectWidgets() {
+    list.clear();
+    for (var i = 0; i < articles.length; i++) {
+      var article = articles[i];
+      var key = GlobalKey<SlideButtonState>();
+      var slide = SlideButton(
+        key: key,
+        singleButtonWidth: 80,
+        onSlideStarted: () {
+          list.forEach((slide) {
+            if (slide.key != key) {
+              slide.key.currentState?.close();
+            }
+          });
+        },
+        child: CollectionArticleWidget(article),
+        buttons: <Widget>[
+          buildAction(key, "取消收藏", Colors.grey[400], () {
+            key.currentState.close();
+            _collect(article);
+          }),
+        ],
+      );
+      list.add(slide);
+    }
+  }
+
+  ///取消收藏
+  _collect(Article article) {
+    CommonUtils.showLoadingDialog(context);
+    DioManager.singleton.post("lg/uncollect/${article.id}/json",data: FormData.from({
+      "originId": article.originId,
+    })).whenComplete(() {
+      Navigator.pop(context);
+    }).then((result) {
+      if (result != null) {
+        setState(() {
+          articles.remove(article);
+          getCollectWidgets();
+        });
+      }
+    });
+  }
+
+  InkWell buildAction(GlobalKey<SlideButtonState> key, String text, Color color,
+      GestureTapCallback tap) {
+    return InkWell(
+      onTap: tap,
+      child: Container(
+        alignment: Alignment.center,
+        width: 80,
+        color: color,
+        child: Text(text,
+            style: TextStyle(
+              color: Colors.white,
+            )),
       ),
     );
   }
@@ -88,6 +155,7 @@ class _CollectionPageState extends State<CollectionPage> {
         }
         setState(() {
           articles.addAll(Article.parseList(listdata.datas));
+          getCollectWidgets();
         });
       } else {
         _pageStateController.changeState(PageState.LoadFail);
