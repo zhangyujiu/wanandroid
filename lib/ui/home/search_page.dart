@@ -5,10 +5,8 @@ import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/hotword.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/ui/home/search_result_page.dart';
-import 'package:wanandroid/utils/color.dart';
-import 'package:wanandroid/utils/common.dart';
-import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/icon_text_widget.dart';
+import 'package:wanandroid/utils/utils.dart';
 
 class SearchPage extends StatefulWidget {
   @override

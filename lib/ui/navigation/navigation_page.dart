@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wanandroid/model/category.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/ui/webview_page.dart';
-import 'package:wanandroid/utils/color.dart';
-import 'package:wanandroid/utils/common.dart';
-import 'package:wanandroid/utils/textsize.dart';
+import 'package:wanandroid/utils/utils.dart';
 import 'package:wanandroid/widget/page_widget.dart';
 
 class NavigationPage extends StatefulWidget {

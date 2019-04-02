@@ -7,12 +7,10 @@ import 'package:wanandroid/model/base_data.dart';
 import 'package:wanandroid/model/base_list_data.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/ui/webview_page.dart';
-import 'package:wanandroid/utils/color.dart';
-import 'package:wanandroid/utils/common.dart';
-import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/article_widget.dart';
 import 'package:wanandroid/widget/custom_refresh.dart';
 import 'package:wanandroid/widget/page_widget.dart';
+import 'package:wanandroid/utils/utils.dart';
 
 class HomePage extends StatefulWidget {
   @override

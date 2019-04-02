@@ -1,14 +1,13 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:wanandroid/model/user.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
-import 'package:wanandroid/utils/const.dart';
-import 'package:wanandroid/utils/cookieutil.dart';
-import 'package:wanandroid/utils/sp.dart';
+import 'package:wanandroid/utils/utils.dart';
 
 class FlashPage extends StatefulWidget {
   @override
@@ -18,18 +17,21 @@ class FlashPage extends StatefulWidget {
 }
 
 class _FlashPageState extends State<FlashPage> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(seconds: 4)).whenComplete(() {
-      Navigator.pushReplacementNamed(context, 'main');
-    });
-  }
+  int times = 3;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     initData();
+    countDownTimer(3, (time, isFinish) {
+      print(time);
+      setState(() {
+        times = time;
+      });
+      if (isFinish) {
+        Navigator.pushReplacementNamed(context, 'main');
+      }
+    });
   }
 
   void initData() {
@@ -68,9 +70,33 @@ class _FlashPageState extends State<FlashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      "assets/flash.jpg",
-      fit: BoxFit.fill,
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          ConstrainedBox(
+            constraints: BoxConstraints.expand(),
+            child: Image.asset(
+              "assets/flash.jpg",
+              fit: BoxFit.fill,
+            ),
+          ),
+          Positioned(
+              top: 40,
+              right: 10,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(25, 8, 25, 8),
+                decoration: BoxDecoration(
+                    color: Colors.grey.withAlpha(180),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                child: Text(
+                  "$times s",
+                  style: TextStyle(
+                      color: ColorConst.color_white,
+                      fontSize: TextSizeConst.middleTextSize),
+                ),
+              ))
+        ],
+      ),
     );
   }
 }

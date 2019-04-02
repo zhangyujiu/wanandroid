@@ -6,7 +6,7 @@ import 'package:wanandroid/model/base_data.dart';
 import 'package:wanandroid/model/project_sort.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/ui/project/project_list_page.dart';
-import 'package:wanandroid/utils/color.dart';
+import 'package:wanandroid/utils/utils.dart';
 import 'package:wanandroid/widget/async_snapshot_widget.dart';
 import 'package:wanandroid/widget/load_fail_widget.dart';
 

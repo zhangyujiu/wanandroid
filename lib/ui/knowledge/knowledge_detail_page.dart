@@ -4,11 +4,11 @@ import 'package:wanandroid/model/article.dart';
 import 'package:wanandroid/model/base_list_data.dart';
 import 'package:wanandroid/model/knowledge_system.dart';
 import 'package:wanandroid/net/dio_manager.dart';
-import 'package:wanandroid/utils/color.dart';
 import 'package:wanandroid/widget/article_widget.dart';
 import 'package:wanandroid/widget/custom_refresh.dart';
 import 'package:wanandroid/widget/page_widget.dart';
 import 'package:wanandroid/widget/titlebar.dart';
+import 'package:wanandroid/utils/utils.dart';
 
 class knowledgeDetailPage extends StatefulWidget {
   KnowledgeSystem knowledge;

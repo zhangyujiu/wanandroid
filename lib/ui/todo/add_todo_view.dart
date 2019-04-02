@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/ui/todo/add_todo_action.dart';
 import 'package:wanandroid/ui/todo/add_todo_state.dart';
-import 'package:wanandroid/utils/color.dart';
+import 'package:wanandroid/utils/utils.dart';
 import 'package:wanandroid/widget/titlebar.dart';
 
 Widget buildView(

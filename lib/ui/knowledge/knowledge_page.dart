@@ -3,11 +3,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wanandroid/model/knowledge_system.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/ui/knowledge/knowledge_detail_page.dart';
-import 'package:wanandroid/utils/color.dart';
-import 'package:wanandroid/utils/common.dart';
-import 'package:wanandroid/utils/textsize.dart';
 import 'package:wanandroid/widget/custom_refresh.dart';
 import 'package:wanandroid/widget/page_widget.dart';
+import 'package:wanandroid/utils/utils.dart';
 
 class KnowledgePage extends StatefulWidget {
   @override

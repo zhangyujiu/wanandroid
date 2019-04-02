@@ -4,8 +4,7 @@ import 'package:wanandroid/model/todo.dart';
 import 'package:wanandroid/ui/todo/add_todo_page.dart';
 import 'package:wanandroid/ui/todo/component/todo_item_action.dart';
 import 'package:wanandroid/ui/todo/todo_action.dart';
-import 'package:wanandroid/utils/color.dart';
-import 'package:wanandroid/utils/common.dart';
+import 'package:wanandroid/utils/utils.dart';
 import 'package:wanandroid/utils/textsize.dart';
 
 Widget buildItemView(

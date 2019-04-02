@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redux/redux.dart';
@@ -18,12 +19,7 @@ import 'package:wanandroid/ui/navigation/navigation_page.dart';
 import 'package:wanandroid/ui/project/project_page.dart';
 import 'package:wanandroid/ui/todo/todo_page.dart';
 import 'package:wanandroid/ui/webview_page.dart';
-import 'package:wanandroid/utils/color.dart';
-import 'package:wanandroid/utils/common.dart';
-import 'package:wanandroid/utils/const.dart';
-import 'package:wanandroid/utils/eventbus.dart';
-import 'package:wanandroid/utils/sp.dart';
-import 'package:wanandroid/utils/textsize.dart';
+import 'package:wanandroid/utils/utils.dart';
 import 'package:wanandroid/widget/titlebar.dart';
 
 class MainPage extends StatefulWidget {

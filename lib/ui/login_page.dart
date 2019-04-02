@@ -8,8 +8,7 @@ import 'package:wanandroid/model/user.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
-import 'package:wanandroid/utils/const.dart';
-import 'package:wanandroid/utils/sp.dart';
+import 'package:wanandroid/utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   @override
