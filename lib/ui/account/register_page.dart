@@ -46,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: TitleBar(
         isShowBack: true,
-        title: S.of(context).register,
+        title: S.of(context).register_account,
       ),
       body: Column(
         children: <Widget>[

@@ -84,7 +84,7 @@ class _CollectionPageState extends State<CollectionPage> {
       var key = GlobalKey<SlideButtonState>();
       var slide = SlideButton(
         key: key,
-        singleButtonWidth: 80,
+        singleButtonWidth: 85,
         onSlideStarted: () {
           list.forEach((slide) {
             if (slide.key != key) {
@@ -107,9 +107,12 @@ class _CollectionPageState extends State<CollectionPage> {
   ///取消收藏
   _collect(Article article) {
     CommonUtils.showLoadingDialog(context);
-    DioManager.singleton.post("lg/uncollect/${article.id}/json",data: FormData.from({
-      "originId": article.originId,
-    })).whenComplete(() {
+    DioManager.singleton
+        .post("lg/uncollect/${article.id}/json",
+            data: FormData.from({
+              "originId": article.originId,
+            }))
+        .whenComplete(() {
       Navigator.pop(context);
     }).then((result) {
       if (result != null) {
@@ -127,7 +130,7 @@ class _CollectionPageState extends State<CollectionPage> {
       onTap: tap,
       child: Container(
         alignment: Alignment.center,
-        width: 80,
+        width: 85,
         color: color,
         child: Text(text,
             style: TextStyle(
@@ -149,13 +152,13 @@ class _CollectionPageState extends State<CollectionPage> {
         if (pageIndex == 0) {
           articles.clear();
         }
-        if (listdata.hasNoMore) {
-          // _refreshController.sendBack(false, RefreshStatus.noMore);
-        }
         setState(() {
           articles.addAll(Article.parseList(listdata.datas));
           getCollectWidgets();
         });
+        if (articles.length == 0) {
+          _pageStateController.changeState(PageState.NoData);
+        }
       } else {
         _pageStateController.changeState(PageState.LoadFail);
       }

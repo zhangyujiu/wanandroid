@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroid/generated/i18n.dart';
+import 'package:wanandroid/utils/utils.dart';
 import 'package:wanandroid/widget/load_fail_widget.dart';
 
 typedef ReloadData = Function();
@@ -39,6 +41,9 @@ class _PageWidgetState extends State<PageWidget> {
           case PageState.LoadFail:
             index = 1;
             break;
+          case PageState.NoData:
+            index = 3;
+            break;
           default:
             index = 2;
             break;
@@ -60,11 +65,38 @@ class _PageWidgetState extends State<PageWidget> {
             widget.reload();
           },
         ),
-//        _loadFailWidget(),
         Center(
           child: CircularProgressIndicator(),
+        ),
+        GestureDetector(
+          onTap: () {
+            widget.controller.changeState(PageState.Loading);
+            widget.reload();
+          },
+          child: noDataWidget(),
         )
       ],
+    );
+  }
+
+  Widget noDataWidget() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ImageIcon(
+            AssetImage("assets/icon_no_data.png"),
+            size: 50,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              S.of(context).no_data,
+              style: TextStyle(fontSize: TextSizeConst.middleTextSize),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -86,4 +118,4 @@ class PageStateController {
   }
 }
 
-enum PageState { Loading, LoadSuccess, LoadFail }
+enum PageState { Loading, LoadSuccess, LoadFail, NoData }

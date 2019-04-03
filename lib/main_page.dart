@@ -215,7 +215,7 @@ class _MainPageState extends State<MainPage> {
                 width: MediaQuery.of(context).size.width,
                 height: 45,
                 child: RaisedButton(
-                  color: ColorConst.color_primary,
+                  color: ColorConst.color_46be39,
                   onPressed: () {
                     CommonUtils.showCommitOptionDialog(
                         context,
