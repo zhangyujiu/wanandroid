@@ -7,6 +7,7 @@ import 'package:wanandroid/model/user.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
+import 'package:wanandroid/ui/account/register_page.dart';
 import 'package:wanandroid/utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,7 +26,6 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
   Store _store;
 
   Store get store => _store;
-
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
         .whenComplete(() {
       loading(false);
     }).then((result) {
-      if(result!=null){
+      if (result != null) {
         var id = result.data["id"];
         var username = result.data["username"];
         SpManager.singleton.save(Const.ID, id);
@@ -87,7 +87,8 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
         valueColor: animation,
       );
     } else {
-      loginButtonWidegt = Text(S.of(context).login, style: TextStyle(color: Colors.white));
+      loginButtonWidegt =
+          Text(S.of(context).login, style: TextStyle(color: Colors.white));
     }
     final logo = Hero(
       tag: 'hero',
@@ -143,16 +144,25 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
       height: 80,
     );
 
-    final forgotLabel = FlatButton(
+    final registerLabel = FlatButton(
       child: Text(
-        S.of(context).forget_pwd,
+        S.of(context).register_account,
         style: TextStyle(color: Colors.black54),
       ),
-      onPressed: () {},
+      onPressed: () {
+        CommonUtils.push(context, RegisterPage()).then((data) {
+          if(data!=null){
+            String username = data["username"];
+            String password = data["password"];
+            _userController.text = username;
+            _pwdController.text = password;
+          }
+        });
+      },
     );
 
     return StoreBuilder<MainRedux>(
-      builder: (context,store){
+      builder: (context, store) {
         _store = store;
         return Scaffold(
           backgroundColor: Colors.white,
@@ -168,7 +178,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
                     password,
                     SizedBox(height: 24.0),
                     loginButton,
-                    forgotLabel,
+                    registerLabel,
                   ],
                 ),
               ),

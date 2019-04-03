@@ -14,7 +14,7 @@ import 'package:wanandroid/ui/home/collection_page.dart';
 import 'package:wanandroid/ui/home/home_page.dart';
 import 'package:wanandroid/ui/home/search_page.dart';
 import 'package:wanandroid/ui/knowledge/knowledge_page.dart';
-import 'package:wanandroid/ui/login_page.dart';
+import 'package:wanandroid/ui/account/login_page.dart';
 import 'package:wanandroid/ui/navigation/navigation_page.dart';
 import 'package:wanandroid/ui/project/project_page.dart';
 import 'package:wanandroid/ui/todo/todo_page.dart';

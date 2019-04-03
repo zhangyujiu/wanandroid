@@ -46,6 +46,7 @@ class S implements WidgetsLocalizations {
   String get please_enter_a_keyword => "Please enter a keyword";
   String get please_input_content => "Please input content";
   String get please_input_pwd => "Please input password";
+  String get please_input_pwd_again => "Please input password again";
   String get please_input_title => "Please input title";
   String get please_input_username => "Please input username";
   String get please_login_first => "Please login first!";
@@ -54,6 +55,9 @@ class S implements WidgetsLocalizations {
   String get prompt => "Prompt";
   String get pwd_can_not_be_empty => "Password can not be empty";
   String get receive_timeout => "Receive timeout";
+  String get register => "Register";
+  String get register_account => "Register account";
+  String get register_success => "Register success";
   String get reload => "Reload...";
   String get request_cancel => "Request cancel";
   String get save => "Save";
@@ -79,6 +83,8 @@ class $zh_CN extends S {
   String get cancel => "取消";
   @override
   String get network_error => "网络错误";
+  @override
+  String get register_success => "注册成功";
   @override
   String get connect_timeout => "连接超时";
   @override
@@ -108,11 +114,15 @@ class $zh_CN extends S {
   @override
   String get reload => "重新加载...";
   @override
+  String get please_input_pwd_again => "请再次输入密码";
+  @override
   String get about_us => "关于我们";
   @override
   String get logout_success => "退出成功";
   @override
   String get please_input_content => "请输入内容";
+  @override
+  String get register_account => "注册账号";
   @override
   String get receive_timeout => "接收超时";
   @override
@@ -163,6 +173,8 @@ class $zh_CN extends S {
   String get please_login_first => "请先登录!";
   @override
   String get prompt => "提示";
+  @override
+  String get register => "注册";
 }
 
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
