@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 ///倒计时 单位s
-void countDownTimer(
+StreamSubscription countDownTimer(
     int totalCount, Function(int time, bool isFinish) callback) {
   StreamSubscription timerObservable;
   timerObservable =
@@ -15,4 +15,5 @@ void countDownTimer(
       timerObservable.cancel();
     }
   });
+  return timerObservable;
 }

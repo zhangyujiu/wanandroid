@@ -94,7 +94,7 @@ class _CollectionPageState extends State<CollectionPage> {
         },
         child: CollectionArticleWidget(article),
         buttons: <Widget>[
-          buildAction(key, "取消收藏", Colors.grey[400], () {
+          buildAction(key, "取消收藏", Colors.red, () {
             key.currentState.close();
             _collect(article);
           }),
@@ -146,7 +146,6 @@ class _CollectionPageState extends State<CollectionPage> {
       if (result != null) {
         _pageStateController.changeState(PageState.LoadSuccess);
         var listdata = BaseListData.fromJson(result.data);
-        print(listdata.toString());
         if (pageIndex == 0) {
           articles.clear();
         }

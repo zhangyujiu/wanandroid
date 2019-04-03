@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -17,12 +19,13 @@ class FlashPage extends StatefulWidget {
 
 class _FlashPageState extends State<FlashPage> {
   int times = 3;
+  StreamSubscription subscription;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     initData();
-    countDownTimer(3, (time, isFinish) {
+    subscription = countDownTimer(3, (time, isFinish) {
       print(time);
       setState(() {
         times = time;
@@ -80,22 +83,36 @@ class _FlashPageState extends State<FlashPage> {
             ),
           ),
           Positioned(
-              top: 40,
+              top: 35,
               right: 10,
-              child: Container(
-                padding: EdgeInsets.fromLTRB(25, 8, 25, 8),
-                decoration: BoxDecoration(
-                    color: Colors.grey.withAlpha(180),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                child: Text(
-                  "$times s",
-                  style: TextStyle(
-                      color: ColorConst.color_white,
-                      fontSize: TextSizeConst.middleTextSize),
+              child: InkWell(
+                onTap: (){
+                  subscription.cancel();
+                  Navigator.pushReplacementNamed(context, 'main');
+                },
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(25, 8, 25, 8),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.withAlpha(180),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  child: Text(
+                    "$times s",
+                    style: TextStyle(
+                        color: ColorConst.color_white,
+                        fontSize: TextSizeConst.middleTextSize),
+                  ),
                 ),
               ))
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (subscription != null) {
+      subscription.cancel();
+    }
   }
 }
