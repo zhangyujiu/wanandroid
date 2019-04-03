@@ -72,7 +72,6 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +215,7 @@ class _MainPageState extends State<MainPage> {
                 width: MediaQuery.of(context).size.width,
                 height: 45,
                 child: RaisedButton(
-                  color: Colors.lightBlueAccent,
+                  color: ColorConst.color_primary,
                   onPressed: () {
                     CommonUtils.showCommitOptionDialog(
                         context,

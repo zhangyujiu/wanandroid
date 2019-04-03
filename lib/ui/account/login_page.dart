@@ -133,7 +133,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16.0),
         child: RaisedButton(
-          color: Colors.lightBlueAccent,
+          color: ColorConst.color_primary,
           onPressed: onLoginClick,
           child: loginButtonWidegt,
           shape:

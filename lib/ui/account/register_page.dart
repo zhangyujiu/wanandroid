@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Padding(
         padding: EdgeInsets.all(16),
         child: RaisedButton(
-          color: ColorConst.color_46be39,
+          color: ColorConst.color_primary,
           onPressed: onRegisterClick,
           child: Text(S.of(context).register,
               style: TextStyle(color: Colors.white)),
@@ -58,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Row(
               children: <Widget>[
                 Container(
-                  child: Icon(Icons.phone_android),
+                  child: Icon(Icons.account_circle),
                   padding: EdgeInsets.only(left: 5),
                   alignment: Alignment.centerLeft,
                 ),
