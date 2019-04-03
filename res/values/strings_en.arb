@@ -46,5 +46,6 @@
   "register_account": "Register account",
   "register": "Register",
   "please_input_pwd_again": "Please input password again",
-  "register_success": "Register success"
+  "register_success": "Register success",
+  "no_data":"No data"
 }

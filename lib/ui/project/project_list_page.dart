@@ -56,12 +56,12 @@ class _ProjectListPageState extends State<ProjectListPage> with AutomaticKeepAli
         if (pageIndex == 1) {
           projects.clear();
         }
-        if (baseListData.hasNoMore) {
-          //_refreshController.sendBack(false, RefreshStatus.noMore);
-        }
         setState(() {
           projects.addAll(Project.parseList(baseListData.datas));
         });
+        if (projects.length == 0) {
+          _pageStateController.changeState(PageState.NoData);
+        }
       } else {
         _pageStateController.changeState(PageState.LoadFail);
       }

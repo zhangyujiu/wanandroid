@@ -42,6 +42,7 @@ class S implements WidgetsLocalizations {
   String get my_collection => "My collection";
   String get navigation => "Navigation";
   String get network_error => "Network error";
+  String get no_data => "No data";
   String get ok => "Ok";
   String get please_enter_a_keyword => "Please enter a keyword";
   String get please_input_content => "Please input content";
@@ -84,37 +85,19 @@ class $zh_CN extends S {
   @override
   String get network_error => "网络错误";
   @override
-  String get register_success => "注册成功";
-  @override
   String get connect_timeout => "连接超时";
-  @override
-  String get my_collection => "我的收藏";
-  @override
-  String get save => "保存";
   @override
   String get project => "项目";
   @override
   String get server_error => "服务器错误";
   @override
-  String get update => "修改";
-  @override
   String get knowledge_system => "知识体系";
   @override
   String get username_can_not_be_empty => "用户名不能为空";
   @override
-  String get login => "登录";
-  @override
-  String get search_for_hot_words => "搜索热词";
-  @override
-  String get search => "搜索";
-  @override
   String get navigation => "导航";
   @override
   String get logout => "退出登录";
-  @override
-  String get reload => "重新加载...";
-  @override
-  String get please_input_pwd_again => "请再次输入密码";
   @override
   String get about_us => "关于我们";
   @override
@@ -122,15 +105,7 @@ class $zh_CN extends S {
   @override
   String get please_input_content => "请输入内容";
   @override
-  String get register_account => "注册账号";
-  @override
-  String get receive_timeout => "接收超时";
-  @override
-  String get title_can_not_be_blank => "标题不能为空";
-  @override
   String get load_fail => "加载失败";
-  @override
-  String get ok => "确定";
   @override
   String get pwd_can_not_be_empty => "密码不能为空";
   @override
@@ -138,19 +113,13 @@ class $zh_CN extends S {
   @override
   String get add => "添加";
   @override
-  String get delete_prompt => "您确定要删除吗？";
-  @override
   String get request_cancel => "请求取消";
   @override
-  String get history_record => "历史记录";
-  @override
-  String get clear => "清空";
+  String get no_data => "暂无数据";
   @override
   String get forget_pwd => "忘记密码？";
   @override
   String get collection => "收藏";
-  @override
-  String get please_input_title => "请输入标题";
   @override
   String get keyword_cannot_be_empty => "关键字不能为空";
   @override
@@ -158,17 +127,51 @@ class $zh_CN extends S {
   @override
   String get press_again_to_exit_the_app => "再按一次退出应用程序";
   @override
-  String get home => "首页";
-  @override
   String get login_success => "登录成功";
+  @override
+  String get logout_prompt => "您确定要退出登录吗？";
+  @override
+  String get register_success => "注册成功";
+  @override
+  String get my_collection => "我的收藏";
+  @override
+  String get save => "保存";
+  @override
+  String get update => "修改";
+  @override
+  String get login => "登录";
+  @override
+  String get search_for_hot_words => "搜索热词";
+  @override
+  String get search => "搜索";
+  @override
+  String get reload => "重新加载...";
+  @override
+  String get please_input_pwd_again => "请再次输入密码";
+  @override
+  String get register_account => "注册账号";
+  @override
+  String get receive_timeout => "接收超时";
+  @override
+  String get title_can_not_be_blank => "标题不能为空";
+  @override
+  String get ok => "确定";
+  @override
+  String get delete_prompt => "您确定要删除吗？";
+  @override
+  String get history_record => "历史记录";
+  @override
+  String get clear => "清空";
+  @override
+  String get please_input_title => "请输入标题";
+  @override
+  String get home => "首页";
   @override
   String get app_name => "玩Android";
   @override
   String get please_enter_a_keyword => "请输入关键词";
   @override
   String get please_input_username => "请输入用户名";
-  @override
-  String get logout_prompt => "您确定要退出登录吗？";
   @override
   String get please_login_first => "请先登录!";
   @override

@@ -46,5 +46,6 @@
   "register_account": "注册账号",
   "register": "注册",
   "please_input_pwd_again": "请再次输入密码",
-  "register_success": "注册成功"
+  "register_success": "注册成功",
+  "no_data":"暂无数据"
 }

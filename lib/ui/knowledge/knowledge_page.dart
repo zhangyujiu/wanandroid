@@ -63,12 +63,15 @@ class _KnowledgePageState extends State<KnowledgePage>
       _easyRefreshKey.currentState.callLoadMoreFinish();
       if (result != null) {
         _pageStateController.changeState(PageState.LoadSuccess);
+        datas.clear();
+        List<KnowledgeSystem> knowledges =
+        KnowledgeSystem.parseList(result.data);
         setState(() {
-          datas.clear();
-          List<KnowledgeSystem> knowledges =
-              KnowledgeSystem.parseList(result.data);
           datas.addAll(knowledges);
         });
+        if (knowledges.length == 0) {
+          _pageStateController.changeState(PageState.NoData);
+        }
       }else{
         _pageStateController.changeState(PageState.LoadFail);
       }

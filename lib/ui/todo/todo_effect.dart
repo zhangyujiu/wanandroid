@@ -20,9 +20,13 @@ void _init(Action action, Context<TodoState> ctx) {
     ctx.state.easyRefreshKey.currentState.callRefreshFinish();
     ctx.state.easyRefreshKey.currentState.callLoadMoreFinish();
     if (result != null) {
-      ctx.state.pageStateController.changeState(PageState.LoadSuccess);
-      ctx.dispatch(
-          TodoActionCreator.onInitAction(Todo.parseList(result.data["datas"])));
+      var list = Todo.parseList(result.data["datas"]);
+      if (list.length == 0) {
+        ctx.state.pageStateController.changeState(PageState.NoData);
+      } else {
+        ctx.state.pageStateController.changeState(PageState.LoadSuccess);
+      }
+      ctx.dispatch(TodoActionCreator.onInitAction(list));
     } else {
       ctx.state.pageStateController.changeState(PageState.LoadFail);
     }
@@ -37,9 +41,13 @@ void _onRefresh(Action action, Context<TodoState> ctx) {
     ctx.state.easyRefreshKey.currentState.callRefreshFinish();
     ctx.state.easyRefreshKey.currentState.callLoadMoreFinish();
     if (result != null) {
-      ctx.state.pageStateController.changeState(PageState.LoadSuccess);
-      ctx.dispatch(TodoActionCreator.refreshAction(
-          Todo.parseList(result.data["datas"])));
+      var list = Todo.parseList(result.data["datas"]);
+      if (list.length == 0) {
+        ctx.state.pageStateController.changeState(PageState.NoData);
+      } else {
+        ctx.state.pageStateController.changeState(PageState.LoadSuccess);
+      }
+      ctx.dispatch(TodoActionCreator.refreshAction(list));
     } else {
       ctx.state.pageStateController.changeState(PageState.LoadFail);
     }
