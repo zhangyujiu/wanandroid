@@ -7,11 +7,12 @@ import 'package:wanandroid/event/error_event.dart';
 import 'package:wanandroid/model/base_data.dart';
 import 'package:wanandroid/utils/cookieutil.dart';
 import 'package:wanandroid/utils/eventbus.dart';
+import 'package:wanandroid/utils/utils.dart';
 
 class DioManager {
   Dio _dio;
 
-  static String baseUrl="https://www.wanandroid.com/";
+  static String baseUrl = "https://www.wanandroid.com/";
 
   DioManager._internal() {
     _dio = new Dio(BaseOptions(
@@ -19,9 +20,6 @@ class DioManager {
       connectTimeout: 10000,
       receiveTimeout: 3000,
     ));
-    CookieUtil.getCookiePath().then((path) {
-      _dio.interceptors..add(CookieManager(PersistCookieJar(dir: path)));
-    });
     _dio.interceptors.add(InterceptorsWrapper(onError: (DioError e) {
       EventUtil.eventBus.fire(e);
       return e;
@@ -32,6 +30,8 @@ class DioManager {
 
   factory DioManager() => singleton;
 
+  CookieManager _cookieManager;
+
   get dio {
     return _dio;
   }
@@ -40,6 +40,11 @@ class DioManager {
     print('get请求启动! url：$url ,body: $data');
     Response response;
     ResultData result;
+    String path = await CookieUtil.getCookiePath();
+    if (_cookieManager == null) {
+      _cookieManager = CookieManager(PersistCookieJar(dir: path));
+      _dio.interceptors.add(_cookieManager);
+    }
     try {
       response = await dio.get(
         url,
@@ -66,6 +71,11 @@ class DioManager {
   Future<Response> getNormal(url, {data, options, cancelToken}) async {
     print('get请求启动! url：$url ,body: $data');
     Response response;
+    String path = await CookieUtil.getCookiePath();
+    if (_cookieManager == null) {
+      _cookieManager = CookieManager(PersistCookieJar(dir: path));
+      _dio.interceptors.add(_cookieManager);
+    }
     try {
       response = await dio.get(
         url,
@@ -87,6 +97,11 @@ class DioManager {
     print('post请求启动! url：$url ,body: $data');
     Response response;
     ResultData result;
+    String path = await CookieUtil.getCookiePath();
+    if (_cookieManager == null) {
+      _cookieManager = CookieManager(PersistCookieJar(dir: path));
+      _dio.interceptors.add(_cookieManager);
+    }
     try {
       response = await dio.post(
         url,
@@ -113,6 +128,11 @@ class DioManager {
   Future<Response> postNormal(url, {data, options, cancelToken}) async {
     print('post请求启动! url：$url ,body: $data');
     Response response;
+    String path = await CookieUtil.getCookiePath();
+    if (_cookieManager == null) {
+      _cookieManager = CookieManager(PersistCookieJar(dir: path));
+      _dio.interceptors.add(_cookieManager);
+    }
     try {
       response = await dio.post(
         url,
