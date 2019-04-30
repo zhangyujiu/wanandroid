@@ -24,7 +24,7 @@ class _WebViewPageState extends State<WebViewPage> {
   @override
   void initState() {
     super.initState();
-    flutterWebViewPlugin.close();
+    //flutterWebViewPlugin.close();
     _onStateChanged =
         flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
       switch (state.type) {
@@ -45,9 +45,11 @@ class _WebViewPageState extends State<WebViewPage> {
           break;
       }
     });
-    flutterWebViewPlugin.onDestroy.listen((_) {
+    //flutter_webview_plugin在0.3.0+2之前存在bug，当在网页中点击超链接后返回会一直停留在加载中的页面，在0.3.0+2后修改了此bug
+    //flutter_webview_plugin在版本升级后若不删除下面代码，关闭页面会黑屏
+    /*flutterWebViewPlugin.onDestroy.listen((_) {
       Navigator.of(context).pop();
-    });
+    });*/
   }
 
   @override
