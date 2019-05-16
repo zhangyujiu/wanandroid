@@ -1,8 +1,12 @@
 import 'dart:async';
 
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:flare_dart/math/mat2d.dart';
+import 'package:flare_flutter/flare.dart';
+import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:redux/redux.dart';
 import 'package:wanandroid/model/user.dart';
 import 'package:wanandroid/net/dio_manager.dart';
@@ -25,7 +29,7 @@ class _FlashPageState extends State<FlashPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     initData();
-    subscription = countDownTimer(3, (time, isFinish) {
+    /*subscription = countDownTimer(3, (time, isFinish) {
       print(time);
       setState(() {
         times = time;
@@ -33,7 +37,7 @@ class _FlashPageState extends State<FlashPage> {
       if (isFinish) {
         Navigator.pushReplacementNamed(context, 'main');
       }
-    });
+    });*/
   }
 
   void initData() {
@@ -75,19 +79,20 @@ class _FlashPageState extends State<FlashPage> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          ConstrainedBox(
-            constraints: BoxConstraints.expand(),
-            child: Image.asset(
-              "assets/flash.jpg",
-              fit: BoxFit.fill,
-            ),
+          Center(
+            child: FlareActor("assets/filip.flr",
+                alignment: Alignment.center,
+                fit: BoxFit.contain,
+                animation: "idle"),
           ),
           Positioned(
-              top: 35,
+              top: MediaQuery.of(context).padding.top+10,
               right: 10,
               child: InkWell(
-                onTap: (){
-                  subscription.cancel();
+                onTap: () {
+                  if (subscription != null) {
+                    subscription.cancel();
+                  }
                   Navigator.pushReplacementNamed(context, 'main');
                 },
                 child: Container(
@@ -96,7 +101,8 @@ class _FlashPageState extends State<FlashPage> {
                       color: Colors.grey.withAlpha(180),
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: Text(
-                    "$times s",
+//                    "$times s",
+                    "跳过",
                     style: TextStyle(
                         color: ColorConst.color_white,
                         fontSize: TextSizeConst.middleTextSize),
@@ -116,3 +122,4 @@ class _FlashPageState extends State<FlashPage> {
     }
   }
 }
+
