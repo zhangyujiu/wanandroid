@@ -30,7 +30,7 @@ android {
         config {
             keyAlias 'wanandroid'
             keyPassword '123456'
-            storeFile file('android/key.jks')
+            storeFile file('../key.jks')
             storePassword '123456'
         }
     }
