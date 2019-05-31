@@ -7,3 +7,4 @@ export 'rxutils.dart';
 export 'sp.dart';
 export 'textsize.dart';
 export 'time.dart';
+export 'clipboard_utils.dart';

@@ -47,5 +47,7 @@
   "register": "Register",
   "please_input_pwd_again": "Please input password again",
   "register_success": "Register success",
-  "no_data":"No data"
+  "no_data":"No data",
+  "copy": "copy",
+  "copy_success": "Copy success"
 }

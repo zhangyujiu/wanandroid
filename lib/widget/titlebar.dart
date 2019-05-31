@@ -88,7 +88,7 @@ class _TitleBarState extends State<TitleBar> {
               ),
               padding: EdgeInsets.symmetric(horizontal: 45)), */
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 45),
+            margin: EdgeInsets.symmetric(horizontal: 50),
             child: Center(
               child: MarqueeWidget(
                 text: widget.title,

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:wanandroid/generated/i18n.dart';
+import 'package:wanandroid/utils/utils.dart';
 import 'package:wanandroid/widget/titlebar.dart';
 
 class WebViewPage extends StatefulWidget {
@@ -60,6 +62,12 @@ class _WebViewPageState extends State<WebViewPage> {
           : TitleBar(
               isShowBack: true,
               title: widget.title,
+              rightButtons: <Widget>[
+                TitleBar.textButton(S.of(context).copy,press: (){
+                  ClipboardUtil.saveData2Clipboard(widget.url);
+                  CommonUtils.toast(S.of(context).copy_success);
+                })
+              ],
             ),
       body: WebviewScaffold(
         url: widget.url,

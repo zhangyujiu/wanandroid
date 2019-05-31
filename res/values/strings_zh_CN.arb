@@ -47,5 +47,7 @@
   "register": "注册",
   "please_input_pwd_again": "请再次输入密码",
   "register_success": "注册成功",
-  "no_data":"暂无数据"
+  "no_data":"暂无数据",
+  "copy": "复制",
+  "copy_success": "复制成功"
 }
