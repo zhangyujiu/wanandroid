@@ -46,6 +46,7 @@ class _SearchPageState extends State<SearchPage> {
           Expanded(
             flex: 1,
             child: ListView.builder(
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),//ListView控件有默认padding，默认为mediaQuery.padding
                 itemCount: historys.length + 1,
                 itemBuilder: (context, index) {
                   if (index == 0) {
@@ -160,7 +161,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: Text(
                   S.of(context).search,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: ColorConst.color_white,fontSize: 12),
+                  style: TextStyle(color: ColorConst.color_white, fontSize: 12),
                   maxLines: 1,
                 ),
                 shape: RoundedRectangleBorder(
