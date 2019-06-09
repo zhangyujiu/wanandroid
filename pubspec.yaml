@@ -23,8 +23,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   dio: ^2.1.0
   shared_preferences: ^0.4.3
-  sqflite: ^0.12.2
-  path_provider: ^0.4.0
+  sqflite: ^1.1.5
+  path_provider: ^0.5.0+1
   redux: ^3.0.0
   flutter_redux: ^0.5.2 # 数据共享
   #scoped_model: ^1.0.1  # 数据共享
@@ -33,13 +33,13 @@ dependencies:
   flutter_swiper: ^1.1.4
   rxdart: ^0.19.0
   event_bus: ^1.0.1
-  flutter_spinkit: ^2.0.1
-  flutter_webview_plugin: ^0.3.4
-  cached_network_image: ^0.5.1
+  flutter_spinkit: ^3.1.0
+  flutter_webview_plugin: ^0.3.5
+  cached_network_image: ^0.8.0
   flutter_html: ^0.8.2
   flutter_easyrefresh: ^1.2.7
-  fish_redux: ^0.1.0
-  flare_flutter: ^1.5.0
+  fish_redux: ^0.2.1
+  flare_flutter: ^1.5.1
   flutter_ui:
     git:
       url: "https://github.com/zhangyujiu/flutter_ui.git"

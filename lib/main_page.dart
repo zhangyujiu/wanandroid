@@ -166,11 +166,11 @@ class _MainPageState extends State<MainPage> {
             width: double.infinity,
             height: 200,
             imageUrl: "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png",
-            placeholder: ImageIcon(
+            placeholder: (context,url)=>ImageIcon(
               AssetImage("assets/logo.png"),
               size: 100,
             ),
-            errorWidget: Icon(Icons.info_outline),
+            errorWidget: (context,url,error)=>Icon(Icons.info_outline),
           ),
         ),
         SizedBox(
