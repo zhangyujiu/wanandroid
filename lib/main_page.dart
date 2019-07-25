@@ -1,20 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:redux/redux.dart';
 import 'package:wanandroid/event/error_event.dart';
 import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/net/dio_manager.dart';
 import 'package:wanandroid/redux/main_redux.dart';
 import 'package:wanandroid/redux/user_reducer.dart';
+import 'package:wanandroid/ui/account/login_page.dart';
 import 'package:wanandroid/ui/home/collection_page.dart';
 import 'package:wanandroid/ui/home/home_page.dart';
 import 'package:wanandroid/ui/home/search_page.dart';
 import 'package:wanandroid/ui/knowledge/knowledge_page.dart';
-import 'package:wanandroid/ui/account/login_page.dart';
 import 'package:wanandroid/ui/navigation/navigation_page.dart';
 import 'package:wanandroid/ui/project/project_page.dart';
 import 'package:wanandroid/ui/todo/todo_page.dart';
@@ -71,7 +69,6 @@ class _MainPageState extends State<MainPage> {
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -162,15 +159,20 @@ class _MainPageState extends State<MainPage> {
         ClipPath(
           clipper: ArcClipper(),
           child: CachedNetworkImage(
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
             width: double.infinity,
             height: 200,
             imageUrl: "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png",
-            placeholder: (context,url)=>ImageIcon(
-              AssetImage("assets/logo.png"),
-              size: 100,
-            ),
-            errorWidget: (context,url,error)=>Icon(Icons.info_outline),
+            placeholder: (context, url) => Image.asset(
+                  "assets/logo.png",
+                  width: double.infinity,
+                  height: 200,
+                ),
+            errorWidget: (context, url, error) => Image.asset(
+                  "assets/load_fail.png",
+                  width: double.infinity,
+                  height: 200,
+                ),
           ),
         ),
         SizedBox(
