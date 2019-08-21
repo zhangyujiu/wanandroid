@@ -68,6 +68,17 @@ class _MainPageState extends State<MainPage> {
         CommonUtils.toast(errorMsg);
       }
     });
+    //visitElement(context);
+  }
+
+  void visitElement(Element e) {
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      e.visitChildElements((visitor){
+        print("------------"+visitor.widget.runtimeType.toString());
+        if(visitor==null)return;
+        visitElement(visitor);
+      });
+    });
   }
 
   @override
@@ -161,17 +172,17 @@ class _MainPageState extends State<MainPage> {
           child: CachedNetworkImage(
             fit: BoxFit.cover,
             width: double.infinity,
-            height: 200,
+            height: 180,
             imageUrl: "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png",
             placeholder: (context, url) => Image.asset(
                   "assets/logo.png",
                   width: double.infinity,
-                  height: 200,
+                  height: 180,
                 ),
             errorWidget: (context, url, error) => Image.asset(
                   "assets/load_fail.png",
                   width: double.infinity,
-                  height: 200,
+                  height: 180,
                 ),
           ),
         ),
@@ -213,7 +224,7 @@ class _MainPageState extends State<MainPage> {
             return Offstage(
               offstage: store.state.user == null,
               child: Container(
-                margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                margin: EdgeInsets.fromLTRB(20, 50, 20, 0),
                 width: MediaQuery.of(context).size.width,
                 height: 45,
                 child: RaisedButton(
