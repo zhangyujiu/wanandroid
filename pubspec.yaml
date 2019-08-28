@@ -38,7 +38,7 @@ dependencies:
   cached_network_image: ^0.8.0
   flutter_html: ^0.8.2
   flutter_easyrefresh: ^1.2.7
-  fish_redux: ^0.2.1
+  fish_redux: ^0.2.5
   flare_flutter: ^1.5.1
   flutter_ui:
     git:

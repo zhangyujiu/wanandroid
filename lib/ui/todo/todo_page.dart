@@ -12,6 +12,6 @@ class TodoPage extends Page<TodoState, Map<String, dynamic>> {
           effect: buildEffect(),
           reducer:buildReducer(),
           view: buildView,
-    dependencies:Dependencies<TodoState>(adapter: TodoAdapter())
+    dependencies:Dependencies<TodoState>(adapter:  NoneConn<TodoState>()+TodoAdapter())
         );
 }

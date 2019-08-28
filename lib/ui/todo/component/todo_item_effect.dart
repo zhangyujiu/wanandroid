@@ -16,7 +16,7 @@ Effect<Todo> buildEffect() {
   });
 }
 
-void _onCheck(Action action, Context<Todo> ctx) {
+void _onCheck(dynamic action, Context<Todo> ctx) {
   bool payload = action.payload;
   CommonUtils.showLoadingDialog(ctx.context);
   DioManager.singleton
@@ -31,7 +31,7 @@ void _onCheck(Action action, Context<Todo> ctx) {
   });
 }
 
-void _onDelete(Action action, Context<Todo> ctx) {
+void _onDelete(dynamic action, Context<Todo> ctx) {
   CommonUtils.showCommitOptionDialog(
       ctx.context,
       S.of(ctx.context).prompt,

@@ -14,14 +14,14 @@ Effect<AddTodoState> buildEffect() {
   });
 }
 
-void _init(Action action, Context<AddTodoState> ctx) {
+void _init(dynamic action, Context<AddTodoState> ctx) {
   if (ctx.state.todo != null) {
     ctx.state.titleEditController.text = ctx.state.todo.title;
     ctx.state.contentEditController.text = ctx.state.todo.content;
   }
 }
 
-void _onAdd(Action action, Context<AddTodoState> ctx) {
+void _onAdd(dynamic action, Context<AddTodoState> ctx) {
   Map<String, String> map = action.payload;
   var data = FormData.from({
     "title": map["title"],
@@ -40,7 +40,7 @@ void _onAdd(Action action, Context<AddTodoState> ctx) {
   });
 }
 
-void _onEdit(Action action, Context<AddTodoState> ctx) {
+void _onEdit(dynamic action, Context<AddTodoState> ctx) {
   Map<String, String> map = action.payload;
   var data = FormData.from({
     "title": map["title"],
