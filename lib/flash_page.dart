@@ -47,8 +47,8 @@ class _FlashPageState extends State<FlashPage> {
       var persistCookieJar = PersistCookieJar(dir: path);
       var cookies =
           persistCookieJar.loadForRequest(Uri.parse(DioManager.baseUrl));
-      if (cookies != null && cookies.length > 0) {
-        var cookie = cookies[0];
+      if (cookies != null && cookies.length > 2) {
+        var cookie = cookies[2];
         if (cookie.expires == null) return;
         bool isExpires = cookie.expires.isBefore(DateTime.now());
         //Cookie过期则退出登录
