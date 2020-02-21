@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:flare_dart/math/mat2d.dart';
-import 'package:flare_flutter/flare.dart';
-import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flare_flutter/flare_actor.dart';

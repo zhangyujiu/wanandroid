@@ -131,6 +131,8 @@ class _MainPageState extends State<MainPage> {
               type: BottomNavigationBarType.fixed,
               fixedColor: Color(ColorConst.primaryColor),
               onTap: (index) => _tap(index),
+              selectedFontSize: 12,
+              unselectedFontSize: 12,
               items: [
                 BottomNavigationBarItem(
                     title: Text(appBarTitles[0]), icon: Icon(Icons.home)),

@@ -59,7 +59,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
-                          "${article.author}",
+                          "${article.author.isNotEmpty ? article.author : article.shareUser}",
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(

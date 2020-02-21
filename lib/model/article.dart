@@ -25,6 +25,7 @@ class Article {
   int visible;
   int zan;
   int originId;
+  String shareUser;
 
   Article({
     this.apkLink,
@@ -51,6 +52,7 @@ class Article {
     this.visible,
     this.zan,
     this.originId,
+    this.shareUser,
   });
 
   static Article fromJson(Map<String, dynamic> json) {
@@ -78,6 +80,7 @@ class Article {
       visible: json['visible'],
       zan: json['zan'],
       originId: json['originId'],
+      shareUser: json['shareUser'],
     );
     article.tags = Tag.parseTags(json['tags']);
     return article;
@@ -117,5 +120,6 @@ class Article {
         'visible': visible,
         'zan': zan,
         'originId ': originId,
+        'shareUser ': shareUser,
       };
 }
