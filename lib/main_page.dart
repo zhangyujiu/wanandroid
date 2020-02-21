@@ -217,7 +217,7 @@ class _MainPageState extends State<MainPage> {
               context,
               WebViewPage(
                 title: S.of(context).about_us,
-                url: "http://www.wanandroid.com/about",
+                url: "http://www.wanandroid.com",
               ));
         }),
         StoreBuilder<MainRedux>(

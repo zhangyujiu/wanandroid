@@ -49,7 +49,7 @@ class _CollectionArticleWidgetState extends State<CollectionArticleWidget> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        "${article.author}",
+                        "${article.author.isNotEmpty ? article.author : article.chapterName}",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(
