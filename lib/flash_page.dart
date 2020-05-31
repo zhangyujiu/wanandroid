@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:redux/redux.dart';
@@ -73,40 +74,43 @@ class _FlashPageState extends State<FlashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Center(
-            child: FlareActor("assets/filip.flr",
-                alignment: Alignment.center,
-                fit: BoxFit.contain,
-                animation: "idle"),
-          ),
-          Positioned(
-              top: MediaQuery.of(context).padding.top+10,
-              right: 10,
-              child: InkWell(
-                onTap: () {
-                  if (subscription != null) {
-                    subscription.cancel();
-                  }
-                  Navigator.pushReplacementNamed(context, 'main');
-                },
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(25, 8, 25, 8),
-                  decoration: BoxDecoration(
-                      color: Colors.grey.withAlpha(180),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: Text(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Center(
+              child: FlareActor("assets/filip.flr",
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "idle"),
+            ),
+            Positioned(
+                top: MediaQuery.of(context).padding.top+10,
+                right: 10,
+                child: InkWell(
+                  onTap: () {
+                    if (subscription != null) {
+                      subscription.cancel();
+                    }
+                    Navigator.pushReplacementNamed(context, 'main');
+                  },
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(25, 8, 25, 8),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.withAlpha(180),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Text(
 //                    "$times s",
-                    "跳过",
-                    style: TextStyle(
-                        color: ColorConst.color_white,
-                        fontSize: TextSizeConst.middleTextSize),
+                      "跳过",
+                      style: TextStyle(
+                          color: ColorConst.color_white,
+                          fontSize: TextSizeConst.middleTextSize),
+                    ),
                   ),
-                ),
-              ))
-        ],
+                ))
+          ],
+        ),
       ),
     );
   }

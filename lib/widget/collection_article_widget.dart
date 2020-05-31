@@ -42,6 +42,7 @@ class _CollectionArticleWidgetState extends State<CollectionArticleWidget> {
               children: <Widget>[
                 Icon(
                   Icons.android,
+                  size: 18,
                   color: ColorConst.color_primary,
                 ),
                 Expanded(
@@ -75,6 +76,7 @@ class _CollectionArticleWidgetState extends State<CollectionArticleWidget> {
               children: <Widget>[
                 Icon(
                   Icons.access_time,
+                  size: 18,
                   color: Colors.black45,
                 ),
                 Expanded(

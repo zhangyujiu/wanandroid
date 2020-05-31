@@ -128,6 +128,7 @@ class _ProjectListPageState extends State<ProjectListPage> with AutomaticKeepAli
                           children: <Widget>[
                             Icon(
                               Icons.android,
+                              size: 18,
                               color: ColorConst.color_primary,
                             ),
                             Expanded(

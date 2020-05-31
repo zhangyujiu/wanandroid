@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wanandroid/model/article.dart';
 import 'package:wanandroid/model/base_list_data.dart';
@@ -48,36 +49,39 @@ class _SearchResultPageState extends State<SearchResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: TitleBar(
-        title: widget.keyWord,
-      ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor.withAlpha(180),
-          child: Icon(Icons.arrow_upward),
-          onPressed: () {
-            _scrollController.animateTo(0,
-                duration: Duration(milliseconds: 1000), curve: Curves.linear);
-          }),
-      body: PageWidget(
-        reload: () {
-          getList(true);
-        },
-        controller: _pageStateController,
-        child: CustomRefresh(
-            easyRefreshKey: _easyRefreshKey,
-            onRefresh: () {
-              _onRefresh(true);
-            },
-            loadMore: () {
-              _onRefresh(false);
-            },
-            child: ListView.builder(
-                controller: _scrollController,
-                itemCount: articles.length,
-                itemBuilder: (context, index) {
-                  return ArticleWidget(articles[index]);
-                })),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        appBar: TitleBar(
+          title: widget.keyWord,
+        ),
+        floatingActionButton: FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor.withAlpha(180),
+            child: Icon(Icons.arrow_upward),
+            onPressed: () {
+              _scrollController.animateTo(0,
+                  duration: Duration(milliseconds: 1000), curve: Curves.linear);
+            }),
+        body: PageWidget(
+          reload: () {
+            getList(true);
+          },
+          controller: _pageStateController,
+          child: CustomRefresh(
+              easyRefreshKey: _easyRefreshKey,
+              onRefresh: () {
+                _onRefresh(true);
+              },
+              loadMore: () {
+                _onRefresh(false);
+              },
+              child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount: articles.length,
+                  itemBuilder: (context, index) {
+                    return ArticleWidget(articles[index]);
+                  })),
+        ),
       ),
     );
   }

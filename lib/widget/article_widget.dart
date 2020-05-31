@@ -52,6 +52,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                 children: <Widget>[
                   Icon(
                     Icons.android,
+                    size: 18,
                     color: ColorConst.color_primary,
                   ),
                   Expanded(
@@ -101,6 +102,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                   !article.collect
                       ? IconButton(
                           alignment: Alignment.centerLeft,
+                          iconSize: 18,
                           padding: EdgeInsets.all(0),
                           icon: Icon(
                             Icons.favorite_border,
@@ -110,6 +112,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                         )
                       : IconButton(
                           alignment: Alignment.centerLeft,
+                          iconSize: 18,
                           padding: EdgeInsets.all(0),
                           icon: Icon(
                             Icons.favorite,
@@ -119,6 +122,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                         ),
                   Icon(
                     Icons.access_time,
+                    size: 18,
                     color: Colors.black45,
                   ),
                   Expanded(

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:wanandroid/event/error_event.dart';
@@ -89,60 +90,67 @@ class _MainPageState extends State<MainPage> {
       S.of(context).navigation,
       S.of(context).project
     ];
+    /*return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: ,
+    );*/
     return WillPopScope(
-        child: Scaffold(
-          appBar: TitleBar(
-            isShowBack: true,
-            leftButton: Builder(builder: (cxt) {
-              return IconButton(
-                  icon: Icon(
-                    Icons.menu,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Scaffold.of(cxt).openDrawer();
-                  });
-            }),
-            title: appBarTitles[_tabIndex],
-            rightButtons: <Widget>[
-              TitleBar.iconButton(
-                  icon: Icons.search,
-                  color: ColorConst.color_white,
-                  press: () {
-                    CommonUtils.push(context, SearchPage());
-                  })
-            ],
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: Scaffold(
+            appBar: TitleBar(
+              isShowBack: true,
+              leftButton: Builder(builder: (cxt) {
+                return IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Scaffold.of(cxt).openDrawer();
+                    });
+              }),
+              title: appBarTitles[_tabIndex],
+              rightButtons: <Widget>[
+                TitleBar.iconButton(
+                    icon: Icons.search,
+                    color: ColorConst.color_white,
+                    press: () {
+                      CommonUtils.push(context, SearchPage());
+                    })
+              ],
+            ),
+            drawer: Drawer(
+              child: _drawerChild(),
+            ),
+            body: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _pageCtr,
+              children: <Widget>[
+                HomePage(),
+                KnowledgePage(),
+                NavigationPage(),
+                ProjectPage(),
+              ],
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+                currentIndex: _tabIndex,
+                type: BottomNavigationBarType.fixed,
+                fixedColor: Color(ColorConst.primaryColor),
+                onTap: (index) => _tap(index),
+                selectedFontSize: 12,
+                unselectedFontSize: 12,
+                items: [
+                  BottomNavigationBarItem(
+                      title: Text(appBarTitles[0]), icon: Icon(Icons.location_city)),
+                  BottomNavigationBarItem(
+                      title: Text(appBarTitles[1]), icon: Icon(Icons.dvr)),
+                  BottomNavigationBarItem(
+                      title: Text(appBarTitles[2]), icon: Icon(Icons.send)),
+                  BottomNavigationBarItem(
+                      title: Text(appBarTitles[3]), icon: Icon(Icons.school)),
+                ]),
           ),
-          drawer: Drawer(
-            child: _drawerChild(),
-          ),
-          body: PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _pageCtr,
-            children: <Widget>[
-              HomePage(),
-              KnowledgePage(),
-              NavigationPage(),
-              ProjectPage(),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-              currentIndex: _tabIndex,
-              type: BottomNavigationBarType.fixed,
-              fixedColor: Color(ColorConst.primaryColor),
-              onTap: (index) => _tap(index),
-              selectedFontSize: 12,
-              unselectedFontSize: 12,
-              items: [
-                BottomNavigationBarItem(
-                    title: Text(appBarTitles[0]), icon: Icon(Icons.home)),
-                BottomNavigationBarItem(
-                    title: Text(appBarTitles[1]), icon: Icon(Icons.theaters)),
-                BottomNavigationBarItem(
-                    title: Text(appBarTitles[2]), icon: Icon(Icons.navigation)),
-                BottomNavigationBarItem(
-                    title: Text(appBarTitles[3]), icon: Icon(Icons.print)),
-              ]),
         ),
         onWillPop: () async {
           if (_lastPressedAt == null ||
@@ -175,7 +183,7 @@ class _MainPageState extends State<MainPage> {
             fit: BoxFit.cover,
             width: double.infinity,
             height: 180,
-            imageUrl: "http://t2.hddhhn.com/uploads/tu/201612/98/st93.png",
+            imageUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590935946147&di=8a991bf574f0812dffa87485fc1b340e&imgtype=0&src=http%3A%2F%2F5.26923.com%2Fdownload%2Fpic%2F000%2F324%2F9195f173c1a41d99e7df634b712c65b9.jpg",
             placeholder: (context, url) => Image.asset(
                   "assets/logo.png",
                   width: double.infinity,
@@ -217,7 +225,7 @@ class _MainPageState extends State<MainPage> {
               context,
               WebViewPage(
                 title: S.of(context).about_us,
-                url: "http://www.wanandroid.com",
+                url: "https://www.wanandroid.com/",
               ));
         }),
         StoreBuilder<MainRedux>(

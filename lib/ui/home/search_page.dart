@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wanandroid/db/db.dart';
 import 'package:wanandroid/generated/i18n.dart';
 import 'package:wanandroid/model/hotword.dart';
@@ -38,80 +39,84 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _title(context),
-          Expanded(
-            flex: 1,
-            child: ListView.builder(
-                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),//ListView控件有默认padding，默认为mediaQuery.padding
-                itemCount: historys.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              S.of(context).search_for_hot_words,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(color: ColorConst.color_333),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _title(context),
+            Expanded(
+              flex: 1,
+              child: ListView.builder(
+                  padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                  //ListView控件有默认padding，默认为mediaQuery.padding
+                  itemCount: historys.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Padding(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: Text(
+                                S.of(context).search_for_hot_words,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(color: ColorConst.color_333),
+                              ),
                             ),
-                          ),
-                          hotwords.length > 0
-                              ? Wrap(
-                                  spacing: 5,
-                                  runSpacing: 5,
-                                  children: _buildWrapItem(),
-                                )
-                              : SizedBox(),
-                          Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 1,
-                                  child: Text(S.of(context).history_record,
-                                      style: TextStyle(
-                                          color: ColorConst.color_333)),
-                                ),
-                                InkWell(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(5),
-                                    child: Text(S.of(context).clear,
+                            hotwords.length > 0
+                                ? Wrap(
+                              spacing: 5,
+                              runSpacing: 5,
+                              children: _buildWrapItem(),
+                            )
+                                : SizedBox(),
+                            Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 1,
+                                    child: Text(S.of(context).history_record,
                                         style: TextStyle(
                                             color: ColorConst.color_333)),
                                   ),
-                                  onTap: () {
-                                    DbManager.singleton.clear().then((_) {
-                                      getHistory();
-                                    });
-                                  },
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  } else {
-                    return _buildHistoryItem(historys[index - 1]);
-                  }
-                }),
-          )
-        ],
+                                  InkWell(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: Text(S.of(context).clear,
+                                          style: TextStyle(
+                                              color: ColorConst.color_333)),
+                                    ),
+                                    onTap: () {
+                                      DbManager.singleton.clear().then((_) {
+                                        getHistory();
+                                      });
+                                    },
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    } else {
+                      return _buildHistoryItem(historys[index - 1]);
+                    }
+                  }),
+            )
+          ],
+        ),
       ),
     );
   }
 
   Widget _title(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top+10),
       color: ColorConst.color_white,
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -144,7 +149,7 @@ class _SearchPageState extends State<SearchPage> {
                         color: ColorConst.color_333),
                     decoration: InputDecoration(
                         hintText: S.of(context).please_enter_a_keyword,
-                        contentPadding: EdgeInsets.all(6.0),
+                        contentPadding: EdgeInsets.all(3.0),
                         border: InputBorder.none)),
               ),
             ),
