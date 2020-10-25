@@ -183,7 +183,7 @@ class _MainPageState extends State<MainPage> {
             fit: BoxFit.cover,
             width: double.infinity,
             height: 180,
-            imageUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1590935946147&di=8a991bf574f0812dffa87485fc1b340e&imgtype=0&src=http%3A%2F%2F5.26923.com%2Fdownload%2Fpic%2F000%2F324%2F9195f173c1a41d99e7df634b712c65b9.jpg",
+            imageUrl: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1603607132785&di=1b34e010ae664b8ba3f70f0f41acaabd&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fwallpaper%2F1212%2F25%2Fc0%2F16875142_1356415699834.jpg",
             placeholder: (context, url) => Image.asset(
                   "assets/logo.png",
                   width: double.infinity,
